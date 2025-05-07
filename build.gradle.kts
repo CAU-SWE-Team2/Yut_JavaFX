@@ -1,5 +1,6 @@
 plugins {
-    id("java")
+    application
+    java
 }
 
 group = "org.example"
@@ -16,4 +17,10 @@ dependencies {
 
 tasks.test {
     useJUnitPlatform()
+}
+
+
+
+application {
+    mainClass.set("com.yut.ui.swing.GameWindow")
 }
