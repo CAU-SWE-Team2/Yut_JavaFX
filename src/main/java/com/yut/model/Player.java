@@ -12,6 +12,10 @@ public class Player {
     Player(int id){
         this.id = id;
     }
+    Player(int id, int numOfPieces){
+        this.id = id;
+        this.numOfTotalPieces = numOfPieces;
+    }
 
     // public int throwYut(Yut yut){
     //     return yut.getRandomResult();

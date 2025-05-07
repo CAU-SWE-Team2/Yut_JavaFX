@@ -9,8 +9,8 @@ public class Game {
     private int currentPlayerId;
 
 
-    public Game(int boardType, int playerCount) {
-        players = new Players(playerCount);
+    public Game(int boardType, int playerCount, int numOfTotalPieces) {
+        players = new Players(playerCount, numOfTotalPieces);
         
         if(boardType == 0)
             board = new SquareBoard();
@@ -20,13 +20,13 @@ public class Game {
             board = new HexagonBoard();
         
 
-        currentPlayerId = 0;
+        currentPlayerId = players.getFirstPlayer().id;
         gameTurn = new GameTurn(players.getPlayer(0));
     }
 
     public void switchTurn(){
         currentPlayerId++;
-        Player player = players.getPlayer((currentPlayerId) % players.size());
+        Player player = players.getPlayer((currentPlayerId) % players.size() + 1);
 
         gameTurn = new GameTurn(player);
     }
@@ -39,9 +39,4 @@ public class Game {
         }
         return false;
     }
-
-
-
-
-
 }
