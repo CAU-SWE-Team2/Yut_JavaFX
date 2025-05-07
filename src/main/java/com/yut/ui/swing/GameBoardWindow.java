@@ -14,16 +14,17 @@ public class GameBoardWindow extends JFrame {
 
         // 레이아웃
         setLayout(new BorderLayout());
+
         // 1. 상단: TopPanel (시작화면 버튼)
         JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JButton backButton = new JButton("← 시작 화면으로");
         topPanel.add(backButton);
         add(topPanel, BorderLayout.NORTH);
-
-        // 2. 하단: BottomPanel (플레이어 상태)
-        JPanel bottomPanel = new JPanel();
-        bottomPanel.add(new JLabel("플레이어 정보 표시"));
-        add(bottomPanel, BorderLayout.SOUTH);
+        // 기능
+        backButton.addActionListener(e -> {
+            dispose(); // 현재 창 닫기
+            new GameWindow(); // 게임 화면 창 열기
+        });
 
         // 3. 중앙: 좌/우 분할
         JPanel centerPanel = new JPanel(new GridLayout(1, 2)); // 1행 2열
@@ -38,6 +39,10 @@ public class GameBoardWindow extends JFrame {
         centerPanel.add(controlPanel);
         add(centerPanel, BorderLayout.CENTER);
 
+        // 2. 하단: BottomPanel (플레이어 상태)
+        JPanel bottomPanel = new JPanel();
+        bottomPanel.add(new JLabel("플레이어 정보 표시"));
+        add(bottomPanel, BorderLayout.SOUTH);
     }
 
     public static void main(String[] args) {
