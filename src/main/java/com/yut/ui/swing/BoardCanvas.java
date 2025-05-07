@@ -237,4 +237,16 @@ public class BoardCanvas extends JToggleButton {
         g2.drawString(text, textX, textY);
     }
 
+    public void setSelectedStyle(boolean selected) {
+        if (selected) {
+            setBorder(BorderFactory.createLineBorder(new Color(60, 120, 200), 3, true));
+            setBackground(new Color(240, 245, 255));
+            setOpaque(true);
+        } else {
+            setBorder(BorderFactory.createEmptyBorder());
+            setBackground(null);
+            setOpaque(false);
+        }
+    }
+
 }

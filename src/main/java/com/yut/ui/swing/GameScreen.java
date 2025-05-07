@@ -5,7 +5,7 @@ import java.awt.*;
 
 public class GameScreen extends JPanel {
 
-    public GameScreen(MainFrame frame) {
+    public GameScreen(MainFrame frame, int boardType, int playerCount, int pieceCount) {
         setLayout(new BorderLayout());
 
         // 1. 상단: TopPanel (시작화면 버튼)
@@ -21,8 +21,10 @@ public class GameScreen extends JPanel {
         JPanel centerPanel = new JPanel(new GridLayout(1, 2));
 
         JPanel boardPanel = new JPanel();
-        boardPanel.setBackground(Color.YELLOW);
-        boardPanel.add(new JLabel("윷판"));
+        boardPanel.setBackground(Color.CYAN);
+        BoardCanvas boardCanvas = new BoardCanvas(boardType);
+        boardCanvas.setPreferredSize(new Dimension(400, 400));
+        boardPanel.add(boardCanvas);
 
         ControlPanel controlPanel = new ControlPanel();
 

@@ -43,6 +43,25 @@ public class StartScreen extends JPanel {
         JPanel configPanel = new JPanel();
         configPanel.setLayout(new BoxLayout(configPanel, BoxLayout.Y_AXIS));
 
+        // 버튼 선택시 테두리
+        board4.addActionListener(e -> {
+            board4.setSelectedStyle(true);
+            board5.setSelectedStyle(false);
+            board6.setSelectedStyle(false);
+        });
+
+        board5.addActionListener(e -> {
+            board4.setSelectedStyle(false);
+            board5.setSelectedStyle(true);
+            board6.setSelectedStyle(false);
+        });
+
+        board6.addActionListener(e -> {
+            board4.setSelectedStyle(false);
+            board5.setSelectedStyle(false);
+            board6.setSelectedStyle(true);
+        });
+
         // 플레이어 수 설정
         JLabel playerLabel = new JLabel("플레이어 수:");
         playerLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -73,7 +92,18 @@ public class StartScreen extends JPanel {
         Dimension startButtonSize = new Dimension(150, 40);
         startButton.setPreferredSize(startButtonSize);
 
-        startButton.addActionListener(e -> frame.showGame());
+        startButton.addActionListener(e -> {
+            int selectedBoardType = 4; // 기본값
+            if (board5.isSelected())
+                selectedBoardType = 5;
+            else if (board6.isSelected())
+                selectedBoardType = 6;
+
+            int players = (Integer) playerCount.getValue();
+            int pieces = (Integer) pieceCount.getValue();
+
+            frame.showGame(selectedBoardType, players, pieces);
+        });
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(startButton);

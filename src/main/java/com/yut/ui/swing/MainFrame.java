@@ -18,10 +18,8 @@ public class MainFrame extends JFrame {
 
         // Screens
         StartScreen start = new StartScreen(this);
-        GameScreen game = new GameScreen(this);
 
         cardPanel.add(start, START);
-        cardPanel.add(game, GAME);
 
         add(cardPanel);
         cardLayout.show(cardPanel, START);
@@ -31,7 +29,9 @@ public class MainFrame extends JFrame {
         cardLayout.show(cardPanel, START);
     }
 
-    public void showGame() {
+    public void showGame(int boardType, int playerCount, int pieceCount) {
+        GameScreen game = new GameScreen(this, boardType, playerCount, pieceCount);
+        cardPanel.add(game, GAME);
         cardLayout.show(cardPanel, GAME);
     }
 }
