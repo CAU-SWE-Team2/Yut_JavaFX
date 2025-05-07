@@ -23,7 +23,7 @@ public class GameTurn {
     // type == -2면 랜덤, 아니면 type을 사용
     public void roll(int type){
 
-        if(type == -2)
+        if(type == 0)
             yut.rollYutRandomly();
         else
             yut.rollYutSelected(type);
@@ -41,13 +41,15 @@ public class GameTurn {
         return group.getNextNode(nextYut);
     }
 
-    //result == 0 업음, 1 잡음, 2 그냥 이동
     public void move(Group group, Node node){
-        int result = group.move(node);
+        group.move(node);
         
-        if(result == 1)
-            rollCount++;
-
         leftYuts.poll();
+    }
+
+
+
+    public Player getCurrentPlayer() {
+        return currentPlayer;
     }
 }

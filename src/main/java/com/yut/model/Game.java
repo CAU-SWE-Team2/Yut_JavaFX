@@ -7,9 +7,18 @@ public class Game {
 
     private GameTurn gameTurn;
     private int currentPlayerId;
+
+
     public Game(int boardType, int playerCount) {
         players = new Players(playerCount);
-        board = new Board(boardType);
+        
+        if(boardType == 0)
+            board = new SquareBoard();
+        else if(boardType == 1)
+            board = new PentagonBoard();
+        else
+            board = new HexagonBoard();
+        
 
         currentPlayerId = 0;
         gameTurn = new GameTurn(players.getPlayer(0));
@@ -21,11 +30,11 @@ public class Game {
 
         gameTurn = new GameTurn(player);
     }
-g
+
     public boolean ifGameEnded(){
         for (int i = 0; i < players.size(); i++){
             Player player = players.getPlayer(i);
-            if(player.getCurrentPiece() == 0)
+            if(player.getNumOfCurrentPieces() == 0)
                 return true;
         }
         return false;

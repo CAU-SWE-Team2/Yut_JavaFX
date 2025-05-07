@@ -1,3 +1,5 @@
+package com.yut.model;
+
 import java.util.HashMap;
 
 public class PentagonBoard extends Board {

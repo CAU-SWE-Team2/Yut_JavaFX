@@ -1,9 +1,13 @@
+package com.yut.model;
+
 import java.util.ArrayList;
+
 
 public class Group {
     int id;
     int numOfPieces;
     ArrayList<Integer> currentPieces = new ArrayList<>();
+    
     Node currentLocation;
     Player owner;
     Board playingBoard;
@@ -36,27 +40,22 @@ public class Group {
         this.playingBoard = board;
     }
 
-    public void move(int yutResult){
-        this.currentLocation.currentGroup = null;
-        if(yutResult == -1){
-            this.currentLocation = this.currentLocation.beforeNode;
-        }
-        else {
-            int whereToMove = this.currentLocation.id/100-1;
-            for (int i = 0; i < yutResult; i++) {
-                this.currentLocation = this.currentLocation.nextNodes[whereToMove];
-            }
-        }
-        if(this.currentLocation.currentGroup != null){
-            if(this.currentLocation.currentGroup.owner == this.owner){
-                this.carryBack(this.currentLocation.currentGroup);
+    public int move(Node node){
+        node.currentGroup = null;
+        
+        if(node.currentGroup != null){
+            if(node.currentGroup.owner == this.owner){
+                this.carryBack(node.currentGroup);
+                return 0;
             }
             else{
-                this.catchOtherGroup(this.currentLocation.currentGroup);
+                this.catchOtherGroup(node.currentGroup);
+                return 1;
             }
         }
         else {
-            this.currentLocation.currentGroup = this;
+            node.currentGroup = this;
+            return 2;
         }
     }
 
