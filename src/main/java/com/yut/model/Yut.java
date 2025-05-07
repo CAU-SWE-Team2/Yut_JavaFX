@@ -16,10 +16,15 @@ public class Yut {
 
     static Yut getYut() {return instance;}
 
-    void rollYut(){
+    void rollYutRandomly(){
         Random random = new Random();
         current = random.nextInt(5) + 1;
     }
+
+    void rollYutSelected(int yut){
+        current = yut;
+    }
+
 
     int getCurrent(){return current;}
 }
