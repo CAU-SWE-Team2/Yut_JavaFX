@@ -33,8 +33,14 @@ public class GameScreen extends JPanel {
         add(centerPanel, BorderLayout.CENTER);
 
         // 3. 하단: 플레이어 상태 패널
-        JPanel bottomPanel = new JPanel();
-        bottomPanel.add(new JLabel("플레이어 정보 표시"));
+        JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
+
+        for (int i = 1; i <= playerCount; i++) {
+            PlayerCanvas player = new PlayerCanvas(i, pieceCount); // playerId, 말 개수
+            bottomPanel.add(player);
+        }
+
         add(bottomPanel, BorderLayout.SOUTH);
+
     }
 }
