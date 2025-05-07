@@ -71,5 +71,26 @@ public class PentagonBoard extends Board {
         nodes.get(612).nextNodes = new Node[]{nodes.get(100), nodes.get(100), nodes.get(100), nodes.get(100), nodes.get(100), nodes.get(100)};
         endNode.nextNodes = new Node[]{endNode, endNode, endNode, endNode, endNode, endNode};
         waitingNode.beforeNode = waitingNode;
+
+        for(int i: nodes.keySet()){
+            int id = nodes.get(i).id;
+            if(id != 600) {
+                if ((id - 1) % 10 == 0) {
+                    int a = id / 100;
+                    nodes.get(i).beforeNode = nodes.get(a * 100);
+                }
+                else if(id % 100 == 0){
+                    int b = id / 100;
+                    nodes.get(i).beforeNode = nodes.get((b-1)*100+b*10+4);
+                }
+                else {
+                    nodes.get(i).beforeNode = nodes.get(id - 1);
+                }
+            }
+            else{
+                nodes.get(i).beforeNode = nodes.get(462);
+            }
+        }
+        nodes.get(121).beforeNode = waitingNode;
     }
 }
