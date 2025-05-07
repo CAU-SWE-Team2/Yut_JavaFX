@@ -27,10 +27,10 @@ public class GameScreen extends JPanel {
         layeredBoard.add(boardCanvas, JLayeredPane.DEFAULT_LAYER);
 
         Color[] playerColors = {
-                new Color(220, 20, 60), // 빨강 (P1)
-                new Color(30, 144, 255), // 파랑 (P2)
-                new Color(34, 139, 34), // 초록 (P3)
-                new Color(255, 140, 0) // 주황 (P4)
+                new Color(240, 128, 128), // 빨강 (P1)
+                new Color(176, 224, 230), // 파랑 (P2)
+                new Color(198, 233, 105), // 초록 (P3)
+                new Color(221, 160, 221) // 보라 (P4)
         };
 
         for (int i = 0; i < playerCount; i++) {

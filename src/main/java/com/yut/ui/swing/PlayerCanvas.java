@@ -35,7 +35,7 @@ public class PlayerCanvas extends JPanel {
         g2.setColor(Color.BLACK);
         g2.drawString("P" + playerId, 20, 25);
 
-        // 말 표시
+        // 남은 말 개수 표시
         int radius = 10;
         int spacing = 5;
         int totalWidth = pieceCount * (2 * radius) + (pieceCount - 1) * spacing;
