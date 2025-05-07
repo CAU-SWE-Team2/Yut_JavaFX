@@ -19,12 +19,30 @@ public class GameScreen extends JPanel {
 
         // 2. 중앙: 좌/우 분할
         JPanel centerPanel = new JPanel(new GridLayout(1, 2));
+        JLayeredPane layeredBoard = new JLayeredPane();
+        layeredBoard.setPreferredSize(new Dimension(400, 400));
 
-        JPanel boardPanel = new JPanel();
-        boardPanel.setBackground(Color.CYAN);
         BoardCanvas boardCanvas = new BoardCanvas(boardType);
-        boardCanvas.setPreferredSize(new Dimension(400, 400));
-        boardPanel.add(boardCanvas);
+        boardCanvas.setBounds(0, 0, 400, 400); // 위치 고정
+        layeredBoard.add(boardCanvas, JLayeredPane.DEFAULT_LAYER);
+
+        Color[] playerColors = {
+                new Color(220, 20, 60), // 빨강 (P1)
+                new Color(30, 144, 255), // 파랑 (P2)
+                new Color(34, 139, 34), // 초록 (P3)
+                new Color(255, 140, 0) // 주황 (P4)
+        };
+
+        for (int i = 0; i < playerCount; i++) {
+            Color color = playerColors[i % playerColors.length];
+            Piece piece = new Piece(color);
+            piece.setBounds(100 + i * 30, 100, 20, 20); // 말 위치 조정
+            layeredBoard.add(piece, JLayeredPane.PALETTE_LAYER);
+        }
+
+        // 래핑해서 패널에 넣기
+        JPanel boardPanel = new JPanel();
+        boardPanel.add(layeredBoard);
 
         ControlPanel controlPanel = new ControlPanel();
 
