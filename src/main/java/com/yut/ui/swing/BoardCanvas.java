@@ -2,19 +2,55 @@ package com.yut.ui.swing;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.List;
+import java.util.ArrayList;
+
 
 public class BoardCanvas extends JToggleButton {
     private int boardType;
+    private List<ClickableNode> clickableNodes = new ArrayList<>();
 
     public BoardCanvas(int boardType) {
         this.boardType = boardType;
         setPreferredSize(new Dimension(250, 250));
         setFocusPainted(false);
         setContentAreaFilled(false);
+
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                for (ClickableNode node : clickableNodes) {
+                    if (node.contains(e.getX(), e.getY())) {
+                        System.out.println("Clicked on node at (" + node.x + ", " + node.y + ")");
+                        // TODO: Add game logic here (e.g., move piece)
+                        break;
+                    }
+                }
+            }
+        });
     }
 
     public int getBoardType() {
         return boardType;
+    }
+
+    // 클릭해서 말 옮기는 용도의 node
+    private static class ClickableNode {
+        int x, y, radius;
+
+        ClickableNode(int x, int y, int radius) {
+            this.x = x;
+            this.y = y;
+            this.radius = radius;
+        }
+
+        boolean contains(int mx, int my) {
+            int dx = x - mx;
+            int dy = y - my;
+            return dx * dx + dy * dy <= radius * radius;
+        }
     }
 
     @Override
@@ -29,6 +65,7 @@ public class BoardCanvas extends JToggleButton {
         int padding = 20;
         int boardSize = Math.min(w, h) - 2 * padding;
         if (boardType == 4) {
+
             int step = boardSize / 4;
             int cStep = boardSize / 5; // cardinal steps
             int dStep = boardSize / 6; // diagonal steps
@@ -56,8 +93,11 @@ public class BoardCanvas extends JToggleButton {
                         if (corner) {
                             drawCircle(g2, cx, cy, 16);
                             drawCircle(g2, cx, cy, 12);
-                        } else
+                            clickableNodes.add(new ClickableNode(cx, cy, 16));
+                        } else{
                             drawCircle(g2, cx, cy, 9);
+                            clickableNodes.add(new ClickableNode(cx, cy, 9));
+                        }
                     }
                 }
             }
@@ -72,6 +112,7 @@ public class BoardCanvas extends JToggleButton {
                         int cx = startX + col * dStep;
                         int cy = startY + row * dStep;
                         drawCircle(g2, cx, cy, 9);
+                        clickableNodes.add(new ClickableNode(cx, cy, 9));
                     }
                 }
             }
@@ -79,6 +120,7 @@ public class BoardCanvas extends JToggleButton {
             // Draw central circle bigger
             drawCircle(g2, startX + 3 * dStep, startY + 3 * dStep, 16);
             drawCircle(g2, startX + 3 * dStep, startY + 3 * dStep, 12);
+            clickableNodes.add(new ClickableNode(startX + 3 * dStep, startY + 3 * dStep, 16));
 
             // Draw "출발" in bottom-right node
             int textX = startX + 5 * cStep;
@@ -113,6 +155,7 @@ public class BoardCanvas extends JToggleButton {
             for (int i = 0; i < 5; i++) {
                 drawCircle(g2, xPoints[i], yPoints[i], 16);
                 drawCircle(g2, xPoints[i], yPoints[i], 12);
+                clickableNodes.add(new ClickableNode(cx, cy, 16));
             }
 
             // values are all set to be positive
@@ -123,11 +166,16 @@ public class BoardCanvas extends JToggleButton {
             int intervalBotX = (xPoints[2] - xPoints[1]) / 5;
 
             for (int i = 1; i < 5; i++) {
-                drawCircle(g2, xPoints[0] + intervalMidX * i, yPoints[0] - intervalMidY * i, 7);
-                drawCircle(g2, xPoints[1] + intervalBotX * i, yPoints[1], 7);
-                drawCircle(g2, xPoints[2] + intervalMidX * i, yPoints[2] + intervalMidY * i, 7);
-                drawCircle(g2, xPoints[3] - intervalTopX * i, yPoints[3] + intervalTopY * i, 7);
-                drawCircle(g2, xPoints[4] - intervalTopX * i, yPoints[4] - intervalTopY * i, 7);
+                drawCircle(g2, xPoints[0] + intervalMidX * i, yPoints[0] - intervalMidY * i, 9);
+                clickableNodes.add(new ClickableNode(xPoints[0] + intervalMidX * i, yPoints[0] - intervalMidY * i, 9));
+                drawCircle(g2, xPoints[1] + intervalBotX * i, yPoints[1], 9);
+                clickableNodes.add(new ClickableNode(xPoints[1] + intervalBotX * i, yPoints[1], 9));
+                drawCircle(g2, xPoints[2] + intervalMidX * i, yPoints[2] + intervalMidY * i, 9);
+                clickableNodes.add(new ClickableNode(xPoints[2] + intervalMidX * i, yPoints[2] + intervalMidY * i, 9));
+                drawCircle(g2, xPoints[3] - intervalTopX * i, yPoints[3] + intervalTopY * i, 9);
+                clickableNodes.add(new ClickableNode(xPoints[3] - intervalTopX * i, yPoints[3] + intervalTopY * i, 9));
+                drawCircle(g2, xPoints[4] - intervalTopX * i, yPoints[4] - intervalTopY * i, 9);
+                clickableNodes.add(new ClickableNode(xPoints[4] - intervalTopX * i, yPoints[4] - intervalTopY * i, 9));
             }
 
             int intervalCTopY = (yPoints[4] - cx) / 3;
@@ -137,16 +185,22 @@ public class BoardCanvas extends JToggleButton {
             int intervalCBotY = (cy - yPoints[1]) / 3;
 
             for (int i = 1; i < 3; i++) {
-                drawCircle(g2, cx - intervalCMidX * i, cy + intervalCMidY * i, 7);
-                drawCircle(g2, cx - intervalCBotX * i, cy - intervalCBotY * i, 7);
-                drawCircle(g2, cx + intervalCBotX * i, cy - intervalCBotY * i, 7);
-                drawCircle(g2, cx + intervalCMidX * i, cy + intervalCMidY * i, 7);
-                drawCircle(g2, cx, cy + intervalCTopY * i, 7);
+                drawCircle(g2, cx - intervalCMidX * i, cy + intervalCMidY * i, 9);
+                clickableNodes.add(new ClickableNode(cx - intervalCMidX * i, cy + intervalCMidY * i, 9));
+                drawCircle(g2, cx - intervalCBotX * i, cy - intervalCBotY * i, 9);
+                clickableNodes.add(new ClickableNode(cx - intervalCBotX * i, cy - intervalCBotY * i, 9));
+                drawCircle(g2, cx + intervalCBotX * i, cy - intervalCBotY * i, 9);
+                clickableNodes.add(new ClickableNode(cx + intervalCBotX * i, cy - intervalCBotY * i, 9));
+                drawCircle(g2, cx + intervalCMidX * i, cy + intervalCMidY * i, 9);
+                clickableNodes.add(new ClickableNode(cx + intervalCMidX * i, cy + intervalCMidY * i, 9));
+                drawCircle(g2, cx, cy + intervalCTopY * i, 9);
+                clickableNodes.add(new ClickableNode(cx, cy + intervalCTopY * i, 9));
             }
 
             // Draw center node
             drawCircle(g2, cx, cy, 16);
             drawCircle(g2, cx, cy, 12);
+            clickableNodes.add(new ClickableNode(cx, cy, 16));
 
             // Optionally: Draw "출발" at bottom-right point
             int startIdx = 0; // You can change this to any corner (0~4)
@@ -180,6 +234,7 @@ public class BoardCanvas extends JToggleButton {
             for (int i = 0; i < 6; i++) {
                 drawCircle(g2, xPoints[i], yPoints[i], 15);
                 drawCircle(g2, xPoints[i], yPoints[i], 12);
+                clickableNodes.add(new ClickableNode(xPoints[i], yPoints[i], 15));
             }
 
             // values are all set to be positive
@@ -188,12 +243,18 @@ public class BoardCanvas extends JToggleButton {
             int interval2X = (xPoints[2] - xPoints[1]) / 5;
 
             for (int i = 1; i < 5; i++) {
-                drawCircle(g2, xPoints[0] + interval1X * i, yPoints[0] - interval1Y * i, 6);
-                drawCircle(g2, xPoints[1] + interval2X * i, yPoints[1], 6);
-                drawCircle(g2, xPoints[2] + interval1X * i, yPoints[2] + interval1Y * i, 6);
-                drawCircle(g2, xPoints[3] - interval1X * i, yPoints[3] + interval1Y * i, 6);
-                drawCircle(g2, xPoints[4] - interval2X * i, yPoints[4], 6);
-                drawCircle(g2, xPoints[5] - interval1X * i, yPoints[5] - interval1Y * i, 6);
+                drawCircle(g2, xPoints[0] + interval1X * i, yPoints[0] - interval1Y * i, 9);
+                clickableNodes.add(new ClickableNode(xPoints[0] + interval1X * i, yPoints[0] - interval1Y * i, 9));
+                drawCircle(g2, xPoints[1] + interval2X * i, yPoints[1], 9);
+                clickableNodes.add(new ClickableNode(xPoints[1] + interval2X * i, yPoints[1], 9));
+                drawCircle(g2, xPoints[2] + interval1X * i, yPoints[2] + interval1Y * i, 9);
+                clickableNodes.add(new ClickableNode(xPoints[2] + interval1X * i, yPoints[2] + interval1Y * i, 9));
+                drawCircle(g2, xPoints[3] - interval1X * i, yPoints[3] + interval1Y * i, 9);
+                clickableNodes.add(new ClickableNode(xPoints[3] - interval1X * i, yPoints[3] + interval1Y * i, 9));
+                drawCircle(g2, xPoints[4] - interval2X * i, yPoints[4], 9);
+                clickableNodes.add(new ClickableNode(xPoints[4] - interval2X * i, yPoints[4], 9));
+                drawCircle(g2, xPoints[5] - interval1X * i, yPoints[5] - interval1Y * i, 9);
+                clickableNodes.add(new ClickableNode(xPoints[5] - interval1X * i, yPoints[5] - interval1Y * i, 9));
             }
 
             int intervalC1X = (cx - xPoints[1]) / 3;
@@ -201,17 +262,24 @@ public class BoardCanvas extends JToggleButton {
             int intervalC2X = (cx - xPoints[0]) / 3;
 
             for (int i = 1; i < 3; i++) {
-                drawCircle(g2, cx - intervalC2X * i, cy, 7);
-                drawCircle(g2, cx - intervalC1X * i, cy + intervalC1Y * i, 7);
-                drawCircle(g2, cx + intervalC1X * i, cy + intervalC1Y * i, 7);
-                drawCircle(g2, cx + intervalC2X * i, cy, 7);
-                drawCircle(g2, cx + intervalC1X * i, cy - intervalC1Y * i, 7);
-                drawCircle(g2, cx - intervalC1X * i, cy - intervalC1Y * i, 7);
+                drawCircle(g2, cx - intervalC2X * i, cy, 9);
+                clickableNodes.add(new ClickableNode(cx - intervalC2X * i, cy, 9));
+                drawCircle(g2, cx - intervalC1X * i, cy + intervalC1Y * i, 9);
+                clickableNodes.add(new ClickableNode( cx - intervalC1X * i, cy + intervalC1Y * i, 9));
+                drawCircle(g2, cx + intervalC1X * i, cy + intervalC1Y * i, 9);
+                clickableNodes.add(new ClickableNode(cx + intervalC1X * i, cy + intervalC1Y * i, 9));
+                drawCircle(g2, cx + intervalC2X * i, cy, 9);
+                clickableNodes.add(new ClickableNode(cx + intervalC2X * i, cy, 9));
+                drawCircle(g2, cx + intervalC1X * i, cy - intervalC1Y * i, 9);
+                clickableNodes.add(new ClickableNode(cx + intervalC1X * i, cy - intervalC1Y * i, 9));
+                drawCircle(g2, cx - intervalC1X * i, cy - intervalC1Y * i, 9);
+                clickableNodes.add(new ClickableNode(cx - intervalC1X * i, cy - intervalC1Y * i, 9));
             }
 
             // Draw center node
             drawCircle(g2, cx, cy, 15);
             drawCircle(g2, cx, cy, 12);
+            clickableNodes.add(new ClickableNode(cx, cy, 15));
 
             // Optionally: Draw "출발" at bottom-right point
             int startIdx = 0; // You can change this to any corner (0~4)
@@ -248,5 +316,6 @@ public class BoardCanvas extends JToggleButton {
             setOpaque(false);
         }
     }
+
 
 }
