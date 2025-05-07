@@ -13,6 +13,12 @@ public class GameWindow extends JFrame {
         JPanel panel = new JPanel();
         JButton startButton = new JButton("게임 시작");
 
+        // 버튼 클릭 시 게임 화면으로 전환
+        startButton.addActionListener(e -> {
+            dispose(); // 현재 창 닫기
+            new GameBoardWindow(); // 게임 화면 창 열기
+        });
+
         panel.add(startButton);
         add(panel);
 
