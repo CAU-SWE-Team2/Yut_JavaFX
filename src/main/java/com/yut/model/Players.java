@@ -1,24 +1,22 @@
 package com.yut.model;
 
 
-// 싱글톤 플레이어들
+// 플레이어들
 class Players {
-    private static Players instance = new Players();
 
-    private static Player[] playersArr;
+    private Player[] playersArr;
 
-    private Players() {}
-
-    static Players getPlayers() {
-        return instance;
-    }
-
-    static void createPlayers(int playerCnt) {
+    public Players(int playerCnt) {
         playersArr = new Player[playerCnt];
+
     }
 
-    static void clearPlayers() {
-        playersArr = null;
+    public Player getPlayer(int id){
+        return playersArr[id];
     }
 
+    public int size(){
+        return playersArr.length;
+    }
 }
+
