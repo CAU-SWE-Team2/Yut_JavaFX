@@ -1,6 +1,7 @@
 package com.yut.model;
+import com.yut.controller.GameModelInterface;
 
-public class Game {
+public class Game implements GameModelInterface {
 
     private Players players;
     private Board board;
