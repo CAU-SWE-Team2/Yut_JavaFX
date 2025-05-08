@@ -27,7 +27,7 @@ public class Piece extends JComponent {
     protected void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
         g2.setColor(color);
-        g2.setStroke(new BasicStroke(1));
+        g2.setStroke(new BasicStroke(1.5f));
         g2.fillOval(0, 0, getWidth(), getHeight());
         g2.setColor(Color.DARK_GRAY);
         g2.drawOval(0, 0, getWidth(), getHeight());
