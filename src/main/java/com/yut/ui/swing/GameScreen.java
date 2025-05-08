@@ -54,7 +54,8 @@ public class GameScreen extends JPanel {
         JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
 
         for (int i = 1; i <= playerCount; i++) {
-            PlayerCanvas player = new PlayerCanvas(i, pieceCount); // playerId, 말 개수
+            Color color = playerColors[(i - 1) % playerColors.length];
+            PlayerCanvas player = new PlayerCanvas(i, pieceCount, color); // playerId, 말 개수, 색상
             bottomPanel.add(player);
         }
 
