@@ -6,10 +6,12 @@ import java.awt.*;
 public class PlayerCanvas extends JPanel {
     private int playerId;
     private int pieceCount;
+    private Color color;
 
-    public PlayerCanvas(int playerId, int pieceCount) {
+    public PlayerCanvas(int playerId, int pieceCount, Color color) {
         this.playerId = playerId;
         this.pieceCount = pieceCount;
+        this.color = color;
         setPreferredSize(new Dimension(180, 80));
         setOpaque(false);
     }
@@ -44,7 +46,7 @@ public class PlayerCanvas extends JPanel {
 
         for (int i = 0; i < pieceCount; i++) {
             int x = startX + i * (2 * radius + spacing);
-            g2.setColor(new Color(100, 149, 237));
+            g2.setColor(color);
             g2.fillOval(x, y, 2 * radius, 2 * radius);
             g2.setColor(Color.DARK_GRAY);
             g2.drawOval(x, y, 2 * radius, 2 * radius);
