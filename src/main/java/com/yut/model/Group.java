@@ -44,19 +44,26 @@ public class Group {
         node.currentGroup = null;
         this.currentLocation = node;
         
-        if(node.currentGroup != null){
-            if(node.currentGroup.owner == this.owner){
-                this.carryBack(node.currentGroup);
-                return 0;
-            }
-            else{
-                this.catchOtherGroup(node.currentGroup);
-                return 1;
-            }
-        }
-        else {
-            node.currentGroup = this;
+        if(node.equals(playingBoard.endNode)){
+            this.owner.numOfCurrentPieces -= this.numOfPieces;
+            this.owner.currentGroups.remove(this);
             return 2;
+        }
+        else{
+            if(node.currentGroup != null){
+                if(node.currentGroup.owner == this.owner){
+                    this.carryBack(node.currentGroup);
+                    return 0;
+                }
+                else{
+                    this.catchOtherGroup(node.currentGroup);
+                    return 1;
+                }
+            }
+            else {
+                node.currentGroup = this;
+                return 2;
+            }
         }
     }
 
