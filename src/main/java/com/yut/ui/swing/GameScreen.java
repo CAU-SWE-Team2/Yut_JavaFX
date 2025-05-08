@@ -2,6 +2,8 @@ package com.yut.ui.swing;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +19,12 @@ public class GameScreen extends JPanel {
     private int boardType;
     private int playerCount;
     private int pieceCount;
+
+    //for moving pieces
+    private BoardCanvas boardCanvas;
+    private Integer selectedPieceId = null;
+    private boolean awaitingMove = false;
+
 
     // 말이 말판에 올라갈 때
     public void addPieceToBoard(int playerId, int totalPieceCount) {
@@ -94,6 +102,7 @@ public class GameScreen extends JPanel {
 
         layeredBoard.add(boardCanvas, JLayeredPane.DEFAULT_LAYER);
         boardCanvas.setGameScreen(this);
+        this.boardCanvas = boardCanvas;
 
 
 
@@ -112,6 +121,15 @@ public class GameScreen extends JPanel {
             pieceList.add(piece);
             piece.setBounds(100 + i * 30, 100, 20, 20);
             layeredBoard.add(piece, JLayeredPane.PALETTE_LAYER);
+
+            piece.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    selectedPieceId = pieceList.indexOf(piece); // find which piece was clicked
+                    awaitingMove = true;
+                    System.out.println("Selected piece ID: " + selectedPieceId);
+                }
+            });
         }
 
         JPanel boardPanel = new JPanel();
@@ -166,9 +184,15 @@ public class GameScreen extends JPanel {
     }
 
     //piece를 클릭한 노드의 중심으로 이동
-    public void movePiece (int pieceID, int x, int y){
-        int cx = x - pieceList.get(pieceID).getWidth() / 2;
-        int cy = y - pieceList.get(pieceID).getHeight() / 2;
-        pieceList.get(pieceID).setLocation(cx, cy);
+    public void movePiece (int nodeID){
+        ClickableNode node = boardCanvas.getNodeById(nodeID);
+        int cx = node.x - pieceList.get(selectedPieceId).getWidth() / 2;
+        int cy = node.y - pieceList.get(selectedPieceId).getHeight() / 2;
+        pieceList.get(selectedPieceId).setLocation(cx, cy);
     }
+
+    public boolean isAwaitingMove() {
+        return awaitingMove && selectedPieceId != null;
+    }
+
 }

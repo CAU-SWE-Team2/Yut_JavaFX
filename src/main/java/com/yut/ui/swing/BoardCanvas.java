@@ -7,6 +7,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
 import java.util.ArrayList;
+import com.yut.ui.swing.ClickableNode;
 
 
 public class BoardCanvas extends JToggleButton {
@@ -35,7 +36,10 @@ public class BoardCanvas extends JToggleButton {
                     if (node.contains(e.getX(), e.getY())) {
                         System.out.println("Clicked on node #" + node.nodeID + "at (" + node.x + ", " + node.y + ")");
                         // TODO: Add game logic here (e.g., move piece)
-                        gameScreen.movePiece(0, node.x, node.y);
+                        //gameScreen.movePiece(0, node.x, node.y);
+                        if (gameScreen.isAwaitingMove()) {
+                            gameScreen.movePiece(node.nodeID);
+                        }
                         break;
                     }
                 }
@@ -51,24 +55,16 @@ public class BoardCanvas extends JToggleButton {
         return boardType;
     }
 
-    // 클릭해서 말 옮기는 용도의 node
-    private static class ClickableNode {
-        int x, y, radius;
-        int nodeID;
 
-        ClickableNode(int x, int y, int radius, int nodeID) {
-            this.x = x;
-            this.y = y;
-            this.radius = radius;
-            this.nodeID = nodeID;
-        }
 
-        boolean contains(int mx, int my) {
-            int dx = x - mx;
-            int dy = y - my;
-            return dx * dx + dy * dy <= radius * radius;
+    public ClickableNode getNodeById(int id) {
+        for (ClickableNode node : clickableNodes) {
+            if (node.nodeID == id) return node;
         }
+        return null;
     }
+
+
 
     @Override
     protected void paintComponent(Graphics g) {
