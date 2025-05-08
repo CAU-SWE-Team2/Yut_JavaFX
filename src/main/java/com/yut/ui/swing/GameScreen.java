@@ -2,9 +2,12 @@ package com.yut.ui.swing;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class GameScreen extends JPanel {
-
+    private List<Piece> pieceList = new ArrayList<>();
     public GameScreen(MainFrame frame, int boardType, int playerCount, int pieceCount) {
         setLayout(new BorderLayout());
 
@@ -27,6 +30,8 @@ public class GameScreen extends JPanel {
         boardCanvas.setEnabled(false);
         boardCanvas.setInteractive(true);
         layeredBoard.add(boardCanvas, JLayeredPane.DEFAULT_LAYER);
+        boardCanvas.setGameScreen(this);
+
 
 
         Color[] playerColors = {
@@ -36,10 +41,12 @@ public class GameScreen extends JPanel {
                 new Color(221, 160, 221) // 보라 (P4)
         };
 
+
         for (int i = 0; i < playerCount; i++) {
             Color color = playerColors[i % playerColors.length];
             Piece piece = new Piece(color);
             piece.setBounds(100 + i * 30, 100, 20, 20); // 말 위치 조정
+            pieceList.add(piece);
             layeredBoard.add(piece, JLayeredPane.PALETTE_LAYER);
         }
 
@@ -63,5 +70,12 @@ public class GameScreen extends JPanel {
 
         add(bottomPanel, BorderLayout.SOUTH);
 
+    }
+
+    //piece를 클릭한 노드의 중심으로 이동
+    public void movePiece (int pieceID, int x, int y){
+        int cx = x - pieceList.get(pieceID).getWidth() / 2;
+        int cy = y - pieceList.get(pieceID).getHeight() / 2;
+        pieceList.get(pieceID).setLocation(cx, cy);
     }
 }

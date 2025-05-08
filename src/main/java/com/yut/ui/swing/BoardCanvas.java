@@ -1,5 +1,6 @@
 package com.yut.ui.swing;
 
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -11,6 +12,11 @@ import java.util.ArrayList;
 public class BoardCanvas extends JToggleButton {
     private int boardType;
     private List<ClickableNode> clickableNodes = new ArrayList<>();
+    private GameScreen gameScreen;
+
+    public void setGameScreen (GameScreen gs){
+        this.gameScreen = gs;
+    }
 
     // default는 interactive하지 않음 -> GameScreen에서 interactive = true 하면 노드 클릭가능
     private boolean interactive = false;
@@ -29,6 +35,7 @@ public class BoardCanvas extends JToggleButton {
                     if (node.contains(e.getX(), e.getY())) {
                         System.out.println("Clicked on node at (" + node.x + ", " + node.y + ")");
                         // TODO: Add game logic here (e.g., move piece)
+                        gameScreen.movePiece(0, node.x, node.y);
                         break;
                     }
                 }
