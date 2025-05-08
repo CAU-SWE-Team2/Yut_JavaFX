@@ -12,6 +12,9 @@ public class BoardCanvas extends JToggleButton {
     private int boardType;
     private List<ClickableNode> clickableNodes = new ArrayList<>();
 
+    // default는 interactive하지 않음 -> GameScreen에서 interactive = true 하면 노드 클릭가능
+    private boolean interactive = false;
+
     public BoardCanvas(int boardType) {
         this.boardType = boardType;
         setPreferredSize(new Dimension(250, 250));
@@ -21,6 +24,7 @@ public class BoardCanvas extends JToggleButton {
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                if (!interactive) return; // disable node interaction in preview mode
                 for (ClickableNode node : clickableNodes) {
                     if (node.contains(e.getX(), e.getY())) {
                         System.out.println("Clicked on node at (" + node.x + ", " + node.y + ")");
@@ -30,6 +34,10 @@ public class BoardCanvas extends JToggleButton {
                 }
             }
         });
+    }
+
+    public void setInteractive(boolean interactive) {
+        this.interactive = interactive;
     }
 
     public int getBoardType() {
