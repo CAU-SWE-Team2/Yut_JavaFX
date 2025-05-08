@@ -42,6 +42,7 @@ public class Group {
 
     public int move(Node node){
         node.currentGroup = null;
+        this.currentLocation = node;
         
         if(node.currentGroup != null){
             if(node.currentGroup.owner == this.owner){

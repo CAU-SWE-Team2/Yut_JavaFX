@@ -2,7 +2,6 @@ package com.yut.model;
 
 import java.util.ArrayDeque;
 import java.util.Queue;
-import java.util.ArrayList;
 import com.yut.controller.GameTurnModelInterface;   
 
 public class GameTurn implements GameTurnModelInterface {
@@ -33,7 +32,7 @@ public class GameTurn implements GameTurnModelInterface {
         leftYuts.add(result);
 
         rollCount--;
-        if(result == yut.YUT || result == yut.MO)rollCount++;
+        if(result == Yut.YUT || result == Yut.MO)rollCount++;
     }
 
     // 그룹을 보내면 현재 가지고 있는 윷을 사용해 이동할 수 있는 노드를 보여줌
