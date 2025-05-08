@@ -98,30 +98,6 @@ public class BoardCanvas extends JToggleButton {
             g2.drawLine(startX, startY, startX + 4 * step, startY + 4 * step);
             g2.drawLine(startX, startY + 4 * step, startX + 4 * step, startY);
 
-            /*
-            // Draw edge nodes
-            for (int row = 0; row <= 5; row++) {
-                for (int col = 0; col <= 5; col++) {
-                    boolean shouldDraw = row == 0 || row == 5 || col == 0 || col == 5;
-                    boolean corner = (row == 0 || row == 5) && (col == 0 || col == 5);
-
-                    if (shouldDraw) {
-                        int cx = startX + col * cStep;
-                        int cy = startY + row * cStep;
-                        if (corner) {
-                            drawCircle(g2, cx, cy, 16);
-                            drawCircle(g2, cx, cy, 12);
-                            clickableNodes.add(new ClickableNode(cx, cy, 16));
-                        } else{
-                            drawCircle(g2, cx, cy, 9);
-                            clickableNodes.add(new ClickableNode(cx, cy, 9));
-                        }
-                    }
-                }
-            }
-
-            */
-
             for (int i = 0; i < 5; i++){
                 if (i == 0) {
                     drawCircle(g2, startX + 5 * cStep, startY + 5*cStep, 16);
