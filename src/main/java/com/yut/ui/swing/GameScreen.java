@@ -143,6 +143,7 @@ public class GameScreen extends JPanel {
         bottomPanelWrapper.add(bottomPanel, BorderLayout.CENTER);
         add(bottomPanelWrapper, BorderLayout.SOUTH);
 
+        /*
         // 테스트용: 각 플레이어에게 다양한 수의 말 진입 및 도착 처리
         addPieceToBoard(1, pieceCount);
         addPieceToBoard(1, pieceCount);
@@ -160,6 +161,7 @@ public class GameScreen extends JPanel {
         addFinishedPiece(3, pieceCount);
         addFinishedPiece(3, pieceCount);
         addFinishedPiece(3, pieceCount);// 말이 4개 이하면 우승
+        */
 
     }
 
