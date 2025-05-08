@@ -83,8 +83,13 @@ public class GameScreen extends JPanel {
         layeredBoard.setPreferredSize(new Dimension(400, 400));
 
         BoardCanvas boardCanvas = new BoardCanvas(boardType);
-        boardCanvas.setBounds(0, 0, 400, 400);
+
+        boardCanvas.setBounds(0, 0, 400, 400); // 위치 고정
+        boardCanvas.setEnabled(false);
+        boardCanvas.setInteractive(true);
+
         layeredBoard.add(boardCanvas, JLayeredPane.DEFAULT_LAYER);
+
 
         Color[] playerColors = {
                 new Color(240, 128, 128),
