@@ -55,16 +55,12 @@ public class BoardCanvas extends JToggleButton {
         return boardType;
     }
 
-
-
     public ClickableNode getNodeById(int id) {
         for (ClickableNode node : clickableNodes) {
             if (node.nodeID == id) return node;
         }
         return null;
     }
-
-
 
     @Override
     protected void paintComponent(Graphics g) {

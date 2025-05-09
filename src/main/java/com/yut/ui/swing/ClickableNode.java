@@ -1,13 +1,14 @@
 package com.yut.ui.swing;
 
-public class ClickableNode {
+import javax.swing.*;
+
+public class ClickableNode extends JComponent {
     int x, y, radius;
     int nodeID;
     //what piece is currently on the node
     Piece OnNodePiece;
     //what preview is currently on the node
-    Piece PreviewPiece;
-    boolean selected;
+    boolean hasPreview;
 
     ClickableNode(int x, int y, int radius, int nodeID) {
         this.x = x;
@@ -24,7 +25,7 @@ public class ClickableNode {
         return y;
     }
 
-    boolean contains(int mx, int my) {
+    boolean containsInRange(int mx, int my) {
         int dx = x - mx;
         int dy = y - my;
         return dx * dx + dy * dy <= radius * radius;
@@ -38,20 +39,18 @@ public class ClickableNode {
         this.OnNodePiece = OnNodePiece;
     }
 
-    public void setPreviewPiece(Piece PreviewPiece) {
-        this.PreviewPiece = PreviewPiece;
+    public void setPreviewPiece(boolean hasPreview) {
+        this.hasPreview = hasPreview;
     }
 
-    //빈 노드인지 = 1, 선택된 말이 있는 노드인지 = 2, 말이 있는 노드인지 = 3;
+    //힌트가 있는 노드인지 = 1, 빈 노드인지 = 2, 말이 있는 노드인지 = 3;
     public int getState(){
-        if (OnNodePiece == null)
+        if (hasPreview)
             return 1;
-        else{
-            if (selected)
-                return 2;
-            else
-                return 3;
-        }
+        if (OnNodePiece == null)
+            return 2;
+        else
+            return 3;
     }
 
     //어떤 말이 위에 있는지

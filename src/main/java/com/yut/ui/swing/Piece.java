@@ -17,10 +17,9 @@ import java.awt.event.ActionListener;
 public class Piece extends JComponent {
     private int playerID;
     private Color color;
-    private int pieceID;
     private int x;
     private int y;
-    private static int radius = 10;
+    public static final int radius = 10;
     private int count = 1; //by default is 1
 
 
@@ -48,22 +47,13 @@ public class Piece extends JComponent {
     //for preview
 
     //something happens when piece is clicked, to be defined
-    public Piece(int pieceID, int x, int  y, Color color) {
+    public Piece(int x, int  y, Color color, int count) {
         this.color = color;
         setSize(radius*2, radius*2); // 말의 크기
         setOpaque(false);
-        this.pieceID = pieceID;
         this.x = x;
         this.y = y;
-    }
-
-    public int getCount(){
-        return count;
-    }
-
-    public void setCount(int count){
         this.count = count;
-        repaint();
     }
 
     @Override
