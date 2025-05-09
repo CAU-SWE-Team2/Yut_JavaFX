@@ -5,8 +5,9 @@ import com.yut.ui.swing.MainFrame;
 import javax.swing.*;
 import java.awt.*;
 
-public class StartScreen extends JPanel {
+public class StartScreen extends JPanel implements StartScreenInterface{
 
+    JButton startButton;
     public StartScreen(MainFrame frame) {
         setLayout(new BorderLayout());
 
@@ -87,7 +88,7 @@ public class StartScreen extends JPanel {
         add(configPanel, BorderLayout.CENTER);
 
         // 게임 시작 버튼
-        JButton startButton = new JButton("게임 시작");
+        this.startButton = new JButton("게임 시작");
 
         Dimension startButtonSize = new Dimension(150, 40);
         startButton.setPreferredSize(startButtonSize);
@@ -109,6 +110,14 @@ public class StartScreen extends JPanel {
         buttonPanel.add(startButton);
         add(buttonPanel, BorderLayout.SOUTH);
     }
+
+    
+    public void addStartButtonListener(ActionListener listener) {
+        startButton.addActionListener(listener);
+    }
+
+
+
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
