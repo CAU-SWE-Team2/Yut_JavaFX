@@ -35,6 +35,8 @@ public class TitleController{
 
             startScreen.addStartButtonListener(new StartButtonListener());
 
+
+
         });
 
     }
@@ -50,6 +52,7 @@ public class TitleController{
 
             gameModel = new Game(boardType, playerCount, pieceCount);
 
+            gameController = new GameController(gameModel, mainFrame.getGameScreen());
             mainFrame.showGame(boardType, playerCount, pieceCount);
         }
     }

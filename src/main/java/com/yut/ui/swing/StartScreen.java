@@ -142,8 +142,7 @@ public class StartScreen extends JPanel {
             MainFrame frame = new MainFrame();
             frame.setVisible(true);
 
-            frame.showGame(4, 4, 5);
-            //GameScreen gameScreen = frame.getGameScreen();
+            frame.showGame(4, 4, 5);            //GameScreen gameScreen = frame.getGameScreen();
 
             //gameScreen.drawPiece(100, 1, 1);
 

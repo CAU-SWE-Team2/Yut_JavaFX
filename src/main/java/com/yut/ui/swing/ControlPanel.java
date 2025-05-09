@@ -58,14 +58,14 @@ public class ControlPanel extends JPanel {
         // 버튼 이벤트 설정
 
         //technically the backend's job, but kept for testing sakes
-        randomButton.addActionListener(e -> {
-            String[] results = { "빽도", "도", "개", "걸", "윷", "모" };
-            String result = results[(int) (Math.random() * results.length)];
-            JOptionPane.showMessageDialog(this, "랜덤 결과: " + result);
-            for (Component c : choosePanel.getComponents()) {
-                c.setEnabled(false);
-            }
-        });
+        // randomButton.addActionListener(e -> {
+        //     String[] results = { "빽도", "도", "개", "걸", "윷", "모" };
+        //     String result = results[(int) (Math.random() * results.length)];
+        //     JOptionPane.showMessageDialog(this, "랜덤 결과: " + result);
+        //     for (Component c : choosePanel.getComponents()) {
+        //         c.setEnabled(false);
+        //     }
+        // });
 
 
         selectButton.addActionListener(e -> {

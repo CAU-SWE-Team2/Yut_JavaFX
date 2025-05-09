@@ -11,6 +11,7 @@ public class MainFrame extends JFrame {
     private JPanel cardPanel = new JPanel(cardLayout);
 
     private GameScreen game;
+    private StartScreen start;
 
     public GameScreen getGameScreen() {
         return game;

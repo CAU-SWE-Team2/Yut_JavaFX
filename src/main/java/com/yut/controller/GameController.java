@@ -36,6 +36,12 @@ public class GameController {
         for(int i = 0; i < 5; i++)
             gameScreen.addSelectedThrowButtonListener(i, new SelectThrowButtonListener(i - 1));
 
+
+
+        for(int i = 1; i <= gameModel.getPlayerCount(); i++){
+            gameScreen.updatePlayerCanvas(i, gameModel.getCurrentPlayer().getNumOfCurrentPieces());
+        }
+
     }
 
 

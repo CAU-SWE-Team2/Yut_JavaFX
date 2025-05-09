@@ -10,4 +10,5 @@ public interface GameModelInterface {
     public GameTurnModelInterface getGameTurn();
     public Board getBoard();
     public Player getCurrentPlayer();
+    public int getPlayerCount();
 }

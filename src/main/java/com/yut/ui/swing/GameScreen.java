@@ -1,4 +1,5 @@
 package com.yut.ui.swing;
+import com.yut.controller.view_interfaces.GameScreenInterface;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,11 +10,11 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import java.util.HashMap;
 import java.util.Map;
-import com.yut.listener.PieceSelectionListener;
 
-public class GameScreen extends JPanel {
+public class GameScreen extends JPanel implements GameScreenInterface {
     private List<Piece> pieceList = new ArrayList<>();
 
     private final Map<Integer, Integer> piecesEntered = new HashMap<>(); // 각 플레이어가 말판에 올려놓은 말의 수
