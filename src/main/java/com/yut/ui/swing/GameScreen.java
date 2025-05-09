@@ -40,6 +40,7 @@ public class GameScreen extends JPanel {
     private boolean awaitingMove = false;
 
     private PreviewCircle previewCircle = null;
+    private SelectRectangle selectRectangle = null;
 
     private ControlPanel controlPanel;
     private JButton backButton;
@@ -207,7 +208,26 @@ public class GameScreen extends JPanel {
         pieceList.get(selectedPieceId).setCoords(cx, cy);
     }
 
+    public class SelectRectangle extends JComponent{
+        public static final int radius = 18;
+        private int x;
+        private int y;
 
+        SelectRectangle(int x, int y) {
+            this.x = x;
+            this.y = y;
+        }
+
+        @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            Graphics2D g2 = (Graphics2D) g;
+            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+            g2.setColor(Color.BLACK); // use the stored color
+            g2.setStroke(new BasicStroke(3));
+            g2.drawRect(0, 0, radius * 2, radius * 2); // draw relative to the component
+        }
+    }
 
     public class PreviewCircle extends JComponent{
         public static final int radius = 18;
@@ -227,6 +247,7 @@ public class GameScreen extends JPanel {
             Graphics2D g2 = (Graphics2D) g;
             g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
             g2.setColor(color); // use the stored color
+            g2.setStroke(new BasicStroke(5));
             g2.drawOval(0, 0, radius * 2, radius * 2); // draw relative to the component
         }
     }
@@ -238,7 +259,7 @@ public class GameScreen extends JPanel {
         previewCircle = new PreviewCircle(x, y, playerColors[playerID]);
         previewCircle.setBounds(x, y, PreviewCircle.radius*2, PreviewCircle.radius*2);
         node.setPreviewPiece(true);
-        this.add(previewCircle);
+        layeredBoard.add(previewCircle);
     }
 
     public void deleteMovePreview(){
@@ -246,10 +267,10 @@ public class GameScreen extends JPanel {
             throw new RuntimeException("Preview Circle cannot be deleted because it doesn't exist");
         }
         else {
-            this.remove(previewCircle);
+            layeredBoard.remove(previewCircle);
             previewCircle = null;
-            this.revalidate();
-            this.repaint();
+            layeredBoard.revalidate();
+            layeredBoard.repaint();
         }
     }
 
@@ -263,7 +284,7 @@ public class GameScreen extends JPanel {
         node.setOnNodePiece(piece);
         layeredBoard.revalidate();
         layeredBoard.repaint();
-
+        System.out.println("Drew piece at node " + nodeID + " (" + node.getNodeX() + ", " + node.getNodeY() + ")");
 
     }
 
@@ -282,10 +303,26 @@ public class GameScreen extends JPanel {
         return nodeMap.get(nodeID).getState();
     }
 
+    //playerID STARTS FROM 1, NOT 0
     public void updatePlayerCanvas(int playerID, int pieceCount){
         PlayerCanvas playercanvas = playerCanvases.get(playerID);
         playercanvas.setPieceCount(pieceCount);
         playercanvas.repaint();
+    }
+
+    public void select(int nodeID){
+        if(selectRectangle != null) {
+            layeredBoard.remove(selectRectangle);
+            layeredBoard.revalidate();
+            layeredBoard.repaint();
+        }
+        ClickableNode node = nodeMap.get(nodeID);
+        int x = node.getNodeX() - PreviewCircle.radius;
+        int y = node.getNodeY() - PreviewCircle.radius;
+        selectRectangle = new SelectRectangle(x, y);
+        selectRectangle.setBounds(x, y, PreviewCircle.radius*2, PreviewCircle.radius*2);
+        node.setPreviewPiece(true);
+        layeredBoard.add(selectRectangle);
     }
 
     //highlights the yut given by backend. Updates display on the control panel

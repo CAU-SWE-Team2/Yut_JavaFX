@@ -142,25 +142,27 @@ public class StartScreen extends JPanel {
             MainFrame frame = new MainFrame();
             frame.setVisible(true);
 
-            frame.showGame(4, 4, 5);
-            //GameScreen gameScreen = frame.getGameScreen();
-
-            //gameScreen.drawPiece(100, 1, 1);
-
-            // delay test until after GameScreen + BoardCanvas paint finishes
-            SwingUtilities.invokeLater(() -> {
-                GameScreen gameScreen = frame.getGameScreen();
-                gameScreen.drawPiece(200, 0, 1);
-            });
-
-
+            frame.showGame(6, 4, 5);
+            GameScreen gameScreen = frame.getGameScreen();
+            gameScreen.drawPiece(200, 1, 1);
+            gameScreen.showMovePreview(300, 1);
+            gameScreen.updatePlayerCanvas(1, 3);
+            System.out.println("100 status:" + gameScreen.getNodeState(100));
+            System.out.println("200 status:" + gameScreen.getNodeState(200));
+            System.out.println("300 status:" + gameScreen.getNodeState(300));
+            gameScreen.select(561);
+            gameScreen.select(500);
 
             /*
+            gameScreen.drawPiece();
             gameScreen.deletePiece();
             gameScreen.showMovePreview();
             gameScreen.deleteMovePreview();
             gameScreen.updatePlayerCanvas();
+
             int nodeState = gameScreen.getNodeState();
+
+            gameScreen.select();
 
             gameScreen.addRandomThrowButtonListener();
             gameScreen.addSelectedThrowButtonListener();
