@@ -143,9 +143,18 @@ public class StartScreen extends JPanel {
             frame.setVisible(true);
 
             frame.showGame(4, 4, 5);
-            GameScreen gameScreen = frame.getGameScreen();
+            //GameScreen gameScreen = frame.getGameScreen();
 
-            gameScreen.drawPiece(200, 1, 1);
+            //gameScreen.drawPiece(100, 1, 1);
+
+            // delay test until after GameScreen + BoardCanvas paint finishes
+            SwingUtilities.invokeLater(() -> {
+                GameScreen gameScreen = frame.getGameScreen();
+                gameScreen.drawPiece(200, 0, 1);
+            });
+
+
+
             /*
             gameScreen.deletePiece();
             gameScreen.showMovePreview();
@@ -160,7 +169,7 @@ public class StartScreen extends JPanel {
 
              */
 
-            Map<Integer, ClickableNode> nodeMap = gameScreen.getNodeMap();
+            //Map<Integer, ClickableNode> nodeMap = gameScreen.getNodeMap();
         });
 
     }

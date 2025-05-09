@@ -80,6 +80,9 @@ public class GameScreen extends JPanel {
         backButton.addActionListener(e -> frame.showStart());
 
         JPanel centerPanel = new JPanel(new GridLayout(1, 2));
+        //apparently this is required
+        layeredBoard.setLayout(null);
+
         layeredBoard.setPreferredSize(new Dimension(400, 400));
 
         BoardCanvas boardCanvas = new BoardCanvas(boardType);
@@ -91,6 +94,21 @@ public class GameScreen extends JPanel {
         layeredBoard.add(boardCanvas, JLayeredPane.DEFAULT_LAYER);
         boardCanvas.setGameScreen(this);
         this.boardCanvas = boardCanvas;
+
+
+        //make sure yut board has been generated fully before doing anything with nodes
+        layeredBoard.repaint(); //force paint
+        Toolkit.getDefaultToolkit().sync(); //ensures paint completes
+
+        //Delay node map setup until after paintComponent has run
+        SwingUtilities.invokeLater(() -> {
+            clickableNodes = boardCanvas.getClickableNodes();
+            for (ClickableNode node : clickableNodes) {
+                nodeMap.put(node.nodeID, node);
+            }
+            System.out.println("Deferred node map loaded: " + nodeMap.keySet());
+        });
+
 
         clickableNodes = boardCanvas.getClickableNodes();
 
@@ -238,12 +256,14 @@ public class GameScreen extends JPanel {
     public void drawPiece (int nodeID, int playerID, int pieceNumber){
         ClickableNode node = nodeMap.get(nodeID);
         if (node == null) throw new RuntimeException("Node does not exist");
-        Piece piece = new Piece(node.getNodeX(), node.getNodeY(), playerColors[playerID], pieceNumber);
-        piece.setBounds(node.getNodeX(), node.getNodeY(), piece.getRadius()*2, piece.getRadius()*2);
+
+        Piece piece = new Piece(node.getNodeX() - Piece.radius, node.getNodeY() - Piece.radius, playerColors[playerID], pieceNumber);
+        piece.setBounds(node.getNodeX() - Piece.radius, node.getNodeY() - Piece.radius, Piece.radius*2, Piece.radius*2);
         layeredBoard.add(piece, JLayeredPane.PALETTE_LAYER);
         node.setOnNodePiece(piece);
         layeredBoard.revalidate();
         layeredBoard.repaint();
+
 
     }
 
@@ -293,4 +313,5 @@ public class GameScreen extends JPanel {
     public Map<Integer, ClickableNode>getNodeMap(){
         return nodeMap;
     }
+
 }
