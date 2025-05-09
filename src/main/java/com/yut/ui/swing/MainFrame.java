@@ -10,6 +10,9 @@ public class MainFrame extends JFrame {
     private CardLayout cardLayout = new CardLayout();
     private JPanel cardPanel = new JPanel(cardLayout);
 
+    private StartScreen start;
+    private GameScreen game;  
+
     public MainFrame() {
         setTitle("Yut Game");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -17,7 +20,7 @@ public class MainFrame extends JFrame {
         setLocationRelativeTo(null);
 
         // Screens
-        StartScreen start = new StartScreen(this);
+        this.start = new StartScreen(this);
 
         cardPanel.add(start, START);
 
@@ -30,8 +33,24 @@ public class MainFrame extends JFrame {
     }
 
     public void showGame(int boardType, int playerCount, int pieceCount) {
-        GameScreen game = new GameScreen(this, boardType, playerCount, pieceCount);
+        this.game = new GameScreen(this, boardType, playerCount, pieceCount);
         cardPanel.add(game, GAME);
         cardLayout.show(cardPanel, GAME);
+    }
+
+    public StartScreen getStart() {
+        return start;
+    }   
+
+    public GameScreen getGame() {
+        return game;
+    }   
+
+    public static void main(String[] args) {
+        
+        SwingUtilities.invokeLater(() -> {
+            MainFrame frame = new MainFrame();
+            frame.setVisible(true);
+        });
     }
 }

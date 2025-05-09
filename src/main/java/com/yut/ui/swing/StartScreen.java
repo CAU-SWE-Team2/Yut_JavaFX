@@ -1,11 +1,19 @@
 package com.yut.ui.swing;
 
+
 import com.yut.ui.swing.MainFrame;
 
+import java.awt.event.ActionListener;
 import javax.swing.*;
 import java.awt.*;
 
 public class StartScreen extends JPanel {
+
+    private int boardType;
+    private int players;
+    private int pieces;
+
+    private JButton startButton;
 
     public StartScreen(MainFrame frame) {
         setLayout(new BorderLayout());
@@ -87,28 +95,46 @@ public class StartScreen extends JPanel {
         add(configPanel, BorderLayout.CENTER);
 
         // 게임 시작 버튼
-        JButton startButton = new JButton("게임 시작");
+        startButton = new JButton("게임 시작");
 
         Dimension startButtonSize = new Dimension(150, 40);
         startButton.setPreferredSize(startButtonSize);
+        
 
+        boardType = 4;
+        players = 2;
+        pieces = 4;
         startButton.addActionListener(e -> {
-            int selectedBoardType = 4; // 기본값
             if (board5.isSelected())
-                selectedBoardType = 5;
+            boardType = 5;
             else if (board6.isSelected())
-                selectedBoardType = 6;
+            boardType = 6;
 
-            int players = (Integer) playerCount.getValue();
-            int pieces = (Integer) pieceCount.getValue();
+            players = (Integer) playerCount.getValue();
+            pieces = (Integer) pieceCount.getValue();
 
-            frame.showGame(selectedBoardType, players, pieces);
+            // frame.showGame(boardType, players, pieces);
         });
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(startButton);
         add(buttonPanel, BorderLayout.SOUTH);
     }
+
+    public int getBoardType() {
+        return boardType;
+    }
+    public int getPlayers() {
+        return players;
+    }
+    public int getPieces() {
+        return pieces;
+    }
+
+    public void addStartButtonListener(ActionListener listener) {
+        startButton.addActionListener(listener);
+    }
+
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {

@@ -5,8 +5,10 @@ class Players {
     private Player[] playersArr;
 
     public Players(int playerCnt, int numOfTotalPieces) {
+
+        playersArr = new Player[playerCnt];
         for(int i = 0; i < playerCnt; i++){
-            playersArr[i-1] = new Player(i + 1, numOfTotalPieces);
+            playersArr[i] = new Player(i + 1, numOfTotalPieces);
         }            
 
     }

@@ -1,20 +1,60 @@
 package com.yut.controller;
 
+import javax.swing.SwingUtilities;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import com.yut.ui.swing.MainFrame;
+import com.yut.ui.swing.GameScreen;
+import com.yut.ui.swing.StartScreen;
+
+import com.yut.model.Game;
+import com.yut.model.GameTurn;
+
 public class TitleController{
     
-    private int playerNumber;
-    private int boardType;
-    private int numOfTotalPieces;
+    static MainFrame mainFrame;
+    static GameScreen gameScreen;
+    static StartScreen startScreen;
 
-    public void PlayerNumberSelect(int playerNumber){
-        TitleViewInterface titleView = new TitleView();
+    static GameModelInterface gameModel;
+    static GameTurnModelInterface gameController;
 
-        titleView.PlayerNumber
-        this.playerNumber = playerNumber;
-        
+    public TitleController(MainFrame mainFrame) {
+        this.mainFrame = mainFrame;
     }
-    void BoardTypeSelect(int boardType){
-        this.boardType = boardType;
+
+    public void start(){
+
+        SwingUtilities.invokeLater(() -> {
+
+
+            mainFrame.setVisible(true);
+            mainFrame.showStart();
+
+            startScreen = mainFrame.getStart();
+            gameScreen = mainFrame.getGame();
+
+            startScreen.addStartButtonListener(new StartButtonListener());
+
+        });
+
     }
-    void GameStart();
+
+
+    class StartButtonListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            int boardType = startScreen.getBoardType();
+            int playerCount = startScreen.getPlayers();
+            int pieceCount = startScreen.getPieces();
+
+            gameModel = new Game(boardType, playerCount, pieceCount);
+
+            mainFrame.showGame(boardType, playerCount, pieceCount);
+        }
+    }
+
+
 }
