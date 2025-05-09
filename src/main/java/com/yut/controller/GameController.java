@@ -64,8 +64,10 @@ public class GameController {
 
                 gameScreen.deletePiece(targetGroup.getCurrentLocation().getId());
                
-               
                 gameTurnModel.move(targetGroup, node);
+
+                gameScreen.updatePlayerCanvas(currentPlayer.getId(), currentPlayer.getNumOfCurrentPieces());
+
                 if(gameTurnModel.getLeftYuts().isEmpty())
                     gameModel.switchTurn();
 
