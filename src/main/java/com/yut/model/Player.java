@@ -1,17 +1,38 @@
 package com.yut.model;
 
-class Player {
-    private final int id;
-    private final int numOfTotalPieces;
+import java.util.ArrayList;
 
-    private int numOfCurrentPiece;
-    private boolean isTurn = false;
+public class Player {
+    int id;
+    static int numOfTotalPieces;
+    int numOfCurrentPieces;
+    ArrayList<Group> currentGroups = new ArrayList<Group>();
+    Group moveTarget;
 
-
-    Player(int id, int pieceTotalCnt) {
+    Player(int id){
         this.id = id;
-        this.numOfTotalPieces = pieceTotalCnt;
-
+    }
+    Player(int id, int numOfPieces){
+        this.id = id;
+        this.numOfTotalPieces = numOfPieces;
     }
 
+    // public int throwYut(Yut yut){
+    //     return yut.getRandomResult();
+    // }
+
+    // public int throwDecidedYut(Yut yut, int num){
+    //     return yut.getDecidedResult(num);
+    // }
+
+    public void chooseTarget(Group target){
+        this.moveTarget = target;
+    }
+
+    public int getNumOfCurrentPieces(){
+        return this.numOfCurrentPieces;
+    }
+
+
 }
+
