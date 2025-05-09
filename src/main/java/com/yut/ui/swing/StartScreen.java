@@ -6,6 +6,7 @@ import com.yut.ui.swing.MainFrame;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 import java.awt.*;
+import java.util.Map;
 
 public class StartScreen extends JPanel {
 
@@ -99,16 +100,16 @@ public class StartScreen extends JPanel {
 
         Dimension startButtonSize = new Dimension(150, 40);
         startButton.setPreferredSize(startButtonSize);
-        
+
 
         boardType = 4;
         players = 2;
         pieces = 4;
         startButton.addActionListener(e -> {
             if (board5.isSelected())
-            boardType = 5;
+                boardType = 5;
             else if (board6.isSelected())
-            boardType = 6;
+                boardType = 6;
 
             players = (Integer) playerCount.getValue();
             pieces = (Integer) pieceCount.getValue();
@@ -133,8 +134,6 @@ public class StartScreen extends JPanel {
 
     public void addStartButtonListener(ActionListener listener) {
         startButton.addActionListener(listener);
-        
-        
     }
 
 
@@ -142,6 +141,36 @@ public class StartScreen extends JPanel {
         SwingUtilities.invokeLater(() -> {
             MainFrame frame = new MainFrame();
             frame.setVisible(true);
+
+            frame.showGame(4, 4, 5);
+            //GameScreen gameScreen = frame.getGameScreen();
+
+            //gameScreen.drawPiece(100, 1, 1);
+
+            // delay test until after GameScreen + BoardCanvas paint finishes
+            SwingUtilities.invokeLater(() -> {
+                GameScreen gameScreen = frame.getGameScreen();
+                gameScreen.drawPiece(200, 0, 1);
+            });
+
+
+
+            /*
+            gameScreen.deletePiece();
+            gameScreen.showMovePreview();
+            gameScreen.deleteMovePreview();
+            gameScreen.updatePlayerCanvas();
+            int nodeState = gameScreen.getNodeState();
+
+            gameScreen.addRandomThrowButtonListener();
+            gameScreen.addSelectedThrowButtonListener();
+            gameScreen.addBackButtonListener();
+            gameScreen.addNodeClickListener();
+
+             */
+
+            //Map<Integer, ClickableNode> nodeMap = gameScreen.getNodeMap();
         });
+
     }
 }

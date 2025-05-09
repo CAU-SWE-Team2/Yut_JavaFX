@@ -4,12 +4,12 @@ import javax.swing.*;
 import java.awt.*;
 
 public class PlayerCanvas extends JPanel {
-    private int playerId;
+    private int playerID;
     private int pieceCount;
     private Color color;
 
-    public PlayerCanvas(int playerId, int pieceCount, Color color) {
-        this.playerId = playerId;
+    public PlayerCanvas(int playerID, int pieceCount, Color color) {
+        this.playerID = playerID;
         this.pieceCount = pieceCount;
         this.color = color;
         setPreferredSize(new Dimension(180, 80));
@@ -19,6 +19,10 @@ public class PlayerCanvas extends JPanel {
     public void setPieceCount(int count) {
         this.pieceCount = count;
         repaint();
+    }
+
+    public Color getColor() {
+        return color;
     }
 
     @Override
@@ -35,7 +39,7 @@ public class PlayerCanvas extends JPanel {
 
         // 플레이어 ID 출력
         g2.setColor(Color.BLACK);
-        g2.drawString("P" + playerId, 20, 25);
+        g2.drawString("P" + playerID, 20, 25);
 
         // 남은 말 개수 표시
         int radius = 10;

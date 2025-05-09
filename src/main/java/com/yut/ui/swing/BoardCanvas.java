@@ -14,6 +14,16 @@ public class BoardCanvas extends JToggleButton {
     private int boardType;
     private List<ClickableNode> clickableNodes = new ArrayList<>();
     private GameScreen gameScreen;
+    private int startX;
+    private int startY;
+
+    public int getStartX(){
+        return startX;
+    }
+
+    public int getStartY(){
+        return startY;
+    }
 
     public void setGameScreen (GameScreen gs){
         this.gameScreen = gs;
@@ -27,35 +37,23 @@ public class BoardCanvas extends JToggleButton {
         setPreferredSize(new Dimension(250, 250));
         setFocusPainted(false);
         setContentAreaFilled(false);
-
-        addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                if (!interactive) return; // disable node interaction in preview mode
-                for (ClickableNode node : clickableNodes) {
-                    if (node.contains(e.getX(), e.getY())) {
-                        System.out.println("Clicked on node #" + node.nodeID + "at (" + node.x + ", " + node.y + ")");
-                        // TODO: Add game logic here (e.g., move piece)
-                        //gameScreen.movePiece(0, node.x, node.y);
-                        if (gameScreen.isAwaitingMove()) {
-                            gameScreen.movePiece(node.nodeID);
-                        }
-                        break;
-                    }
-                }
-            }
-        });
     }
 
     public void setInteractive(boolean interactive) {
         this.interactive = interactive;
     }
 
+    public boolean getInteractive(){
+        return interactive;
+    }
+
+    public List<ClickableNode> getClickableNodes() {
+        return clickableNodes;
+    }
+
     public int getBoardType() {
         return boardType;
     }
-
-
 
     public ClickableNode getNodeById(int id) {
         for (ClickableNode node : clickableNodes) {
@@ -63,8 +61,6 @@ public class BoardCanvas extends JToggleButton {
         }
         return null;
     }
-
-
 
     @Override
     protected void paintComponent(Graphics g) {
@@ -83,8 +79,10 @@ public class BoardCanvas extends JToggleButton {
             int cStep = boardSize / 5; // cardinal steps
             int dStep = boardSize / 6; // diagonal steps
 
-            int startX = padding;
-            int startY = padding;
+            //this might not work
+            startX = padding;
+            startY = padding;
+
 
             // Draw outer square
             g2.setColor(Color.BLACK);
@@ -192,6 +190,10 @@ public class BoardCanvas extends JToggleButton {
                 yPoints[i] = cy + (int) (r * Math.sin(angle));
             }
 
+            //define start point in the scheme of BoardCanvas
+            startX = xPoints[0];
+            startY = yPoints[0];
+
             // Draw outer pentagon
             g2.setColor(Color.BLACK);
             g2.drawPolygon(xPoints, yPoints, 5);
@@ -271,6 +273,9 @@ public class BoardCanvas extends JToggleButton {
                 xPoints[i] = cx + (int) (r * Math.cos(angle));
                 yPoints[i] = cy + (int) (r * Math.sin(angle));
             }
+
+            startX = xPoints[0];
+            startY = yPoints[0];
 
             // Draw outer pentagon
             g2.setColor(Color.BLACK);
