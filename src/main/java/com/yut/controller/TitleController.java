@@ -7,18 +7,17 @@ import java.awt.event.ActionListener;
 import com.yut.ui.swing.MainFrame;
 import com.yut.ui.swing.GameScreen;
 import com.yut.ui.swing.StartScreen;
-
+import com.yut.controller.model_interfaces.GameModelInterface;
 import com.yut.model.Game;
 import com.yut.model.GameTurn;
 
 public class TitleController{
     
     static MainFrame mainFrame;
-    static GameScreen gameScreen;
     static StartScreen startScreen;
 
     static GameModelInterface gameModel;
-    static GameTurnModelInterface gameController;
+    static GameController gameController;
 
     public TitleController(MainFrame mainFrame) {
         this.mainFrame = mainFrame;
@@ -33,7 +32,6 @@ public class TitleController{
             mainFrame.showStart();
 
             startScreen = mainFrame.getStart();
-            gameScreen = mainFrame.getGame();
 
             startScreen.addStartButtonListener(new StartButtonListener());
 

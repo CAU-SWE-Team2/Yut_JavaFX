@@ -1,22 +1,31 @@
 package com.yut.model;
 
 import java.util.ArrayDeque;
-import java.util.Queue;
-import com.yut.controller.GameTurnModelInterface;   
+import java.util.Deque;
+
+import com.yut.controller.model_interfaces.GameTurnModelInterface;   
 
 public class GameTurn implements GameTurnModelInterface {
-    private Queue<Integer> leftYuts;
+
+    
+    
+    private Deque<Integer> leftYuts;
 
     private Player currentPlayer;
 
     private int rollCount;
     private Yut yut;
 
+    private int state;
+
+
     public GameTurn(Player currentPlayer) {
         this.currentPlayer = currentPlayer;
         this.rollCount = 1;
         this.yut = Yut.getYut();
         leftYuts = new ArrayDeque<Integer>();
+
+        state = GameTurnModelInterface.THROWABLE;
     }
 
 
@@ -33,6 +42,10 @@ public class GameTurn implements GameTurnModelInterface {
 
         rollCount--;
         if(result == Yut.YUT || result == Yut.MO)rollCount++;
+
+
+        if(rollCount == 0)
+            state = GameTurnModelInterface.HASTOMOVE;
     }
 
     // 그룹을 보내면 현재 가지고 있는 윷을 사용해 이동할 수 있는 노드를 보여줌
@@ -47,8 +60,26 @@ public class GameTurn implements GameTurnModelInterface {
         int result = group.move(node);
         
         if(result == 1)
+        {
             rollCount++;
-
+            state = GameTurnModelInterface.THROWABLE;
+        }             
         leftYuts.poll();
+
+    }
+
+    public int getState(){
+        return state;
+    }
+    // public void setState(int state){
+    //     this.state = state;
+    // }
+    
+    public Deque<Integer> getLeftYuts(){
+        return leftYuts;
+    }
+
+    public int getRollCount(){
+        return rollCount;
     }
 }

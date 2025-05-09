@@ -29,10 +29,17 @@ public class Player {
         this.moveTarget = target;
     }
 
+    public Group getMoveTarget(){
+        return this.moveTarget;
+    }
+
     public int getNumOfCurrentPieces(){
         return this.numOfCurrentPieces;
     }
 
+    public int getId(){
+        return this.id;
+    }
 
 }
 

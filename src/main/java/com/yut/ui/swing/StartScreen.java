@@ -133,6 +133,8 @@ public class StartScreen extends JPanel {
 
     public void addStartButtonListener(ActionListener listener) {
         startButton.addActionListener(listener);
+        
+        
     }
 
 

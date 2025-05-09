@@ -10,4 +10,12 @@ public class Node {
     Node(int id){
         this.id = id;
     }
+
+    public Group getCurrentGroup() {
+        return currentGroup;
+    }
+
+    public int getId() {
+        return id;
+    }
 }

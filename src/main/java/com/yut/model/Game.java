@@ -1,5 +1,5 @@
 package com.yut.model;
-import com.yut.controller.GameModelInterface;
+import com.yut.controller.model_interfaces.GameModelInterface;
 
 public class Game implements GameModelInterface {
 
@@ -23,6 +23,18 @@ public class Game implements GameModelInterface {
 
         currentPlayerId = players.getFirstPlayer().id;
         gameTurn = new GameTurn(players.getPlayer(0));
+
+
+
+        for(int i = 0; i < players.size(); i++){
+            Player player = players.getPlayer(i);
+            for(int j = 1; j <= numOfTotalPieces; j++ ){
+                Group group = new Group(j, player);
+                group.addToGame(board);
+                  
+            }
+        
+        }
     }
 
     public void switchTurn(){
@@ -40,4 +52,17 @@ public class Game implements GameModelInterface {
         }
         return false;
     }
+
+    public GameTurn getGameTurn(){
+        return gameTurn;
+    }
+
+    public Board getBoard(){
+        return board;
+    }
+
+    public Player getCurrentPlayer(){
+        return players.getPlayer(currentPlayerId);
+    }
 }
+

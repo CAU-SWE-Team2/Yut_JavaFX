@@ -16,6 +16,7 @@ public class Group {
         this.id = id;
         this.currentPieces.add(id);
         this.owner = owner;
+        this.owner.currentGroups.add(this);
     }
 
     private void carryBack(Group existingGroup){
@@ -86,5 +87,13 @@ public class Group {
             this.owner.numOfCurrentPieces -= this.numOfPieces;
             this.owner.currentGroups.remove(this);
         }
+    }
+
+    public int getNumOfPieces(){
+        return this.numOfPieces;
+    }
+
+    public Node getCurrentLocation(){
+        return this.currentLocation;
     }
 }

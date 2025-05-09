@@ -1,6 +1,6 @@
 package com.yut.model;
 // 플레이어들
-class Players {
+public class Players {
 
     private Player[] playersArr;
 
