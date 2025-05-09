@@ -30,7 +30,7 @@ public class MainFrame extends JFrame {
     }
 
     public void showGame(int boardType, int playerCount, int pieceCount) {
-        GameScreen game = new GameScreen(this, boardType, playerCount, pieceCount);
+        GameScreen game = new GameScreen(this, boardType, playerCount);
         cardPanel.add(game, GAME);
         cardLayout.show(cardPanel, GAME);
     }
