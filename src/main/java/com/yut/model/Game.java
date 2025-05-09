@@ -21,7 +21,6 @@ public class Game {
 
         gameTurn = new GameTurn(player);
     }
-g
     public boolean ifGameEnded(){
         for (int i = 0; i < players.size(); i++){
             Player player = players.getPlayer(i);

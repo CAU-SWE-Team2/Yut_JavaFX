@@ -2,10 +2,16 @@ package com.yut.ui.swing;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.List;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class GameScreen extends JPanel {
+    private List<Piece> pieceList = new ArrayList<>();
     private final Map<Integer, Integer> piecesEntered = new HashMap<>(); // 각 플레이어가 말판에 올려놓은 말의 수
     private final Map<Integer, Integer> piecesFinished = new HashMap<>(); // 각 플레이어가 모두 통과시킨 말의 수
     private final Map<Integer, PlayerCanvas> playerCanvases = new HashMap<>(); // 남은 말 개수 (PlayerCanvas) 저장
@@ -13,6 +19,12 @@ public class GameScreen extends JPanel {
     private int boardType;
     private int playerCount;
     private int pieceCount;
+
+    //for moving pieces
+    private BoardCanvas boardCanvas;
+    private Integer selectedPieceId = null;
+    private boolean awaitingMove = false;
+
 
     // 말이 말판에 올라갈 때
     public void addPieceToBoard(int playerId, int totalPieceCount) {
@@ -89,6 +101,9 @@ public class GameScreen extends JPanel {
         boardCanvas.setInteractive(true);
 
         layeredBoard.add(boardCanvas, JLayeredPane.DEFAULT_LAYER);
+        boardCanvas.setGameScreen(this);
+        this.boardCanvas = boardCanvas;
+
 
 
         Color[] playerColors = {
@@ -98,11 +113,23 @@ public class GameScreen extends JPanel {
                 new Color(221, 160, 221)
         };
 
+
         for (int i = 0; i < playerCount; i++) {
             Color color = playerColors[i % playerColors.length];
             Piece piece = new Piece(color);
+            piece.setBounds(100 + i * 30, 100, 20, 20); // 말 위치 조정
+            pieceList.add(piece);
             piece.setBounds(100 + i * 30, 100, 20, 20);
             layeredBoard.add(piece, JLayeredPane.PALETTE_LAYER);
+
+            piece.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    selectedPieceId = pieceList.indexOf(piece); // find which piece was clicked
+                    awaitingMove = true;
+                    System.out.println("Selected piece ID: " + selectedPieceId);
+                }
+            });
         }
 
         JPanel boardPanel = new JPanel();
@@ -134,6 +161,7 @@ public class GameScreen extends JPanel {
         bottomPanelWrapper.add(bottomPanel, BorderLayout.CENTER);
         add(bottomPanelWrapper, BorderLayout.SOUTH);
 
+        /*
         // 테스트용: 각 플레이어에게 다양한 수의 말 진입 및 도착 처리
         addPieceToBoard(1, pieceCount);
         addPieceToBoard(1, pieceCount);
@@ -151,6 +179,20 @@ public class GameScreen extends JPanel {
         addFinishedPiece(3, pieceCount);
         addFinishedPiece(3, pieceCount);
         addFinishedPiece(3, pieceCount);// 말이 4개 이하면 우승
+        */
 
     }
+
+    //piece를 클릭한 노드의 중심으로 이동
+    public void movePiece (int nodeID){
+        ClickableNode node = boardCanvas.getNodeById(nodeID);
+        int cx = node.x - pieceList.get(selectedPieceId).getWidth() / 2;
+        int cy = node.y - pieceList.get(selectedPieceId).getHeight() / 2;
+        pieceList.get(selectedPieceId).setLocation(cx, cy);
+    }
+
+    public boolean isAwaitingMove() {
+        return awaitingMove && selectedPieceId != null;
+    }
+
 }
