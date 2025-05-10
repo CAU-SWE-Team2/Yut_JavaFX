@@ -13,8 +13,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-public class GameController {
 
+public class GameController {
 
     private GameModelInterface gameModel;
 
@@ -30,22 +30,21 @@ public class GameController {
 
         gameScreen.addRandomThrowButtonListener(new RandomThrowButtonListener());
 
-        for(int i = 0; i < 6; i++)
+        for (int i = 0; i < 6; i++)
             gameScreen.addSelectedThrowButtonListener(i, new SelectThrowButtonListener(i));
 
         gameScreen.addMoveNewPieceButtonListener(new MoveNewPieceButtonListener());
 
-        for(int i = 1; i <= gameModel.getPlayerCount(); i++){
+        for (int i = 1; i <= gameModel.getPlayerCount(); i++) {
             gameScreen.updatePlayerCanvas(i, gameModel.getNumOfTotalPieces());
         }
-
+        gameScreen.highlightCurrentPlayer(gameModel.getCurrentPlayer().getId());
     }
-
 
     class NodeClickListener extends MouseAdapter {
 
         private int nodeId;
-        
+
         public NodeClickListener(int nodeId) {
             this.nodeId = nodeId;
         }
@@ -54,91 +53,80 @@ public class GameController {
         public void mouseClicked(MouseEvent e) {
             GameTurnModelInterface gameTurnModel = gameModel.getGameTurn();
 
-            if(gameTurnModel.getState() == GameTurnModelInterface.THROWABLE)
+            if (gameTurnModel.getState() == GameTurnModelInterface.THROWABLE)
                 return;
-            
-            
+
             Node node = gameModel.getBoard().getNodeById(nodeId);
             Player currentPlayer = gameModel.getCurrentPlayer();
 
             // 그룹 이동
-            if(gameScreen.getNodeState(nodeId) == 1)
-            {
+            if (gameScreen.getNodeState(nodeId) == 1) {
                 Group targetGroup = currentPlayer.getMoveTarget();
-                
 
-                if(targetGroup.getCurrentLocation().getId() != 111)
+                if (targetGroup.getCurrentLocation().getId() != 111)
                     gameScreen.deletePiece(targetGroup.getCurrentLocation().getId());
-               
+
                 gameTurnModel.move(targetGroup);
 
-                gameScreen.updatePlayerCanvas(currentPlayer.getId(), gameModel.getNumOfTotalPieces() - currentPlayer.getNumOfCurrentPieces());
+                gameScreen.updatePlayerCanvas(currentPlayer.getId(),
+                        gameModel.getNumOfTotalPieces() - currentPlayer.getNumOfCurrentPieces());
 
-                
-
-
-                ///////)
+                /////// )
                 gameScreen.drawPiece(nodeId, currentPlayer.getId(), targetGroup.getNumOfPieces());
                 gameScreen.deleteMovePreview();
-                
+
                 // gameScreen.select(nodeId);
-                
+
                 // gameTurnModel.
-                if(gameTurnModel.getLeftYuts().isEmpty() && gameTurnModel.getRollCount() == 0)
+                if (gameTurnModel.getLeftYuts().isEmpty() && gameTurnModel.getRollCount() == 0)
                     gameModel.switchTurn();
+                Player newPlayer = gameModel.getCurrentPlayer();
+                gameScreen.highlightCurrentPlayer(newPlayer.getId());
 
             }
             // 아무것도 안함
-            else if(gameScreen.getNodeState(nodeId) == 2)
-            {
+            else if (gameScreen.getNodeState(nodeId) == 2) {
                 // gameScreen.select(nodeId);
             }
 
             // 힌트 표시
-            else if(gameScreen.getNodeState(nodeId) == 3)
-            {
+            else if (gameScreen.getNodeState(nodeId) == 3) {
                 currentPlayer.chooseTarget(node.getCurrentGroup());
                 gameScreen.deleteMovePreview();
 
                 //////
 
                 Node toNode = gameTurnModel.showNextMove(node.getCurrentGroup());
-                
+
                 gameScreen.showMovePreview(toNode.getId(), currentPlayer.getId());
 
-
                 // gameScreen.select(nodeId);
-                
+
             }
-
-
 
         }
     }
 
-    class MoveNewPieceButtonListener implements ActionListener{
+    class MoveNewPieceButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             GameTurnModelInterface gameTurnModel = gameModel.getGameTurn();
-            if(gameTurnModel.getState() == GameTurnModelInterface.THROWABLE)
+            if (gameTurnModel.getState() == GameTurnModelInterface.THROWABLE)
                 return;
 
             Player currentPlayer = gameModel.getCurrentPlayer();
             Group waitingGroup = currentPlayer.getNewGroup();
 
-
-            if(waitingGroup != null)
-            {
+            if (waitingGroup != null) {
                 gameScreen.deleteMovePreview();
                 currentPlayer.chooseTarget(waitingGroup);
 
                 Node toNode = gameTurnModel.showNextMove(waitingGroup);
-                
+
                 gameScreen.showMovePreview(toNode.getId(), currentPlayer.getId());
 
-
             }
-      }
+        }
     }
 
     class RandomThrowButtonListener implements ActionListener {
@@ -146,9 +134,9 @@ public class GameController {
         @Override
         public void actionPerformed(ActionEvent e) {
             GameTurnModelInterface gameTurnModel = gameModel.getGameTurn();
-            if(gameTurnModel.getState() == GameTurnModelInterface.HASTOMOVE)
+            if (gameTurnModel.getState() == GameTurnModelInterface.HASTOMOVE)
                 return;
-            
+
             gameTurnModel.roll(-2);
             gameScreen.updateRandomResult(gameTurnModel.getLeftYuts().getFirst());
 
@@ -166,13 +154,12 @@ public class GameController {
         @Override
         public void actionPerformed(ActionEvent e) {
             GameTurnModelInterface gameTurnModel = gameModel.getGameTurn();
-            if(gameTurnModel.getState() == GameTurnModelInterface.HASTOMOVE)
+            if (gameTurnModel.getState() == GameTurnModelInterface.HASTOMOVE)
                 return;
-            
+
             gameTurnModel.roll(type);
             gameScreen.updateRandomResult(gameTurnModel.getLeftYuts().getLast());
         }
     }
-
 
 }

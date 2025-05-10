@@ -222,12 +222,6 @@ public class GameScreen extends JPanel implements GameScreenInterface {
         bottomPanelWrapper.add(deckDisplayArea, BorderLayout.SOUTH);
         add(bottomPanelWrapper, BorderLayout.SOUTH);
 
-        // Test
-        // Deque<String> testDeck = new ArrayDeque<>();
-        // testDeck.add("도");
-        // testDeck.add("개");
-        // testDeck.add("윷");
-        // printDeckContents(testDeck);
     }
 
     public void printDeckContents(Deque<?> deck) {
@@ -308,10 +302,9 @@ public class GameScreen extends JPanel implements GameScreenInterface {
         layeredBoard.add(previewCircle);
     }
 
-    public void deleteMovePreview(){
-        if(previewCircle != null){
-            if(currentHintNode != null)
-            {
+    public void deleteMovePreview() {
+        if (previewCircle != null) {
+            if (currentHintNode != null) {
                 currentHintNode.setPreviewPiece(false);
                 currentHintNode = null;
             }
@@ -324,10 +317,13 @@ public class GameScreen extends JPanel implements GameScreenInterface {
 
     public void drawPiece(int nodeID, int playerID, int pieceNumber) {
         ClickableNode node = nodeMap.get(nodeID);
-        if (node == null) throw new RuntimeException("Node does not exist");
+        if (node == null)
+            throw new RuntimeException("Node does not exist");
 
-        Piece piece = new Piece(node.getNodeX() - Piece.radius, node.getNodeY() - Piece.radius, playerColors[playerID - 1], pieceNumber);
-        piece.setBounds(node.getNodeX() - Piece.radius, node.getNodeY() - Piece.radius, Piece.radius*2, Piece.radius*2);
+        Piece piece = new Piece(node.getNodeX() - Piece.radius, node.getNodeY() - Piece.radius,
+                playerColors[playerID - 1], pieceNumber);
+        piece.setBounds(node.getNodeX() - Piece.radius, node.getNodeY() - Piece.radius, Piece.radius * 2,
+                Piece.radius * 2);
         layeredBoard.add(piece, JLayeredPane.PALETTE_LAYER);
         node.setOnNodePiece(piece);
         layeredBoard.revalidate();
@@ -373,6 +369,15 @@ public class GameScreen extends JPanel implements GameScreenInterface {
         layeredBoard.add(selectRectangle);
     }
 
+    public void highlightCurrentPlayer(int currentPlayerId) {
+        for (int i = 1; i <= playerCount; i++) {
+            PlayerCanvas canvas = playerCanvases.get(i);
+            if (canvas != null) {
+                canvas.setHighlighted(i == currentPlayerId);
+            }
+        }
+    }
+
     // highlights the yut given by backend. Updates display on the control panel
     public void updateRandomResult(int yut) {
         controlPanel.highlightYutButton(yut);
@@ -386,11 +391,11 @@ public class GameScreen extends JPanel implements GameScreenInterface {
         controlPanel.getYutButtons()[index].addActionListener(listener);
     }
 
-    public void addMoveNewPieceButtonListener(ActionListener listener){
+    public void addMoveNewPieceButtonListener(ActionListener listener) {
         controlPanel.getMoveNewPieceButton().addActionListener(listener);
     }
 
-    public void addBackButtonListener(ActionListener listener){
+    public void addBackButtonListener(ActionListener listener) {
         backButton.addActionListener(listener);
     }
 
