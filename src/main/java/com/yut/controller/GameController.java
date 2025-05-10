@@ -24,7 +24,6 @@ public class GameController {
     public GameController(GameModelInterface gameModel, GameScreenInterface gameScreen) {
         this.gameModel = gameModel;
         this.gameTurnModel = gameModel.getGameTurn();
-
         this.gameScreen = gameScreen;
 
         gameScreen.getNodeMap().forEach((nodeId, node) -> {

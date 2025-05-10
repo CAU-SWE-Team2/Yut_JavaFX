@@ -17,6 +17,10 @@ public class StartScreen extends JPanel {
     private JButton startButton;
 
     public StartScreen(MainFrame frame) {
+        boardType = 4;
+        players = 2;
+        pieces = 4;
+        
         setLayout(new BorderLayout());
 
         JLabel title = new JLabel("Start Screen", SwingConstants.CENTER);
@@ -57,18 +61,21 @@ public class StartScreen extends JPanel {
             board4.setSelectedStyle(true);
             board5.setSelectedStyle(false);
             board6.setSelectedStyle(false);
+            boardType = 4;
         });
 
         board5.addActionListener(e -> {
             board4.setSelectedStyle(false);
             board5.setSelectedStyle(true);
             board6.setSelectedStyle(false);
+            boardType = 5;
         });
 
         board6.addActionListener(e -> {
             board4.setSelectedStyle(false);
             board5.setSelectedStyle(false);
             board6.setSelectedStyle(true);
+            boardType = 6;
         });
 
         // 플레이어 수 설정
@@ -102,20 +109,15 @@ public class StartScreen extends JPanel {
         startButton.setPreferredSize(startButtonSize);
 
 
-        boardType = 4;
-        players = 2;
-        pieces = 4;
-        startButton.addActionListener(e -> {
-            if (board5.isSelected())
-                boardType = 5;
-            else if (board6.isSelected())
-                boardType = 6;
-
-            players = (Integer) playerCount.getValue();
+        
+        playerCount.addChangeListener(e -> {
             pieces = (Integer) pieceCount.getValue();
-
-            // frame.showGame(boardType, players, pieces);
         });
+        pieceCount.addChangeListener(e -> {
+            pieces = (Integer) pieceCount.getValue();
+        });
+
+
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(startButton);
