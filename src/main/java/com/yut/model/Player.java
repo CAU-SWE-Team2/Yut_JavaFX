@@ -25,12 +25,27 @@ public class Player {
     //     return yut.getDecidedResult(num);
     // }
 
+    public Group getNewGroup(){
+        Group newGroup = null;
+        for(int i = 0; i < currentGroups.size(); i++){
+            if(currentGroups.get(i).currentLocation.id == 111){
+                newGroup = currentGroups.get(i);
+                break;
+            }
+        }
+
+        return newGroup;
+    }
+
     public void chooseTarget(Group target){
         this.moveTarget = target;
     }
 
     public Group getMoveTarget(){
         return this.moveTarget;
+    }
+    public void setMoveTarget(Group target){
+        this.moveTarget = target;
     }
 
     public int getNumOfCurrentPieces(){

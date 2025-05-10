@@ -17,20 +17,20 @@ public class Game implements GameModelInterface {
         this.numOfTotalPieces = numOfTotalPieces;
         players = new Players(playerCount, numOfTotalPieces);
         
-        if(boardType == 0)
+        if(boardType == 4)
             board = new SquareBoard();
-        else if(boardType == 1)
+        else if(boardType == 5)
             board = new PentagonBoard();
         else
             board = new HexagonBoard();
         
 
         currentPlayerId = players.getFirstPlayer().id;
-        gameTurn = new GameTurn(players.getPlayer(0));
+        gameTurn = new GameTurn(players.getPlayer(1));
 
 
 
-        for(int i = 0; i < players.size(); i++){
+        for(int i = 1; i <= players.size(); i++){
             Player player = players.getPlayer(i);
             for(int j = 1; j <= numOfTotalPieces; j++ ){
                 Group group = new Group(j, player);
@@ -43,7 +43,8 @@ public class Game implements GameModelInterface {
 
     public void switchTurn(){
         currentPlayerId++;
-        Player player = players.getPlayer((currentPlayerId) % players.size() + 1);
+        currentPlayerId = (currentPlayerId - 1) % playerCount + 1;
+        Player player = players.getPlayer(currentPlayerId);
 
         gameTurn = new GameTurn(player);
     }

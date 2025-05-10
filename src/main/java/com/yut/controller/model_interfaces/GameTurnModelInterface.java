@@ -13,7 +13,7 @@ public interface GameTurnModelInterface {
     // type == -2면 랜덤, 아니면 type을 사용
     public void roll(int type);
     public Node showNextMove(Group group);
-    public void move(Group group, Node node);
+    public void move(Group group);
     // public void setState(int state);
     public int getState();
 
