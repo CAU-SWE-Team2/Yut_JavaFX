@@ -154,6 +154,8 @@ public class StartScreen extends JPanel {
             System.out.println("300 status:" + gameScreen.getNodeState(300));
             gameScreen.select(561);
             gameScreen.select(500);
+            gameScreen.updateRandomResult(1);
+            gameScreen.updateRandomResult(2);
 
             /*
             gameScreen.drawPiece();
@@ -161,6 +163,7 @@ public class StartScreen extends JPanel {
             gameScreen.showMovePreview();
             gameScreen.deleteMovePreview();
             gameScreen.updatePlayerCanvas();
+            gameScreen.updateRandomResult();
 
             int nodeState = gameScreen.getNodeState();
 
