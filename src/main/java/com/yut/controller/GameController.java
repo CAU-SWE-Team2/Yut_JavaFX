@@ -152,9 +152,7 @@ public class GameController {
 
             gameTurnModel.roll(-2);
             int result = gameTurnModel.getLeftYuts().getLast();
-            if(result == -1 && gameModel.getCurrentPlayer().getNumOfWaitingPieces() == 4){
-                result = 1;
-            }
+            
             gameScreen.updateRandomResult(result);
             gameScreen.printDeckContents(gameTurnModel.getLeftYuts());
         }

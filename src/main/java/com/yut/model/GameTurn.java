@@ -50,8 +50,8 @@ public class GameTurn implements GameTurnModelInterface {
             });
             leftYuts.addLast(result);
         }
-        else if(result == Yut.BACKDO && currentPlayer.getNumOfWaitingPieces() == 4){
-            JOptionPane.showMessageDialog(null, "보드 위에 말이 없습니다!", "Backdo", JOptionPane.INFORMATION_MESSAGE);
+        else if(result == Yut.BACKDO && (currentPlayer.getNumOfWaitingPieces() == Player.numOfTotalPieces)){
+            JOptionPane.showMessageDialog(null, "뒤로 갈 수 있는 말이 없습니다!", "Backdo", JOptionPane.INFORMATION_MESSAGE);
             rollCount++;
         }
         else{
