@@ -7,7 +7,6 @@ import java.awt.event.MouseEvent;
 import java.util.List;
 import java.util.ArrayList;
 
-
 public class BoardCanvas extends JToggleButton {
     private int boardType;
     private List<ClickableNode> clickableNodes = new ArrayList<>();
@@ -24,7 +23,8 @@ public class BoardCanvas extends JToggleButton {
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if (!interactive) return; // disable node interaction in preview mode
+                if (!interactive)
+                    return; // disable node interaction in preview mode
                 for (ClickableNode node : clickableNodes) {
                     if (node.contains(e.getX(), e.getY())) {
                         System.out.println("Clicked on node at (" + node.x + ", " + node.y + ")");
@@ -102,7 +102,7 @@ public class BoardCanvas extends JToggleButton {
                             drawCircle(g2, cx, cy, 16);
                             drawCircle(g2, cx, cy, 12);
                             clickableNodes.add(new ClickableNode(cx, cy, 16));
-                        } else{
+                        } else {
                             drawCircle(g2, cx, cy, 9);
                             clickableNodes.add(new ClickableNode(cx, cy, 9));
                         }
@@ -273,7 +273,7 @@ public class BoardCanvas extends JToggleButton {
                 drawCircle(g2, cx - intervalC2X * i, cy, 9);
                 clickableNodes.add(new ClickableNode(cx - intervalC2X * i, cy, 9));
                 drawCircle(g2, cx - intervalC1X * i, cy + intervalC1Y * i, 9);
-                clickableNodes.add(new ClickableNode( cx - intervalC1X * i, cy + intervalC1Y * i, 9));
+                clickableNodes.add(new ClickableNode(cx - intervalC1X * i, cy + intervalC1Y * i, 9));
                 drawCircle(g2, cx + intervalC1X * i, cy + intervalC1Y * i, 9);
                 clickableNodes.add(new ClickableNode(cx + intervalC1X * i, cy + intervalC1Y * i, 9));
                 drawCircle(g2, cx + intervalC2X * i, cy, 9);
@@ -324,6 +324,5 @@ public class BoardCanvas extends JToggleButton {
             setOpaque(false);
         }
     }
-
 
 }
