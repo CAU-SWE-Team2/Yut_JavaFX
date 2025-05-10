@@ -1,19 +1,21 @@
 package com.yut.model;
 
 
-class Node {
-    private String id;
-    private boolean canTransfer;
+public class Node {
+    int id;
+    Node beforeNode;
+    Node[] nextNodes;
+    Group currentGroup;
 
-    Node[] toNodes;
-
-    PieceGroup currentPieceGroup;
-
-    public Node(String id, Node[] toNodes) {
+    Node(int id){
         this.id = id;
-        this.toNodes = toNodes;
+    }
 
-        this.canTransfer = (toNodes.length != 1);
+    public Group getCurrentGroup() {
+        return currentGroup;
+    }
 
+    public int getId() {
+        return id;
     }
 }
