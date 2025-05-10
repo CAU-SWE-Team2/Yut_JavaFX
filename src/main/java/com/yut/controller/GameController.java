@@ -114,6 +114,19 @@ public class GameController {
         }
     }
 
+    class addMoveNewPieceButtonListener implements ActionListener{
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if(gameTurnModel.getState() == GameTurnModelInterface.THROWABLE)
+                return;
+
+
+            Player currentPlayer = gameModel.getCurrentPlayer();
+            
+
+      }
+    }
+
     class RandomThrowButtonListener implements ActionListener {
 
         @Override
@@ -122,6 +135,7 @@ public class GameController {
                 return;
             
             gameTurnModel.roll(-2);
+            gameScreen.updateRandomResult(gameTurnModel.getLeftYuts().getFirst());
 
         }
     }

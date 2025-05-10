@@ -23,12 +23,6 @@ public class ControlPanel extends JPanel {
 
     //method for highlighting, called in GameScreen
     public void highlightYutButton(int yut){
-//        for (JButton button : yutButtons) {
-//            button.setBackground(null); // Reset to default
-//            button.setEnabled(true);
-//        }
-//        if (yut < 0) throw new IllegalArgumentException("Yut must be a positive integer for (int yut)");
-//        yutButtons[yut].setBackground(Color.YELLOW);
         if (yut < 0 || yut >= yutButtons.length)
             throw new IllegalArgumentException("yut index out of range: " + yut);
 
@@ -38,7 +32,7 @@ public class ControlPanel extends JPanel {
             b.setOpaque(true);                // make sure bg can be painted
         }
 
-        // highlight the chosen one
+        // 🔸 highlight the chosen one
         JButton highlight = yutButtons[yut];
         highlight.setEnabled(true);           // allow normal painting
         highlight.setBackground(Color.YELLOW);

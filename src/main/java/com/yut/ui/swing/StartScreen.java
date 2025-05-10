@@ -111,7 +111,7 @@ public class StartScreen extends JPanel {
 
         
         playerCount.addChangeListener(e -> {
-            pieces = (Integer) pieceCount.getValue();
+            players = (Integer) playerCount.getValue();
         });
         pieceCount.addChangeListener(e -> {
             pieces = (Integer) pieceCount.getValue();

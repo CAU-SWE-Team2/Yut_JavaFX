@@ -13,6 +13,7 @@ public interface GameScreenInterface {
     public void deletePiece(int nodeID);
     public void updatePlayerCanvas(int playerID, int pieceCount);
     public void select(int nodeID);
+    public void updateRandomResult(int yut);
     
     // 힌트가 있는 노드인지 = 1, 빈 노드인지 = 2, 말이 있는 노드인지 = 3;
     public int getNodeState(int nodeID);
