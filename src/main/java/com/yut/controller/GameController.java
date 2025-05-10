@@ -17,13 +17,11 @@ public class GameController {
 
 
     private GameModelInterface gameModel;
-    private GameTurnModelInterface gameTurnModel;
 
     private GameScreenInterface gameScreen;
 
     public GameController(GameModelInterface gameModel, GameScreenInterface gameScreen) {
         this.gameModel = gameModel;
-        this.gameTurnModel = gameModel.getGameTurn();
         this.gameScreen = gameScreen;
 
         gameScreen.getNodeMap().forEach((nodeId, node) -> {
@@ -32,17 +30,13 @@ public class GameController {
 
         gameScreen.addRandomThrowButtonListener(new RandomThrowButtonListener());
 
-        for(int i = 0; i < 5; i++)
-            gameScreen.addSelectedThrowButtonListener(i, new SelectThrowButtonListener(i - 1));
+        for(int i = 0; i < 6; i++)
+            gameScreen.addSelectedThrowButtonListener(i, new SelectThrowButtonListener(i));
 
-
+        gameScreen.addMoveNewPieceButtonListener(new MoveNewPieceButtonListener());
 
         for(int i = 1; i <= gameModel.getPlayerCount(); i++){
             gameScreen.updatePlayerCanvas(i, gameModel.getNumOfTotalPieces());
-            
-
-            // for(int j = 1; j <= gameModel.getNumOfTotalPieces(); j++){
-            gameScreen.drawPiece(100, i, 1);
         }
 
     }
@@ -58,6 +52,8 @@ public class GameController {
 
         @Override
         public void mouseClicked(MouseEvent e) {
+            GameTurnModelInterface gameTurnModel = gameModel.getGameTurn();
+
             if(gameTurnModel.getState() == GameTurnModelInterface.THROWABLE)
                 return;
             
@@ -71,20 +67,25 @@ public class GameController {
                 Group targetGroup = currentPlayer.getMoveTarget();
                 
 
-                gameScreen.deletePiece(targetGroup.getCurrentLocation().getId());
+                if(targetGroup.getCurrentLocation().getId() != 111)
+                    gameScreen.deletePiece(targetGroup.getCurrentLocation().getId());
                
-                gameTurnModel.move(targetGroup, node);
+                gameTurnModel.move(targetGroup);
 
-                gameScreen.updatePlayerCanvas(currentPlayer.getId(), currentPlayer.getNumOfCurrentPieces());
+                gameScreen.updatePlayerCanvas(currentPlayer.getId(), gameModel.getNumOfTotalPieces() - currentPlayer.getNumOfCurrentPieces());
 
-                if(gameTurnModel.getLeftYuts().isEmpty())
-                    gameModel.switchTurn();
+                
 
 
                 ///////)
                 gameScreen.drawPiece(nodeId, currentPlayer.getId(), targetGroup.getNumOfPieces());
+                gameScreen.deleteMovePreview(nodeId);
+                
                 // gameScreen.select(nodeId);
-
+                
+                // gameTurnModel.
+                if(gameTurnModel.getLeftYuts().isEmpty() && gameTurnModel.getRollCount() == 0)
+                    gameModel.switchTurn();
 
             }
             // 아무것도 안함
@@ -114,16 +115,28 @@ public class GameController {
         }
     }
 
-    class addMoveNewPieceButtonListener implements ActionListener{
+    class MoveNewPieceButtonListener implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {
+            GameTurnModelInterface gameTurnModel = gameModel.getGameTurn();
             if(gameTurnModel.getState() == GameTurnModelInterface.THROWABLE)
                 return;
 
 
             Player currentPlayer = gameModel.getCurrentPlayer();
-            
 
+            Group waitingGroup = currentPlayer.getNewGroup();
+
+            if(waitingGroup != null)
+            {
+                currentPlayer.chooseTarget(waitingGroup);
+
+                Node toNode = gameTurnModel.showNextMove(waitingGroup);
+                
+                gameScreen.showMovePreview(toNode.getId(), currentPlayer.getId());
+
+
+            }
       }
     }
 
@@ -131,6 +144,7 @@ public class GameController {
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            GameTurnModelInterface gameTurnModel = gameModel.getGameTurn();
             if(gameTurnModel.getState() == GameTurnModelInterface.HASTOMOVE)
                 return;
             
@@ -150,10 +164,12 @@ public class GameController {
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            GameTurnModelInterface gameTurnModel = gameModel.getGameTurn();
             if(gameTurnModel.getState() == GameTurnModelInterface.HASTOMOVE)
                 return;
             
             gameTurnModel.roll(type);
+            gameScreen.updateRandomResult(gameTurnModel.getLeftYuts().getLast());
         }
     }
 

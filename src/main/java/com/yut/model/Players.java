@@ -6,9 +6,9 @@ public class Players {
 
     public Players(int playerCnt, int numOfTotalPieces) {
 
-        playersArr = new Player[playerCnt];
-        for(int i = 0; i < playerCnt; i++){
-            playersArr[i] = new Player(i + 1, numOfTotalPieces);
+        playersArr = new Player[playerCnt + 1];
+        for(int i = 1; i <= playerCnt; i++){
+            playersArr[i] = new Player(i, numOfTotalPieces);
         }            
 
     }
@@ -18,11 +18,11 @@ public class Players {
     }
 
     public Player getFirstPlayer(){
-        return playersArr[0];
+        return playersArr[1];
     }
 
     public int size(){
-        return playersArr.length;
+        return playersArr.length - 1;
     }
 }
 

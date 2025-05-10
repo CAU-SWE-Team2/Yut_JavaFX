@@ -17,11 +17,12 @@ public class Group {
         this.currentPieces.add(id);
         this.owner = owner;
         this.owner.currentGroups.add(this);
-
+        this.numOfPieces = 1;
     }
 
     private void carryBack(Group existingGroup){
         existingGroup.currentPieces.addAll(this.currentPieces);
+        existingGroup.numOfPieces += this.numOfPieces;
         this.currentPieces.clear();
         this.owner.currentGroups.remove(this);
     }
@@ -29,7 +30,7 @@ public class Group {
     private void catchOtherGroup(Group existingGroup){
         int size = existingGroup.currentPieces.size();
         for(int i = 0; i < size; i++){
-            Group repairGroup = new Group(existingGroup.currentPieces.get(i), this.owner);
+            Group repairGroup = new Group(existingGroup.currentPieces.get(i), existingGroup.owner);
             repairGroup.currentLocation = playingBoard.waitingNode;
             existingGroup.owner.currentGroups.add(repairGroup);
         }
@@ -43,7 +44,6 @@ public class Group {
     }
 
     public int move(Node node){
-        node.currentGroup = null;
         this.currentLocation = node;
         
         if(node.equals(playingBoard.endNode)){

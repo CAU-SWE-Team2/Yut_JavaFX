@@ -8,7 +8,7 @@ public class ControlPanel extends JPanel {
     private final JButton[] yutButtons = new JButton[6];
     private final JButton randomButton;
     private final JButton selectButton;
-
+    private final JButton moveNewPieceButton;
     public JButton[] getYutButtons() {
         return yutButtons;
     }
@@ -19,6 +19,10 @@ public class ControlPanel extends JPanel {
 
     public JButton getSelectButton() {
         return selectButton;
+    }
+
+    public JButton getMoveNewPieceButton() {
+        return moveNewPieceButton;
     }
 
     // method for highlighting, called in GameScreen
@@ -69,7 +73,7 @@ public class ControlPanel extends JPanel {
         // 3. 새로운 말 움직이기 버튼 (하단)
         JPanel bottomButtonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         bottomButtonPanel.setBorder(BorderFactory.createEmptyBorder(30, 0, 0, 0)); // 위쪽 30px
-        JButton moveNewPieceButton = new JButton("새로운 말 움직이기"); // or any label you want
+        moveNewPieceButton = new JButton("새로운 말 움직이기"); // or any label you want
         moveNewPieceButton.setPreferredSize(new Dimension(150, 40));
         bottomButtonPanel.add(moveNewPieceButton);
 

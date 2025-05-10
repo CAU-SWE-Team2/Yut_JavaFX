@@ -306,10 +306,13 @@ public class GameScreen extends JPanel implements GameScreenInterface {
         layeredBoard.add(previewCircle);
     }
 
-    public void deleteMovePreview() {
+    public void deleteMovePreview(int nodeID){
         if (previewCircle == null) {
             throw new RuntimeException("Preview Circle cannot be deleted because it doesn't exist");
-        } else {
+        }
+        else {
+            ClickableNode node = nodeMap.get(nodeID);
+            node.setPreviewPiece(false);
             layeredBoard.remove(previewCircle);
             previewCircle = null;
             layeredBoard.revalidate();
@@ -319,12 +322,10 @@ public class GameScreen extends JPanel implements GameScreenInterface {
 
     public void drawPiece(int nodeID, int playerID, int pieceNumber) {
         ClickableNode node = nodeMap.get(nodeID);
-        if (node == null)
-            throw new RuntimeException("Node does not exist");
-        Piece piece = new Piece(node.getNodeX() - Piece.radius, node.getNodeY() - Piece.radius,
-                playerColors[playerID - 1], pieceNumber);
-        piece.setBounds(node.getNodeX() - Piece.radius, node.getNodeY() - Piece.radius, Piece.radius * 2,
-                Piece.radius * 2);
+        if (node == null) throw new RuntimeException("Node does not exist");
+
+        Piece piece = new Piece(node.getNodeX() - Piece.radius, node.getNodeY() - Piece.radius, playerColors[playerID - 1], pieceNumber);
+        piece.setBounds(node.getNodeX() - Piece.radius, node.getNodeY() - Piece.radius, Piece.radius*2, Piece.radius*2);
         layeredBoard.add(piece, JLayeredPane.PALETTE_LAYER);
         node.setOnNodePiece(piece);
         layeredBoard.revalidate();
@@ -383,7 +384,11 @@ public class GameScreen extends JPanel implements GameScreenInterface {
         controlPanel.getYutButtons()[index].addActionListener(listener);
     }
 
-    public void addBackButtonListener(ActionListener listener) {
+    public void addMoveNewPieceButtonListener(ActionListener listener){
+        controlPanel.getMoveNewPieceButton().addActionListener(listener);
+    }
+
+    public void addBackButtonListener(ActionListener listener){
         backButton.addActionListener(listener);
     }
 

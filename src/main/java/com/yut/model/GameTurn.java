@@ -41,30 +41,32 @@ public class GameTurn implements GameTurnModelInterface {
         leftYuts.addLast(result);
 
         rollCount--;
+
         if(result == Yut.YUT || result == Yut.MO)rollCount++;
-
-
         if(rollCount == 0)
             state = GameTurnModelInterface.HASTOMOVE;
+        
+
+
     }
 
     // 그룹을 보내면 현재 가지고 있는 윷을 사용해 이동할 수 있는 노드를 보여줌
     public Node showNextMove(Group group){
 
-        int nextYut = leftYuts.removeFirst();
+        int nextYut = leftYuts.getFirst();
         return group.getNextNode(nextYut);
     }
 
     //result == 0 업음, 1 잡음, 2 그냥 이동
-    public void move(Group group, Node node){
-        int result = group.move(node);
+    public void move(Group group){
+        int result = group.move(group.getNextNode(leftYuts.getFirst()));
         
         if(result == 1)
         {
             rollCount++;
             state = GameTurnModelInterface.THROWABLE;
         }             
-        leftYuts.poll();
+        leftYuts.removeFirst();
 
     }
 
