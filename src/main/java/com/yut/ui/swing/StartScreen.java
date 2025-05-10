@@ -1,6 +1,5 @@
 package com.yut.ui.swing;
 
-
 import com.yut.ui.swing.MainFrame;
 
 import java.awt.event.ActionListener;
@@ -20,7 +19,7 @@ public class StartScreen extends JPanel {
         boardType = 4;
         players = 2;
         pieces = 4;
-        
+
         setLayout(new BorderLayout());
 
         JLabel title = new JLabel("Start Screen", SwingConstants.CENTER);
@@ -55,6 +54,7 @@ public class StartScreen extends JPanel {
 
         JPanel configPanel = new JPanel();
         configPanel.setLayout(new BoxLayout(configPanel, BoxLayout.Y_AXIS));
+        configPanel.setBackground(new Color(240, 248, 255));
 
         // 버튼 선택시 테두리
         board4.addActionListener(e -> {
@@ -79,6 +79,8 @@ public class StartScreen extends JPanel {
         });
 
         // 플레이어 수 설정
+        configPanel.add(Box.createVerticalGlue());
+
         JLabel playerLabel = new JLabel("플레이어 수:");
         playerLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         configPanel.add(playerLabel);
@@ -101,6 +103,7 @@ public class StartScreen extends JPanel {
         configPanel.add(pieceCount);
 
         add(configPanel, BorderLayout.CENTER);
+        configPanel.add(Box.createVerticalGlue());
 
         // 게임 시작 버튼
         startButton = new JButton("게임 시작");
@@ -108,8 +111,6 @@ public class StartScreen extends JPanel {
         Dimension startButtonSize = new Dimension(150, 40);
         startButton.setPreferredSize(startButtonSize);
 
-
-        
         playerCount.addChangeListener(e -> {
             players = (Integer) playerCount.getValue();
         });
@@ -117,19 +118,20 @@ public class StartScreen extends JPanel {
             pieces = (Integer) pieceCount.getValue();
         });
 
-
-
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(startButton);
+        buttonPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 30, 0));
         add(buttonPanel, BorderLayout.SOUTH);
     }
 
     public int getBoardType() {
         return boardType;
     }
+
     public int getPlayers() {
         return players;
     }
+
     public int getPieces() {
         return pieces;
     }
@@ -137,7 +139,6 @@ public class StartScreen extends JPanel {
     public void addStartButtonListener(ActionListener listener) {
         startButton.addActionListener(listener);
     }
-
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
@@ -158,25 +159,25 @@ public class StartScreen extends JPanel {
             gameScreen.updateRandomResult(2);
 
             /*
-            gameScreen.drawPiece();
-            gameScreen.deletePiece();
-            gameScreen.showMovePreview();
-            gameScreen.deleteMovePreview();
-            gameScreen.updatePlayerCanvas();
-            gameScreen.updateRandomResult();
-
-            int nodeState = gameScreen.getNodeState();
-
-            gameScreen.select();
-
-            gameScreen.addRandomThrowButtonListener();
-            gameScreen.addSelectedThrowButtonListener();
-            gameScreen.addBackButtonListener();
-            gameScreen.addNodeClickListener();
-
+             * gameScreen.drawPiece();
+             * gameScreen.deletePiece();
+             * gameScreen.showMovePreview();
+             * gameScreen.deleteMovePreview();
+             * gameScreen.updatePlayerCanvas();
+             * gameScreen.updateRandomResult();
+             * 
+             * int nodeState = gameScreen.getNodeState();
+             * 
+             * gameScreen.select();
+             * 
+             * gameScreen.addRandomThrowButtonListener();
+             * gameScreen.addSelectedThrowButtonListener();
+             * gameScreen.addBackButtonListener();
+             * gameScreen.addNodeClickListener();
+             * 
              */
 
-            //Map<Integer, ClickableNode> nodeMap = gameScreen.getNodeMap();
+            // Map<Integer, ClickableNode> nodeMap = gameScreen.getNodeMap();
         });
 
     }

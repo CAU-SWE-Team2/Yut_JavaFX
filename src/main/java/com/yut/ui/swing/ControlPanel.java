@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class ControlPanel extends JPanel {
-    //enables reference to yut in GameScreen
+    // enables reference to yut in GameScreen
     private final JButton[] yutButtons = new JButton[6];
     private final JButton randomButton;
     private final JButton selectButton;
@@ -21,20 +21,20 @@ public class ControlPanel extends JPanel {
         return selectButton;
     }
 
-    //method for highlighting, called in GameScreen
-    public void highlightYutButton(int yut){
+    // method for highlighting, called in GameScreen
+    public void highlightYutButton(int yut) {
         if (yut < 0 || yut >= yutButtons.length)
             throw new IllegalArgumentException("yut index out of range: " + yut);
 
         for (JButton b : yutButtons) {
-            b.setBackground(null);            // clear any old colour
-            b.setEnabled(false);              // reset to original disabled state
-            b.setOpaque(true);                // make sure bg can be painted
+            b.setBackground(null); // clear any old colour
+            b.setEnabled(false); // reset to original disabled state
+            b.setOpaque(true); // make sure bg can be painted
         }
 
         // 🔸 highlight the chosen one
         JButton highlight = yutButtons[yut];
-        highlight.setEnabled(true);           // allow normal painting
+        highlight.setEnabled(true); // allow normal painting
         highlight.setBackground(Color.YELLOW);
         highlight.repaint();
     }
@@ -44,10 +44,12 @@ public class ControlPanel extends JPanel {
 
         // 1. 윷 던지기 버튼들 (한 줄)
         JPanel throwButtonsPanel = new JPanel(new FlowLayout());
+        throwButtonsPanel.setBorder(BorderFactory.createEmptyBorder(30, 0, 0, 0)); // 위쪽 30px
 
         randomButton = new JButton("랜덤 던지기");
+        randomButton.setPreferredSize(new Dimension(150, 40));
         selectButton = new JButton("지정 던지기");
-
+        selectButton.setPreferredSize(new Dimension(150, 40));
         throwButtonsPanel.add(randomButton);
         throwButtonsPanel.add(selectButton);
 
@@ -66,22 +68,22 @@ public class ControlPanel extends JPanel {
 
         // 3. 새로운 말 움직이기 버튼 (하단)
         JPanel bottomButtonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        bottomButtonPanel.setBorder(BorderFactory.createEmptyBorder(30, 0, 0, 0)); // 위쪽 30px
         JButton moveNewPieceButton = new JButton("새로운 말 움직이기"); // or any label you want
-
+        moveNewPieceButton.setPreferredSize(new Dimension(150, 40));
         bottomButtonPanel.add(moveNewPieceButton);
 
         // 버튼 이벤트 설정
 
-        //technically the backend's job, but kept for testing sakes
+        // technically the backend's job, but kept for testing sakes
         // randomButton.addActionListener(e -> {
-        //     String[] results = { "빽도", "도", "개", "걸", "윷", "모" };
-        //     String result = results[(int) (Math.random() * results.length)];
-        //     JOptionPane.showMessageDialog(this, "랜덤 결과: " + result);
-        //     for (Component c : choosePanel.getComponents()) {
-        //         c.setEnabled(false);
-        //     }
+        // String[] results = { "빽도", "도", "개", "걸", "윷", "모" };
+        // String result = results[(int) (Math.random() * results.length)];
+        // JOptionPane.showMessageDialog(this, "랜덤 결과: " + result);
+        // for (Component c : choosePanel.getComponents()) {
+        // c.setEnabled(false);
+        // }
         // });
-
 
         selectButton.addActionListener(e -> {
             // 지정 버튼을 활성화
