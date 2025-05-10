@@ -285,7 +285,7 @@ public class GameScreen extends JPanel implements GameScreenInterface {
         ClickableNode node = nodeMap.get(nodeID);
         if (node == null) throw new RuntimeException("Node does not exist");
 
-        Piece piece = new Piece(node.getNodeX() - Piece.radius, node.getNodeY() - Piece.radius, playerColors[playerID], pieceNumber);
+        Piece piece = new Piece(node.getNodeX() - Piece.radius, node.getNodeY() - Piece.radius, playerColors[playerID - 1], pieceNumber);
         piece.setBounds(node.getNodeX() - Piece.radius, node.getNodeY() - Piece.radius, Piece.radius*2, Piece.radius*2);
         layeredBoard.add(piece, JLayeredPane.PALETTE_LAYER);
         node.setOnNodePiece(piece);
