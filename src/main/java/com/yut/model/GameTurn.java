@@ -4,6 +4,7 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 
 import com.yut.controller.model_interfaces.GameTurnModelInterface;   
 
@@ -43,8 +44,10 @@ public class GameTurn implements GameTurnModelInterface {
         rollCount--;
 
         if(result == Yut.YUT || result == Yut.MO){
-            JOptionPane.showMessageDialog(null, "한 번 더 던지세요!", "추가 턴", JOptionPane.INFORMATION_MESSAGE);
             rollCount++;
+            SwingUtilities.invokeLater(() -> {
+                JOptionPane.showMessageDialog(null, "한 번 더 던지세요!", "추가 턴", JOptionPane.INFORMATION_MESSAGE);
+            });
             leftYuts.addLast(result);
         }
         else if(result == Yut.BACKDO && currentPlayer.getNumOfWaitingPieces() == 4){
@@ -74,7 +77,9 @@ public class GameTurn implements GameTurnModelInterface {
         int result = group.move(group.getNextNode(nextYut));
         
         if(result == 1){
-            JOptionPane.showMessageDialog(null, "한 번 더 던지세요!", "추가 턴", JOptionPane.INFORMATION_MESSAGE);
+            SwingUtilities.invokeLater(() -> {
+                JOptionPane.showMessageDialog(null, "한 번 더 던지세요!", "추가 턴", JOptionPane.INFORMATION_MESSAGE);
+            });
             rollCount++;
             state = GameTurnModelInterface.THROWABLE;
         }             

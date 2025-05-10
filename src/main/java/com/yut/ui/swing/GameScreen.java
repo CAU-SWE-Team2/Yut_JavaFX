@@ -387,8 +387,10 @@ public class GameScreen extends JPanel implements GameScreenInterface {
     public void updateRandomResult(int yut) {
         controlPanel.highlightYutButton(yut);
         if (yut == 4 || yut == 5) {
+            controlPanel.getMoveNewPieceButton().setBackground(Color.LIGHT_GRAY);
             controlPanel.getMoveNewPieceButton().setEnabled(false);
         } else {
+            controlPanel.getMoveNewPieceButton().setBackground(Color.WHITE);
             controlPanel.getMoveNewPieceButton().setEnabled(true);
         }
     }
