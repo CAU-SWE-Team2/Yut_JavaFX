@@ -8,8 +8,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Deque;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -45,6 +47,7 @@ public class GameScreen extends JPanel implements GameScreenInterface {
 
     private ControlPanel controlPanel;
     private JButton backButton;
+    private JTextArea deckDisplayArea;
 
     private JLayeredPane layeredBoard = new JLayeredPane();
 
@@ -182,6 +185,7 @@ public class GameScreen extends JPanel implements GameScreenInterface {
         initBottomPanel();
 
     }
+
     // related to "For Testing"
     /*
      * public boolean isAwaitingMove() {
@@ -192,7 +196,7 @@ public class GameScreen extends JPanel implements GameScreenInterface {
     private void initBottomPanel() {
         JPanel bottomPanelWrapper = new JPanel();
         bottomPanelWrapper.setLayout(new BorderLayout());
-        bottomPanelWrapper.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0)); // 하단 패딩 10px 추가
+        // bottomPanelWrapper.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
 
         JLabel statusLabel = new JLabel("남은 말 개수 표시", SwingConstants.CENTER);
         statusLabel.setFont(new Font("SansSerif", Font.BOLD, 14));
@@ -208,7 +212,33 @@ public class GameScreen extends JPanel implements GameScreenInterface {
             bottomPanel.add(player);
         }
         bottomPanelWrapper.add(bottomPanel, BorderLayout.CENTER);
+        deckDisplayArea = new JTextArea(5, 20); // 5줄, 20자 너비
+        deckDisplayArea.setEditable(false);
+        deckDisplayArea.setLineWrap(true);
+        deckDisplayArea.setWrapStyleWord(true);
+        deckDisplayArea.setFont(new Font("Monospaced", Font.PLAIN, 12));
+        deckDisplayArea.setBorder(BorderFactory.createTitledBorder("덱 상태"));
+        bottomPanelWrapper.add(deckDisplayArea, BorderLayout.SOUTH);
         add(bottomPanelWrapper, BorderLayout.SOUTH);
+
+        // Test
+        // Deque<String> testDeck = new ArrayDeque<>();
+        // testDeck.add("도");
+        // testDeck.add("개");
+        // testDeck.add("윷");
+        // printDeckContents(testDeck);
+    }
+
+    public void printDeckContents(Deque<?> deck) {
+        StringBuilder sb = new StringBuilder();
+        if (deck.isEmpty()) {
+            sb.append("(덱이 비어 있습니다)");
+        } else {
+            for (Object obj : deck) {
+                sb.append(obj).append("\n");
+            }
+        }
+        deckDisplayArea.setText(sb.toString());
     }
 
     // piece를 클릭한 노드의 중심으로 이동

@@ -54,7 +54,6 @@ public class StartScreen extends JPanel {
 
         JPanel configPanel = new JPanel();
         configPanel.setLayout(new BoxLayout(configPanel, BoxLayout.Y_AXIS));
-        configPanel.setBackground(new Color(240, 248, 255));
 
         // 버튼 선택시 테두리
         board4.addActionListener(e -> {
