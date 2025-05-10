@@ -3,6 +3,8 @@ package com.yut.model;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
+import javax.swing.JOptionPane;
+
 import com.yut.controller.model_interfaces.GameTurnModelInterface;   
 
 public class GameTurn implements GameTurnModelInterface {
@@ -31,7 +33,6 @@ public class GameTurn implements GameTurnModelInterface {
 
     // type == -2면 랜덤, 아니면 type을 사용
     public void roll(int type){
-
         if(type == -2)
             yut.rollYutRandomly();
         else
@@ -42,17 +43,16 @@ public class GameTurn implements GameTurnModelInterface {
 
         rollCount--;
 
-        if(result == Yut.YUT || result == Yut.MO)rollCount++;
+        if(result == Yut.YUT || result == Yut.MO){
+            JOptionPane.showMessageDialog(null, "한 번 더 던지세요!", "추가 턴", JOptionPane.INFORMATION_MESSAGE);
+            rollCount++;
+        }
         if(rollCount == 0)
             state = GameTurnModelInterface.HASTOMOVE;
-        
-
-
     }
 
     // 그룹을 보내면 현재 가지고 있는 윷을 사용해 이동할 수 있는 노드를 보여줌
     public Node showNextMove(Group group){
-
         int nextYut = leftYuts.getFirst();
         if(nextYut == Yut.BACKDO) nextYut = -1;
         return group.getNextNode(nextYut);
@@ -65,6 +65,7 @@ public class GameTurn implements GameTurnModelInterface {
         int result = group.move(group.getNextNode(nextYut));
         
         if(result == 1){
+            JOptionPane.showMessageDialog(null, "한 번 더 던지세요!", "추가 턴", JOptionPane.INFORMATION_MESSAGE);
             rollCount++;
             state = GameTurnModelInterface.THROWABLE;
         }             

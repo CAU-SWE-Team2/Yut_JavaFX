@@ -5,6 +5,7 @@ public class Game implements GameModelInterface {
 
     private Players players;
     private Board board;
+    private int boardType;
 
     private GameTurn gameTurn;
     private int currentPlayerId;
@@ -13,22 +14,20 @@ public class Game implements GameModelInterface {
 
 
     public Game(int boardType, int playerCount, int numOfTotalPieces) {
+        this.boardType = boardType;
         this.playerCount = playerCount;
         this.numOfTotalPieces = numOfTotalPieces;
         players = new Players(playerCount, numOfTotalPieces);
         
-        if(boardType == 4)
+        if(this.boardType == 4)
             board = new SquareBoard();
-        else if(boardType == 5)
+        else if(this.boardType == 5)
             board = new PentagonBoard();
         else
             board = new HexagonBoard();
         
-
         currentPlayerId = players.getFirstPlayer().id;
         gameTurn = new GameTurn(players.getPlayer(1));
-
-
 
         for(int i = 1; i <= players.size(); i++){
             Player player = players.getPlayer(i);
@@ -75,6 +74,10 @@ public class Game implements GameModelInterface {
     }
     public int getNumOfTotalPieces(){
         return numOfTotalPieces;
+    }
+
+    public int getBoardType(){
+        return boardType;
     }
 }
 

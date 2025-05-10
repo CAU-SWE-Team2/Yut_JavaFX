@@ -1,13 +1,16 @@
 package com.yut.controller;
 
+import com.yut.Main;
 import com.yut.controller.model_interfaces.GameModelInterface;
 import com.yut.controller.model_interfaces.GameTurnModelInterface;
 import com.yut.controller.view_interfaces.GameScreenInterface;
-import com.yut.model.Game;
-import com.yut.model.Yut;
 import com.yut.model.Node;
+import com.yut.model.Game;
 import com.yut.model.Group;
 import com.yut.model.Player;
+import com.yut.ui.swing.EndingFrame;
+import com.yut.ui.swing.GameScreen;
+import com.yut.ui.swing.MainFrame;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,9 +21,9 @@ public class GameController {
 
     private GameModelInterface gameModel;
 
-    private GameScreenInterface gameScreen;
+    private GameScreen gameScreen;
 
-    public GameController(GameModelInterface gameModel, GameScreenInterface gameScreen) {
+    public GameController(GameModelInterface gameModel, GameScreen gameScreen) {
         this.gameModel = gameModel;
         this.gameScreen = gameScreen;
 
@@ -44,7 +47,6 @@ public class GameController {
     }
 
     class NodeClickListener extends MouseAdapter {
-
         private int nodeId;
 
         public NodeClickListener(int nodeId) {
@@ -180,8 +182,6 @@ public class GameController {
 
     class GoalButtonListener implements ActionListener {
 
-      
-
         @Override
         public void actionPerformed(ActionEvent e) {
             GameTurnModelInterface gameTurnModel = gameModel.getGameTurn();
@@ -205,7 +205,12 @@ public class GameController {
 
             gameScreen.updatePlayerCanvas(currentPlayer.getId(), gameModel.getNumOfTotalPieces() - targetGroup.getNumOfPieces());
             gameScreen.setGoalButtonVisible(false);
+
+            if(currentPlayer.getNumOfCurrentPieces() == 0){
+                EndingFrame endingFrame = new EndingFrame(currentPlayer.getId());
+                endingFrame.setVisible(true);
+                gameScreen.setVisible(false);
+            }
         }
     }
-
 }

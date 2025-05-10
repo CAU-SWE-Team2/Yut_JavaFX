@@ -43,5 +43,4 @@ public interface GameScreenInterface {
 
 
     public Map<Integer, ClickableNode> getNodeMap();
-
 }
