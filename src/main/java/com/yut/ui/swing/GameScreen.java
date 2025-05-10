@@ -263,7 +263,7 @@ public class GameScreen extends JPanel implements GameScreenInterface {
         ClickableNode node = nodeMap.get(nodeID);
         int x = node.getNodeX() - PreviewCircle.radius;
         int y = node.getNodeY() - PreviewCircle.radius;
-        previewCircle = new PreviewCircle(x, y, playerColors[playerID]);
+        previewCircle = new PreviewCircle(x, y, playerColors[playerID - 1]);
         previewCircle.setBounds(x, y, PreviewCircle.radius*2, PreviewCircle.radius*2);
         node.setPreviewPiece(true);
         layeredBoard.add(previewCircle);
@@ -284,7 +284,6 @@ public class GameScreen extends JPanel implements GameScreenInterface {
     public void drawPiece (int nodeID, int playerID, int pieceNumber){
         ClickableNode node = nodeMap.get(nodeID);
         if (node == null) throw new RuntimeException("Node does not exist");
-
         Piece piece = new Piece(node.getNodeX() - Piece.radius, node.getNodeY() - Piece.radius, playerColors[playerID - 1], pieceNumber);
         piece.setBounds(node.getNodeX() - Piece.radius, node.getNodeY() - Piece.radius, Piece.radius*2, Piece.radius*2);
         layeredBoard.add(piece, JLayeredPane.PALETTE_LAYER);
@@ -292,7 +291,6 @@ public class GameScreen extends JPanel implements GameScreenInterface {
         layeredBoard.revalidate();
         layeredBoard.repaint();
         System.out.println("Drew piece at node " + nodeID + " (" + node.getNodeX() + ", " + node.getNodeY() + ")");
-
     }
 
     public void deletePiece (int nodeID){
@@ -327,7 +325,7 @@ public class GameScreen extends JPanel implements GameScreenInterface {
         int x = node.getNodeX() - PreviewCircle.radius;
         int y = node.getNodeY() - PreviewCircle.radius;
         selectRectangle = new SelectRectangle(x, y);
-        selectRectangle.setBounds(x, y, PreviewCircle.radius*2, PreviewCircle.radius*2);
+        selectRectangle.setBounds(x, y, SelectRectangle.radius*2, SelectRectangle.radius*2);
         node.setPreviewPiece(true);
         layeredBoard.add(selectRectangle);
     }
@@ -345,7 +343,6 @@ public class GameScreen extends JPanel implements GameScreenInterface {
         controlPanel.getYutButtons()[index].addActionListener(listener);
     }
 
-
     public void addBackButtonListener(ActionListener listener){
         backButton.addActionListener(listener);
     }
@@ -357,5 +354,4 @@ public class GameScreen extends JPanel implements GameScreenInterface {
     public Map<Integer, ClickableNode>getNodeMap(){
         return nodeMap;
     }
-
 }
