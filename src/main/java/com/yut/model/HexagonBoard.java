@@ -79,7 +79,7 @@ public class HexagonBoard extends Board {
 
         for(int i: nodes.keySet()){
             int id = nodes.get(i).id;
-            if(id != 500) {
+            if(id != 700) {
                 if ((id - 1) % 10 == 0) {
                     int a = id / 100;
                     nodes.get(i).beforeNode = nodes.get(a * 100);
@@ -93,7 +93,7 @@ public class HexagonBoard extends Board {
                 }
             }
             else{
-                nodes.get(i).beforeNode = nodes.get(352);
+                nodes.get(i).beforeNode = nodes.get(372);
             }
         }
         nodes.get(100).beforeNode = nodes.get(614);

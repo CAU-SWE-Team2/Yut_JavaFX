@@ -76,7 +76,7 @@ public class GameTurn implements GameTurnModelInterface {
         if(nextYut == Yut.BACKDO) nextYut = -1;
         int result = group.move(group.getNextNode(nextYut));
         
-        if(result == 1){
+        if(result == 1 && currentPlayer.getNumOfCurrentPieces() != 0){
             SwingUtilities.invokeLater(() -> {
                 JOptionPane.showMessageDialog(null, "한 번 더 던지세요!", "추가 턴", JOptionPane.INFORMATION_MESSAGE);
             });
