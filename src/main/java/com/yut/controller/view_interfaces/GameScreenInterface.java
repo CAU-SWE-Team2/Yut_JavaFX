@@ -4,6 +4,7 @@ import com.yut.ui.swing.ClickableNode;
 
 import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
+import java.util.Deque;
 import java.util.Map;
 
 public interface GameScreenInterface {
@@ -24,6 +25,8 @@ public interface GameScreenInterface {
 
     public void updateRandomResult(int yut);
 
+    public void printDeckContents(Deque<Integer> deck);
+    
     // 힌트가 있는 노드인지 = 1, 빈 노드인지 = 2, 말이 있는 노드인지 = 3;
     public int getNodeState(int nodeID);
 
@@ -34,8 +37,10 @@ public interface GameScreenInterface {
     public void addBackButtonListener(ActionListener listener);
 
     public void addNodeClickListener(ClickableNode node, MouseListener listener);
+    public void addMoveNewPieceButtonListener(ActionListener listener); 
+    public void addGoalButtonListener(ActionListener listener);
+    public void setGoalButtonVisible(boolean visible);
 
-    public void addMoveNewPieceButtonListener(ActionListener listener);
 
     public Map<Integer, ClickableNode> getNodeMap();
 

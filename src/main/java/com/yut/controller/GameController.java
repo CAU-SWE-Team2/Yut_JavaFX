@@ -39,6 +39,8 @@ public class GameController {
             gameScreen.updatePlayerCanvas(i, gameModel.getNumOfTotalPieces());
         }
         gameScreen.highlightCurrentPlayer(gameModel.getCurrentPlayer().getId());
+        gameScreen.addGoalButtonListener(new GoalButtonListener());
+
     }
 
     class NodeClickListener extends MouseAdapter {
@@ -59,20 +61,27 @@ public class GameController {
             Node node = gameModel.getBoard().getNodeById(nodeId);
             Player currentPlayer = gameModel.getCurrentPlayer();
 
+
+            gameScreen.setGoalButtonVisible(false);
+
             // 그룹 이동
             if (gameScreen.getNodeState(nodeId) == 1) {
                 Group targetGroup = currentPlayer.getMoveTarget();
 
                 if (targetGroup.getCurrentLocation().getId() != 111)
                     gameScreen.deletePiece(targetGroup.getCurrentLocation().getId());
-
+               
+                gameScreen.deletePiece(nodeId);
                 gameTurnModel.move(targetGroup);
+                gameScreen.printDeckContents(gameTurnModel.getLeftYuts());
 
-                gameScreen.updatePlayerCanvas(currentPlayer.getId(),
-                        gameModel.getNumOfTotalPieces() - currentPlayer.getNumOfCurrentPieces());
+                gameScreen.updatePlayerCanvas(currentPlayer.getId(), gameModel.getNumOfTotalPieces() - currentPlayer.getNumOfCurrentPieces());
 
-                /////// )
-                gameScreen.drawPiece(nodeId, currentPlayer.getId(), targetGroup.getNumOfPieces());
+                
+
+
+                ///////)
+                gameScreen.drawPiece(nodeId, currentPlayer.getId(), node.getCurrentGroup().getNumOfPieces());
                 gameScreen.deleteMovePreview();
 
                 // gameScreen.select(nodeId);
@@ -97,8 +106,12 @@ public class GameController {
                 //////
 
                 Node toNode = gameTurnModel.showNextMove(node.getCurrentGroup());
-
-                gameScreen.showMovePreview(toNode.getId(), currentPlayer.getId());
+                
+                if(toNode.getId() != 0)
+                    gameScreen.showMovePreview(toNode.getId(), currentPlayer.getId());
+                else{
+                    gameScreen.setGoalButtonVisible(true);
+                }
 
                 // gameScreen.select(nodeId);
 
@@ -139,6 +152,7 @@ public class GameController {
 
             gameTurnModel.roll(-2);
             gameScreen.updateRandomResult(gameTurnModel.getLeftYuts().getFirst());
+            gameScreen.printDeckContents(gameTurnModel.getLeftYuts());
 
         }
     }
@@ -159,6 +173,31 @@ public class GameController {
 
             gameTurnModel.roll(type);
             gameScreen.updateRandomResult(gameTurnModel.getLeftYuts().getLast());
+            gameScreen.printDeckContents(gameTurnModel.getLeftYuts());
+        }
+    }
+
+
+    class GoalButtonListener implements ActionListener {
+
+      
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            GameTurnModelInterface gameTurnModel = gameModel.getGameTurn();
+            if(gameTurnModel.getState() == GameTurnModelInterface.THROWABLE)
+                return;
+                
+            
+            Player currentPlayer = gameModel.getCurrentPlayer();
+
+            Group targetGroup = currentPlayer.getMoveTarget();
+            gameScreen.deletePiece(targetGroup.getCurrentLocation().getId());
+            gameTurnModel.move(targetGroup);
+            targetGroup.goal();
+
+            gameScreen.updatePlayerCanvas(currentPlayer.getId(), gameModel.getNumOfTotalPieces() - currentPlayer.getNumOfCurrentPieces());
+            gameScreen.setGoalButtonVisible(false);
         }
     }
 

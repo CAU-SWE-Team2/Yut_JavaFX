@@ -21,10 +21,14 @@ public class Group {
     }
 
     private void carryBack(Group existingGroup){
-        existingGroup.currentPieces.addAll(this.currentPieces);
-        existingGroup.numOfPieces += this.numOfPieces;
-        this.currentPieces.clear();
-        this.owner.currentGroups.remove(this);
+        this.currentPieces.addAll(existingGroup.currentPieces);
+        this.numOfPieces += existingGroup.numOfPieces;
+        
+        existingGroup.currentPieces.clear();
+        existingGroup.owner.currentGroups.remove(existingGroup);
+
+        this.currentLocation.currentGroup = this;
+        existingGroup.currentLocation = null;
     }
 
     private void catchOtherGroup(Group existingGroup){
@@ -47,12 +51,12 @@ public class Group {
     public int move(Node node){
         this.currentLocation = node;
         
-        if(node.equals(playingBoard.endNode)){
-            this.owner.numOfCurrentPieces -= this.numOfPieces;
-            this.owner.currentGroups.remove(this);
-            return 2;
-        }
-        else{
+        // if(node.equals(playingBoard.endNode)){
+        //     this.owner.numOfCurrentPieces -= this.numOfPieces;
+        //     this.owner.currentGroups.remove(this);
+        //     return 2;
+        // }
+        // else{
             if(node.currentGroup != null){
                 if(node.currentGroup.owner == this.owner){
                     this.carryBack(node.currentGroup);
@@ -67,7 +71,7 @@ public class Group {
                 node.currentGroup = this;
                 return 2;
             }
-        }
+        // }
     }
 
     public Node getNextNode(int n){
@@ -85,10 +89,10 @@ public class Group {
     }
 
     public void goal(){
-        if(this.currentLocation.id == 0){
+        // if(this.currentLocation.id == 0){
             this.owner.numOfCurrentPieces -= this.numOfPieces;
             this.owner.currentGroups.remove(this);
-        }
+        // }
     }
 
     public int getNumOfPieces(){

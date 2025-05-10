@@ -1,6 +1,7 @@
 package com.yut.ui.swing;
 
 import com.yut.controller.view_interfaces.GameScreenInterface;
+import com.yut.model.Yut;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,6 +13,7 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Deque;
+
 
 import java.util.HashMap;
 import java.util.Map;
@@ -224,13 +226,13 @@ public class GameScreen extends JPanel implements GameScreenInterface {
 
     }
 
-    public void printDeckContents(Deque<?> deck) {
+    public void printDeckContents(Deque<Integer> deck) {
         StringBuilder sb = new StringBuilder();
         if (deck.isEmpty()) {
             sb.append("(덱이 비어 있습니다)");
         } else {
-            for (Object obj : deck) {
-                sb.append(obj).append("\n");
+            for (Integer obj : deck) {
+                sb.append(Yut.getYutName(obj)).append(" ");
             }
         }
         deckDisplayArea.setText(sb.toString());
@@ -336,6 +338,9 @@ public class GameScreen extends JPanel implements GameScreenInterface {
             throw new RuntimeException("There are no pieces to delete on node" + nodeID);
         ClickableNode node = nodeMap.get(nodeID);
         Piece piece = node.getOnNodePiece();
+
+        if(piece == null)
+            return;
         node.setOnNodePiece(null);
         layeredBoard.remove(piece);
         layeredBoard.revalidate();
@@ -401,6 +406,14 @@ public class GameScreen extends JPanel implements GameScreenInterface {
 
     public void addNodeClickListener(ClickableNode node, MouseListener listener) {
         node.addMouseListener(listener);
+    }
+
+    public void addGoalButtonListener(ActionListener listener) {
+        controlPanel.getGoalButton().addActionListener(listener);
+    }
+
+    public void setGoalButtonVisible(boolean visible) {
+        controlPanel.getGoalButton().setVisible(visible);
     }
 
     public Map<Integer, ClickableNode> getNodeMap() {
