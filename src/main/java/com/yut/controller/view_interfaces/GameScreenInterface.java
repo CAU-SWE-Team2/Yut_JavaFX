@@ -8,7 +8,7 @@ import java.util.Map;
 public interface GameScreenInterface {
     // public void select(int nodeID);
     public void showMovePreview(int nodeID, int playerID);
-    public void deleteMovePreview(int nodeID);
+    public void deleteMovePreview();
     public void drawPiece(int nodeID, int playerID, int pieceNumber);
     public void deletePiece(int nodeID);
     public void updatePlayerCanvas(int playerID, int pieceCount);

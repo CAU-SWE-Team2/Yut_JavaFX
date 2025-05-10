@@ -79,7 +79,7 @@ public class GameController {
 
                 ///////)
                 gameScreen.drawPiece(nodeId, currentPlayer.getId(), targetGroup.getNumOfPieces());
-                gameScreen.deleteMovePreview(nodeId);
+                gameScreen.deleteMovePreview();
                 
                 // gameScreen.select(nodeId);
                 
@@ -98,6 +98,7 @@ public class GameController {
             else if(gameScreen.getNodeState(nodeId) == 3)
             {
                 currentPlayer.chooseTarget(node.getCurrentGroup());
+                gameScreen.deleteMovePreview();
 
                 //////
 
@@ -122,13 +123,13 @@ public class GameController {
             if(gameTurnModel.getState() == GameTurnModelInterface.THROWABLE)
                 return;
 
-
             Player currentPlayer = gameModel.getCurrentPlayer();
-
             Group waitingGroup = currentPlayer.getNewGroup();
+
 
             if(waitingGroup != null)
             {
+                gameScreen.deleteMovePreview();
                 currentPlayer.chooseTarget(waitingGroup);
 
                 Node toNode = gameTurnModel.showNextMove(waitingGroup);

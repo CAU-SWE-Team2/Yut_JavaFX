@@ -35,6 +35,7 @@ public class Group {
             existingGroup.owner.currentGroups.add(repairGroup);
         }
         existingGroup.owner.currentGroups.remove(existingGroup);
+        existingGroup.currentLocation = null;
         this.currentLocation.currentGroup = this;
     }
 

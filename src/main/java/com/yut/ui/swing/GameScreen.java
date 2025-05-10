@@ -41,6 +41,7 @@ public class GameScreen extends JPanel implements GameScreenInterface {
     private BoardCanvas boardCanvas;
     private Integer selectedPieceId = null;
     private boolean awaitingMove = false;
+    private ClickableNode currentHintNode = null; // for move preview
 
     private PreviewCircle previewCircle = null;
     private SelectRectangle selectRectangle = null;
@@ -303,16 +304,17 @@ public class GameScreen extends JPanel implements GameScreenInterface {
         previewCircle = new PreviewCircle(x, y, playerColors[playerID - 1]);
         previewCircle.setBounds(x, y, PreviewCircle.radius * 2, PreviewCircle.radius * 2);
         node.setPreviewPiece(true);
+        currentHintNode = node;
         layeredBoard.add(previewCircle);
     }
 
-    public void deleteMovePreview(int nodeID){
-        if (previewCircle == null) {
-            throw new RuntimeException("Preview Circle cannot be deleted because it doesn't exist");
-        }
-        else {
-            ClickableNode node = nodeMap.get(nodeID);
-            node.setPreviewPiece(false);
+    public void deleteMovePreview(){
+        if(previewCircle != null){
+            if(currentHintNode != null)
+            {
+                currentHintNode.setPreviewPiece(false);
+                currentHintNode = null;
+            }
             layeredBoard.remove(previewCircle);
             previewCircle = null;
             layeredBoard.revalidate();
