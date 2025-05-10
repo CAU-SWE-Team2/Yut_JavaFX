@@ -1,6 +1,5 @@
 package com.yut.ui.swing;
 
-
 import com.yut.ui.swing.MainFrame;
 
 import java.awt.event.ActionListener;
@@ -101,7 +100,6 @@ public class StartScreen extends JPanel {
         Dimension startButtonSize = new Dimension(150, 40);
         startButton.setPreferredSize(startButtonSize);
 
-
         boardType = 4;
         players = 2;
         pieces = 4;
@@ -125,9 +123,11 @@ public class StartScreen extends JPanel {
     public int getBoardType() {
         return boardType;
     }
+
     public int getPlayers() {
         return players;
     }
+
     public int getPieces() {
         return pieces;
     }
@@ -135,7 +135,6 @@ public class StartScreen extends JPanel {
     public void addStartButtonListener(ActionListener listener) {
         startButton.addActionListener(listener);
     }
-
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
@@ -154,24 +153,24 @@ public class StartScreen extends JPanel {
             gameScreen.select(500);
 
             /*
-            gameScreen.drawPiece();
-            gameScreen.deletePiece();
-            gameScreen.showMovePreview();
-            gameScreen.deleteMovePreview();
-            gameScreen.updatePlayerCanvas();
-
-            int nodeState = gameScreen.getNodeState();
-
-            gameScreen.select();
-
-            gameScreen.addRandomThrowButtonListener();
-            gameScreen.addSelectedThrowButtonListener();
-            gameScreen.addBackButtonListener();
-            gameScreen.addNodeClickListener();
-
+             * gameScreen.drawPiece();
+             * gameScreen.deletePiece();
+             * gameScreen.showMovePreview();
+             * gameScreen.deleteMovePreview();
+             * gameScreen.updatePlayerCanvas();
+             * 
+             * int nodeState = gameScreen.getNodeState();
+             * 
+             * gameScreen.select();
+             * 
+             * gameScreen.addRandomThrowButtonListener();
+             * gameScreen.addSelectedThrowButtonListener();
+             * gameScreen.addBackButtonListener();
+             * gameScreen.addNodeClickListener();
+             * 
              */
 
-            //Map<Integer, ClickableNode> nodeMap = gameScreen.getNodeMap();
+            // Map<Integer, ClickableNode> nodeMap = gameScreen.getNodeMap();
         });
 
     }
