@@ -103,4 +103,8 @@ public class Group {
     public Node getCurrentLocation(){
         return this.currentLocation;
     }
+
+    public Player getOwner(){
+        return this.owner;
+    }
 }

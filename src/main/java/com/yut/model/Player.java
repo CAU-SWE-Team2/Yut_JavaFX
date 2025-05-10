@@ -39,7 +39,9 @@ public class Player {
     }
 
     public void chooseTarget(Group target){
-        this.moveTarget = target;
+        if(target.getOwner().getId() == this.id){
+            this.moveTarget = target;
+        }
     }
 
     public Group getMoveTarget(){

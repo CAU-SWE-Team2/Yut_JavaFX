@@ -102,17 +102,16 @@ public class GameController {
 
             // 힌트 표시
             else if (gameScreen.getNodeState(nodeId) == 3) {
-                currentPlayer.chooseTarget(node.getCurrentGroup());
-                gameScreen.deleteMovePreview();
-
-                //////
-
-                Node toNode = gameTurnModel.showNextMove(node.getCurrentGroup());
+                if(node.getCurrentGroup().getOwner().getId() == currentPlayer.getId()){
+                    currentPlayer.chooseTarget(node.getCurrentGroup());
+                    gameScreen.deleteMovePreview();
+                    Node toNode = gameTurnModel.showNextMove(node.getCurrentGroup());
                 
-                if(toNode.getId() != 0)
-                    gameScreen.showMovePreview(toNode.getId(), currentPlayer.getId());
-                else{
-                    gameScreen.setGoalButtonVisible(true);
+                    if(toNode.getId() != 0)
+                        gameScreen.showMovePreview(toNode.getId(), currentPlayer.getId());
+                    else{
+                        gameScreen.setGoalButtonVisible(true);
+                    }
                 }
 
                 // gameScreen.select(nodeId);
@@ -145,7 +144,6 @@ public class GameController {
     }
 
     class RandomThrowButtonListener implements ActionListener {
-
         @Override
         public void actionPerformed(ActionEvent e) {
             GameTurnModelInterface gameTurnModel = gameModel.getGameTurn();
@@ -155,7 +153,6 @@ public class GameController {
             gameTurnModel.roll(-2);
             gameScreen.updateRandomResult(gameTurnModel.getLeftYuts().getFirst());
             gameScreen.printDeckContents(gameTurnModel.getLeftYuts());
-
         }
     }
 

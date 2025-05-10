@@ -386,6 +386,11 @@ public class GameScreen extends JPanel implements GameScreenInterface {
     // highlights the yut given by backend. Updates display on the control panel
     public void updateRandomResult(int yut) {
         controlPanel.highlightYutButton(yut);
+        if (yut == 4 || yut == 5) {
+            controlPanel.getMoveNewPieceButton().setEnabled(false);
+        } else {
+            controlPanel.getMoveNewPieceButton().setEnabled(true);
+        }
     }
 
     public void addRandomThrowButtonListener(ActionListener listener) {
