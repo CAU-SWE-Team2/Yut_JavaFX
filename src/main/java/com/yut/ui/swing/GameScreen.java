@@ -322,8 +322,8 @@ public class GameScreen extends JPanel implements GameScreenInterface {
             layeredBoard.repaint();
         }
         ClickableNode node = nodeMap.get(nodeID);
-        int x = node.getNodeX() - PreviewCircle.radius;
-        int y = node.getNodeY() - PreviewCircle.radius;
+        int x = node.getNodeX() - SelectRectangle.radius;
+        int y = node.getNodeY() - SelectRectangle.radius;
         selectRectangle = new SelectRectangle(x, y);
         selectRectangle.setBounds(x, y, SelectRectangle.radius*2, SelectRectangle.radius*2);
         node.setPreviewPiece(true);
