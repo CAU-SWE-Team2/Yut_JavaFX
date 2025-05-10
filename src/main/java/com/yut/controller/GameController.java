@@ -75,7 +75,7 @@ public class GameController {
                 gameTurnModel.move(targetGroup);
                 gameScreen.printDeckContents(gameTurnModel.getLeftYuts());
 
-                gameScreen.updatePlayerCanvas(currentPlayer.getId(), gameModel.getNumOfTotalPieces() - currentPlayer.getNumOfCurrentPieces());
+                gameScreen.updatePlayerCanvas(currentPlayer.getId(), gameModel.getCurrentPlayer().getNumOfCurrentPieces());
 
                 
 
@@ -194,9 +194,16 @@ public class GameController {
             Group targetGroup = currentPlayer.getMoveTarget();
             gameScreen.deletePiece(targetGroup.getCurrentLocation().getId());
             gameTurnModel.move(targetGroup);
+
+            gameScreen.printDeckContents(gameTurnModel.getLeftYuts());
             targetGroup.goal();
 
-            gameScreen.updatePlayerCanvas(currentPlayer.getId(), gameModel.getNumOfTotalPieces() - currentPlayer.getNumOfCurrentPieces());
+            if (gameTurnModel.getLeftYuts().isEmpty() && gameTurnModel.getRollCount() == 0){
+                gameModel.switchTurn();
+                gameScreen.highlightCurrentPlayer(gameModel.getCurrentPlayer().getId());
+            }
+
+            gameScreen.updatePlayerCanvas(currentPlayer.getId(), gameModel.getNumOfTotalPieces() - targetGroup.getNumOfPieces());
             gameScreen.setGoalButtonVisible(false);
         }
     }

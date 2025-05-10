@@ -96,6 +96,6 @@ public class HexagonBoard extends Board {
                 nodes.get(i).beforeNode = nodes.get(352);
             }
         }
-        nodes.get(121).beforeNode = waitingNode;
+        nodes.get(100).beforeNode = nodes.get(614);
     }
 }

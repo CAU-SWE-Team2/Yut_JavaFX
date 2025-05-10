@@ -54,15 +54,17 @@ public class GameTurn implements GameTurnModelInterface {
     public Node showNextMove(Group group){
 
         int nextYut = leftYuts.getFirst();
+        if(nextYut == Yut.BACKDO) nextYut = -1;
         return group.getNextNode(nextYut);
     }
 
     //result == 0 업음, 1 잡음, 2 그냥 이동
     public void move(Group group){
-        int result = group.move(group.getNextNode(leftYuts.getFirst()));
+        int nextYut = leftYuts.getFirst();
+        if(nextYut == Yut.BACKDO) nextYut = -1;
+        int result = group.move(group.getNextNode(nextYut));
         
-        if(result == 1)
-        {
+        if(result == 1){
             rollCount++;
             state = GameTurnModelInterface.THROWABLE;
         }             

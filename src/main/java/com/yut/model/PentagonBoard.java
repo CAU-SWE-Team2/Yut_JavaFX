@@ -91,6 +91,6 @@ public class PentagonBoard extends Board {
                 nodes.get(i).beforeNode = nodes.get(462);
             }
         }
-        nodes.get(121).beforeNode = waitingNode;
+        nodes.get(100).beforeNode = nodes.get(614);
     }
 }

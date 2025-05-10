@@ -5,7 +5,7 @@ import java.util.Random;
 public class Yut {
     private static Yut instance = new Yut();
 
-    private static final int BACKDO = 0;
+    public static final int BACKDO = 0;
     public static final int DO = 1;
     public static final int GE = 2;
     public static final int GUL = 3;

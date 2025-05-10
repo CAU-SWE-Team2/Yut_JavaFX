@@ -49,6 +49,7 @@ public class Group {
     }
 
     public int move(Node node){
+        this.currentLocation.currentGroup = null;
         this.currentLocation = node;
         
         // if(node.equals(playingBoard.endNode)){

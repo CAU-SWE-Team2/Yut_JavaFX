@@ -15,6 +15,7 @@ public class Player {
     Player(int id, int numOfPieces){
         this.id = id;
         this.numOfTotalPieces = numOfPieces;
+        this.numOfCurrentPieces = numOfPieces;
     }
 
     // public int throwYut(Yut yut){
