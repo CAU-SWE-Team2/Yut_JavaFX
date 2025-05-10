@@ -151,13 +151,16 @@ public class GameController {
                 return;
 
             gameTurnModel.roll(-2);
-            gameScreen.updateRandomResult(gameTurnModel.getLeftYuts().getFirst());
+            int result = gameTurnModel.getLeftYuts().getLast();
+            if(result == -1 && gameModel.getCurrentPlayer().getNumOfWaitingPieces() == 4){
+                result = 1;
+            }
+            gameScreen.updateRandomResult(result);
             gameScreen.printDeckContents(gameTurnModel.getLeftYuts());
         }
     }
 
     class SelectThrowButtonListener implements ActionListener {
-
         private int type;
 
         public SelectThrowButtonListener(int type) {
@@ -171,6 +174,7 @@ public class GameController {
                 return;
 
             gameTurnModel.roll(type);
+
             gameScreen.updateRandomResult(gameTurnModel.getLeftYuts().getLast());
             gameScreen.printDeckContents(gameTurnModel.getLeftYuts());
         }

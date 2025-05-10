@@ -39,14 +39,23 @@ public class GameTurn implements GameTurnModelInterface {
             yut.rollYutSelected(type);
 
         int result = yut.getCurrent();
-        leftYuts.addLast(result);
 
         rollCount--;
 
         if(result == Yut.YUT || result == Yut.MO){
             JOptionPane.showMessageDialog(null, "한 번 더 던지세요!", "추가 턴", JOptionPane.INFORMATION_MESSAGE);
             rollCount++;
+            leftYuts.addLast(result);
         }
+        else if(result == Yut.BACKDO && currentPlayer.getNumOfWaitingPieces() == 4){
+            JOptionPane.showMessageDialog(null, "보드 위에 말이 없습니다!", "Backdo", JOptionPane.INFORMATION_MESSAGE);
+            rollCount++;
+        }
+        else{
+            leftYuts.addLast(result);
+        }
+
+         // 남은 윷이 없으면 턴 종료
         if(rollCount == 0)
             state = GameTurnModelInterface.HASTOMOVE;
     }

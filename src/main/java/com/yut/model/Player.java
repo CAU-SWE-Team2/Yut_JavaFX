@@ -59,5 +59,15 @@ public class Player {
         return this.id;
     }
 
+    public int getNumOfWaitingPieces(){
+        int num = 0;
+        for(int i = 0; i < currentGroups.size(); i++){
+            if(currentGroups.get(i).currentLocation.id == 111){
+                num++;
+            }
+        }
+        return num;
+    }
+
 }
 
