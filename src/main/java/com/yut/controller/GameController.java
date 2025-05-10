@@ -39,7 +39,11 @@ public class GameController {
 
 
         for(int i = 1; i <= gameModel.getPlayerCount(); i++){
-            gameScreen.updatePlayerCanvas(i, gameModel.getCurrentPlayer().getNumOfCurrentPieces());
+            gameScreen.updatePlayerCanvas(i, gameModel.getNumOfTotalPieces());
+            
+
+            // for(int j = 1; j <= gameModel.getNumOfTotalPieces(); j++){
+            gameScreen.drawPiece(100, i, 1);
         }
 
     }

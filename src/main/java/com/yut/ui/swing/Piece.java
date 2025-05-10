@@ -1,7 +1,5 @@
 package com.yut.ui.swing;
 
-import com.yut.listener.PieceSelectionListener;
-
 import javax.swing.JComponent;
 import java.awt.Color;
 import java.awt.Graphics;

@@ -9,10 +9,12 @@ public class Game implements GameModelInterface {
     private GameTurn gameTurn;
     private int currentPlayerId;
     private int playerCount;
+    private int numOfTotalPieces;
 
 
     public Game(int boardType, int playerCount, int numOfTotalPieces) {
         this.playerCount = playerCount;
+        this.numOfTotalPieces = numOfTotalPieces;
         players = new Players(playerCount, numOfTotalPieces);
         
         if(boardType == 0)
@@ -69,6 +71,9 @@ public class Game implements GameModelInterface {
 
     public int getPlayerCount(){
         return playerCount;
+    }
+    public int getNumOfTotalPieces(){
+        return numOfTotalPieces;
     }
 }
 

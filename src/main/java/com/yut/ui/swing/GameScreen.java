@@ -107,6 +107,12 @@ public class GameScreen extends JPanel implements GameScreenInterface {
             clickableNodes = boardCanvas.getClickableNodes();
             for (ClickableNode node : clickableNodes) {
                 nodeMap.put(node.nodeID, node);
+
+                int radius = 18; // or get it from the node
+                int x = node.getNodeX() - radius;
+                int y = node.getNodeY() - radius;
+                node.setBounds(x, y, radius * 2, radius * 2);
+                layeredBoard.add(node, JLayeredPane.POPUP_LAYER);
             }
             System.out.println("Deferred node map loaded: " + nodeMap.keySet());
         });

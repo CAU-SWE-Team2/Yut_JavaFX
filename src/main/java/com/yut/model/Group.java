@@ -17,6 +17,7 @@ public class Group {
         this.currentPieces.add(id);
         this.owner = owner;
         this.owner.currentGroups.add(this);
+
     }
 
     private void carryBack(Group existingGroup){

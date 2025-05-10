@@ -9,6 +9,8 @@ public interface GameModelInterface {
     public boolean ifGameEnded();
     public GameTurnModelInterface getGameTurn();
     public Board getBoard();
+
     public Player getCurrentPlayer();
     public int getPlayerCount();
+    public int getNumOfTotalPieces();
 }
