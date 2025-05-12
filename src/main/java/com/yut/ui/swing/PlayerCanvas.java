@@ -4,21 +4,31 @@ import javax.swing.*;
 import java.awt.*;
 
 public class PlayerCanvas extends JPanel {
-    private int playerId;
+    private int playerID;
     private int pieceCount;
     private Color color;
+    private boolean highlighted = false;
 
-    public PlayerCanvas(int playerId, int pieceCount, Color color) {
-        this.playerId = playerId;
+    public void setHighlighted(boolean highlighted) {
+        this.highlighted = highlighted;
+        repaint();
+    }
+
+    public PlayerCanvas(int playerID, int pieceCount, Color color) {
+        this.playerID = playerID;
         this.pieceCount = pieceCount;
         this.color = color;
         setPreferredSize(new Dimension(180, 80));
-        setOpaque(false);
+        // setOpaque(false);
     }
 
     public void setPieceCount(int count) {
         this.pieceCount = count;
         repaint();
+    }
+
+    public Color getColor() {
+        return color;
     }
 
     @Override
@@ -30,12 +40,21 @@ public class PlayerCanvas extends JPanel {
         // 배경 직사각형
         g2.setColor(new Color(230, 230, 230));
         g2.fillRoundRect(10, 10, getWidth() - 20, getHeight() - 20, 20, 15);
-        g2.setColor(Color.GRAY);
+
+        // 테두리 색상 결정
+        if (highlighted) {
+            g2.setColor(Color.YELLOW);
+            g2.setStroke(new BasicStroke(3));
+        } else {
+            g2.setColor(Color.GRAY);
+            g2.setStroke(new BasicStroke(1));
+        }
         g2.drawRoundRect(10, 10, getWidth() - 20, getHeight() - 20, 20, 15);
+        g2.setStroke(new BasicStroke(1));
 
         // 플레이어 ID 출력
         g2.setColor(Color.BLACK);
-        g2.drawString("P" + playerId, 20, 25);
+        g2.drawString("P" + playerID, 20, 25);
 
         // 남은 말 개수 표시
         int radius = 10;

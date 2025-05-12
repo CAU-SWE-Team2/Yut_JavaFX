@@ -1,13 +1,15 @@
 package com.yut.model;
-
-
 // 플레이어들
-class Players {
+public class Players {
 
     private Player[] playersArr;
 
-    public Players(int playerCnt) {
-        playersArr = new Player[playerCnt];
+    public Players(int playerCnt, int numOfTotalPieces) {
+
+        playersArr = new Player[playerCnt + 1];
+        for(int i = 1; i <= playerCnt; i++){
+            playersArr[i] = new Player(i, numOfTotalPieces);
+        }            
 
     }
 
@@ -15,8 +17,12 @@ class Players {
         return playersArr[id];
     }
 
+    public Player getFirstPlayer(){
+        return playersArr[1];
+    }
+
     public int size(){
-        return playersArr.length;
+        return playersArr.length - 1;
     }
 }
 

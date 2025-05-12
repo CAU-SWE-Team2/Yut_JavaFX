@@ -2,12 +2,24 @@ package com.yut.ui.swing;
 
 import com.yut.ui.swing.MainFrame;
 
+import java.awt.event.ActionListener;
 import javax.swing.*;
 import java.awt.*;
+import java.util.Map;
 
 public class StartScreen extends JPanel {
 
+    private int boardType;
+    private int players;
+    private int pieces;
+
+    private JButton startButton;
+
     public StartScreen(MainFrame frame) {
+        boardType = 4;
+        players = 2;
+        pieces = 4;
+
         setLayout(new BorderLayout());
 
         JLabel title = new JLabel("Start Screen", SwingConstants.CENTER);
@@ -48,21 +60,26 @@ public class StartScreen extends JPanel {
             board4.setSelectedStyle(true);
             board5.setSelectedStyle(false);
             board6.setSelectedStyle(false);
+            boardType = 4;
         });
 
         board5.addActionListener(e -> {
             board4.setSelectedStyle(false);
             board5.setSelectedStyle(true);
             board6.setSelectedStyle(false);
+            boardType = 5;
         });
 
         board6.addActionListener(e -> {
             board4.setSelectedStyle(false);
             board5.setSelectedStyle(false);
             board6.setSelectedStyle(true);
+            boardType = 6;
         });
 
         // 플레이어 수 설정
+        configPanel.add(Box.createVerticalGlue());
+
         JLabel playerLabel = new JLabel("플레이어 수:");
         playerLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         configPanel.add(playerLabel);
@@ -85,35 +102,82 @@ public class StartScreen extends JPanel {
         configPanel.add(pieceCount);
 
         add(configPanel, BorderLayout.CENTER);
+        configPanel.add(Box.createVerticalGlue());
 
         // 게임 시작 버튼
-        JButton startButton = new JButton("게임 시작");
+        startButton = new JButton("게임 시작");
 
         Dimension startButtonSize = new Dimension(150, 40);
         startButton.setPreferredSize(startButtonSize);
 
-        startButton.addActionListener(e -> {
-            int selectedBoardType = 4; // 기본값
-            if (board5.isSelected())
-                selectedBoardType = 5;
-            else if (board6.isSelected())
-                selectedBoardType = 6;
-
-            int players = (Integer) playerCount.getValue();
-            int pieces = (Integer) pieceCount.getValue();
-
-            frame.showGame(selectedBoardType, players, pieces);
+        playerCount.addChangeListener(e -> {
+            players = (Integer) playerCount.getValue();
+        });
+        pieceCount.addChangeListener(e -> {
+            pieces = (Integer) pieceCount.getValue();
         });
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(startButton);
+        buttonPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 30, 0));
         add(buttonPanel, BorderLayout.SOUTH);
+    }
+
+    public int getBoardType() {
+        return boardType;
+    }
+
+    public int getPlayers() {
+        return players;
+    }
+
+    public int getPieces() {
+        return pieces;
+    }
+
+    public void addStartButtonListener(ActionListener listener) {
+        startButton.addActionListener(listener);
     }
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             MainFrame frame = new MainFrame();
             frame.setVisible(true);
+
+            frame.showGame(6, 4, 5);
+            GameScreen gameScreen = frame.getGameScreen();
+            gameScreen.drawPiece(200, 1, 1);
+            gameScreen.showMovePreview(300, 1);
+            gameScreen.updatePlayerCanvas(1, 3);
+            System.out.println("100 status:" + gameScreen.getNodeState(100));
+            System.out.println("200 status:" + gameScreen.getNodeState(200));
+            System.out.println("300 status:" + gameScreen.getNodeState(300));
+            gameScreen.select(561);
+            gameScreen.select(500);
+            gameScreen.updateRandomResult(1);
+            gameScreen.updateRandomResult(2);
+
+            /*
+             * gameScreen.drawPiece();
+             * gameScreen.deletePiece();
+             * gameScreen.showMovePreview();
+             * gameScreen.deleteMovePreview();
+             * gameScreen.updatePlayerCanvas();
+             * gameScreen.updateRandomResult();
+             * 
+             * int nodeState = gameScreen.getNodeState();
+             * 
+             * gameScreen.select();
+             * 
+             * gameScreen.addRandomThrowButtonListener();
+             * gameScreen.addSelectedThrowButtonListener();
+             * gameScreen.addBackButtonListener();
+             * gameScreen.addNodeClickListener();
+             * 
+             */
+
+            // Map<Integer, ClickableNode> nodeMap = gameScreen.getNodeMap();
         });
+
     }
 }
