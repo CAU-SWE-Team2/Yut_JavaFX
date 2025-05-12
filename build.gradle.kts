@@ -1,5 +1,13 @@
 plugins {
-    id("java")
+    application
+    java
+}
+
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
 }
 
 group = "org.example"
@@ -16,4 +24,10 @@ dependencies {
 
 tasks.test {
     useJUnitPlatform()
+}
+
+
+
+application {
+    mainClass.set("com.yut.ui.swing.GameWindow")
 }
