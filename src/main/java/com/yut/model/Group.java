@@ -63,9 +63,12 @@ public class Group {
                     this.carryBack(node.currentGroup);
                     return 0;
                 }
-                else{
+                else if(this.currentLocation.getId() != 0){
                     this.catchOtherGroup(node.currentGroup);
                     return 1;
+                }
+                else{
+                    return 2;
                 }
             }
             else {
