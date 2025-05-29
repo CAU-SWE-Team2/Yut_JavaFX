@@ -35,7 +35,7 @@ public class Group {
         int size = existingGroup.currentPieces.size();
         for(int i = 0; i < size; i++){
             Group repairGroup = new Group(existingGroup.currentPieces.get(i), existingGroup.owner);
-            repairGroup.currentLocation = playingBoard.waitingNode;
+            repairGroup.addToGame(playingBoard);
             existingGroup.owner.currentGroups.add(repairGroup);
         }
         existingGroup.owner.currentGroups.remove(existingGroup);
