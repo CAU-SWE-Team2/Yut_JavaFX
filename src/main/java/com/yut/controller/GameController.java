@@ -208,7 +208,7 @@ public class GameController {
                 gameScreen.highlightCurrentPlayer(gameModel.getCurrentPlayer().getId());
             }
 
-            gameScreen.updatePlayerCanvas(currentPlayer.getId(), gameModel.getCurrentPlayer().getNumOfCurrentPieces() - targetGroup.getNumOfPieces());
+            gameScreen.updatePlayerCanvas(currentPlayer.getId(), gameModel.getCurrentPlayer().getNumOfCurrentPieces());
             gameScreen.setGoalButtonVisible(false);
 
             if(currentPlayer.getNumOfCurrentPieces() == 0){
