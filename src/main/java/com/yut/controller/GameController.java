@@ -8,6 +8,7 @@ import com.yut.model.Node;
 import com.yut.model.Game;
 import com.yut.model.Group;
 import com.yut.model.Player;
+import com.yut.model.Yut;
 import com.yut.ui.swing.EndingFrame;
 import com.yut.ui.swing.GameScreen;
 import com.yut.ui.swing.MainFrame;
@@ -201,8 +202,13 @@ public class GameController {
                 gameModel.switchTurn();
                 gameScreen.highlightCurrentPlayer(gameModel.getCurrentPlayer().getId());
             }
+            if(gameTurnModel.getLeftYuts().size() == 1 && gameTurnModel.getLeftYuts().getFirst() == Yut.BACKDO){
+                gameTurnModel.getLeftYuts().removeFirst();
+                gameModel.switchTurn();
+                gameScreen.highlightCurrentPlayer(gameModel.getCurrentPlayer().getId());
+            }
 
-            gameScreen.updatePlayerCanvas(currentPlayer.getId(), gameModel.getNumOfTotalPieces() - targetGroup.getNumOfPieces());
+            gameScreen.updatePlayerCanvas(currentPlayer.getId(), gameModel.getCurrentPlayer().getNumOfCurrentPieces());
             gameScreen.setGoalButtonVisible(false);
 
             if(currentPlayer.getNumOfCurrentPieces() == 0){

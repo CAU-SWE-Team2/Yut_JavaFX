@@ -50,7 +50,7 @@ public class GameTurn implements GameTurnModelInterface {
             });
             leftYuts.addLast(result);
         }
-        else if(result == Yut.BACKDO && (currentPlayer.getNumOfWaitingPieces() == Player.numOfTotalPieces)){
+        else if(result == Yut.BACKDO && (currentPlayer.getNumOfWaitingPieces() == currentPlayer.getNumOfCurrentPieces()) && leftYuts.isEmpty()){
             JOptionPane.showMessageDialog(null, "뒤로 갈 수 있는 말이 없습니다!", "Backdo", JOptionPane.INFORMATION_MESSAGE);
             rollCount++;
         }
@@ -82,9 +82,8 @@ public class GameTurn implements GameTurnModelInterface {
             });
             rollCount++;
             state = GameTurnModelInterface.THROWABLE;
-        }             
+        }           
         leftYuts.removeFirst();
-
     }
 
     public int getState(){

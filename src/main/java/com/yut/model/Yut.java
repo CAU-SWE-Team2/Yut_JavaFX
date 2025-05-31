@@ -39,7 +39,20 @@ public class Yut {
 
     void rollYutRandomly(){
         Random random = new Random();
-        current = random.nextInt(6);
+        current = random.nextInt(16);
+        if (current == 0) {
+            current = 0;
+        } else if (current <= 3) {
+            current = 1;
+        } else if (current <= 9) {
+            current = 2;
+        } else if (current <= 13) {
+            current = 3;
+        } else if (current == 14) {
+            current = 4;
+        } else {
+            current = 5;
+        }
     }
 
     void rollYutSelected(int yut){
