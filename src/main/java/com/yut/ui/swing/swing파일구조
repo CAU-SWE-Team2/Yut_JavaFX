@@ -1,5 +1,0 @@
-com.yut.ui.swing
-├── GameWindow.java          ← 시작 화면
-├── GameBoardWindow.java     ← 본 게임 진행 화면
-├── BoardPanel.java          ← 윷판을 그리는 커스텀 JPanel
-├── ControlPanel.java        ← 버튼, 상태 표시 등 조작 UI
