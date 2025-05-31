@@ -13,10 +13,13 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 import java.util.*;
 
 public class GameScreenFX extends BorderPane implements GameScreenInterface {
+
     private List<PieceFX> pieceList = new ArrayList<>();
     private final Map<Integer, Integer> piecesEntered = new HashMap<>();
     private final Map<Integer, PlayerCanvasFX> playerCanvases = new HashMap<>();
@@ -49,51 +52,129 @@ public class GameScreenFX extends BorderPane implements GameScreenInterface {
     private ControlPanelFX controlPanel;
     private TextArea deckDisplayArea;
 
+    ImageView firtstYut;
+    ImageView secondYut;
+    ImageView thirdYut;
+    ImageView fourthYut;
+
     public GameScreenFX(int boardType, int playerCount, Runnable onBack) {
+
+        // Font customFont20 = Font.loadFont(
+        // getClass().getResource("/assets/fonts/SF_HailSnow.ttf").toExternalForm(),
+        // 20);
+
+        // Font customFont50 = Font.loadFont(
+        // getClass().getResource("/assets/fonts/SF_HailSnow.ttf").toExternalForm(),
+        // 50);
+
         this.boardType = boardType;
         this.playerCount = playerCount;
         this.onBack = onBack;
 
-        HBox topPanel = new HBox();
-        topPanel.setPadding(new Insets(10, 15, 10, 15));
-        Button backButton = new Button("← 시작 화면으로");
-        backButton.setPrefSize(150, 40);
-        backButton.setOnAction(e -> onBack.run());
-        topPanel.getChildren().add(backButton);
-        setTop(topPanel);
+        BackgroundImage backgroundImage = new BackgroundImage(
+                new javafx.scene.image.Image(
+                        getClass().getResource("/assets/img/background_game.png").toExternalForm()),
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.CENTER,
+                new BackgroundSize(100, 100, true, true, true, true));
+        setBackground(new Background(backgroundImage));
 
+        // 시작 버튼 상단
+        HBox topPanel = new HBox();
+        topPanel.setPadding(new Insets(10));
+        topPanel.setAlignment(Pos.CENTER_LEFT);
+        topPanel.setPrefHeight(1000);
+
+        Button backButton = new Button("← 시작 화면으로");
+        backButton.setPrefWidth(160);
+        backButton.setPrefHeight(160);
+        backButton.setMaxHeight(Double.MAX_VALUE);
+
+        backButton.setOnAction(e -> onBack.run());
+        // backButton.setFont(customFont20);
+        topPanel.getChildren().add(backButton);
+
+        // 보드 및 노드
         boardCanvas = new BoardCanvasFX(boardType);
         clickableNodes = boardCanvas.getClickableNodes();
         for (ClickableNodeFX node : clickableNodes) {
             nodeMap.put(node.getNodeID(), node);
         }
+        boardCanvas.setPrefHeight(1500);
+
         layeredBoard.setId("layered-board");
         layeredBoard.getChildren().add(boardCanvas);
 
-        HBox centerPanel = new HBox(10);
-        centerPanel.setAlignment(Pos.CENTER);
+        StackPane boardPane = new StackPane(layeredBoard);
+        boardPane.setPadding(new Insets(10));
 
-        controlPanel = new ControlPanelFX();
-
+        // 덱 표시창
         deckDisplayArea = new TextArea();
-        deckDisplayArea.setPrefRowCount(5);
-        deckDisplayArea.setWrapText(true);
         deckDisplayArea.setEditable(false);
-        controlPanel.getChildren().add(deckDisplayArea);
+        deckDisplayArea.setWrapText(true);
+        deckDisplayArea.setPrefWidth(180);
+        deckDisplayArea.setPrefHeight(300);
 
-        centerPanel.getChildren().addAll(layeredBoard, controlPanel);
-        setCenter(centerPanel);
+        // 컨트롤 패널 (사진, 버튼 등)
+        controlPanel = new ControlPanelFX();
+        controlPanel.getGoalButton().setVisible(true);
 
-        initBottomPanel();
-    }
+        Image image = new Image(getClass().getResource("/assets/img/yut_small_backward.png").toExternalForm());
+        Image image2 = new Image(getClass().getResource("/assets/img/yut_small_upward.png").toExternalForm());
+        Image image3 = new Image(getClass().getResource("/assets/img/yut_small_backdo.png").toExternalForm());
 
-    private void initBottomPanel() {
-        VBox bottomPanel = new VBox(10);
-        Label statusLabel = new Label("남은 말 개수 표시");
-        statusLabel.setFont(new Font("SansSerif", 14));
-        bottomPanel.getChildren().add(statusLabel);
+        firtstYut = new ImageView(image3);
+        firtstYut.setFitWidth(30);
+        firtstYut.setPreserveRatio(true);
 
-        HBox playersBox = new HBox(10);
+        secondYut = new ImageView(image2);
+        secondYut.setFitWidth(30);
+        secondYut.setPreserveRatio(true);
+
+        thirdYut = new ImageView(image2);
+        thirdYut.setFitWidth(30);
+        thirdYut.setPreserveRatio(true);
+
+        fourthYut = new ImageView(image);
+        fourthYut.setFitWidth(30);
+        fourthYut.setPreserveRatio(true);
+
+        HBox soohyun = new HBox(15, firtstYut, secondYut, thirdYut, fourthYut);
+
+        VBox rightOfBoard = new VBox(15, deckDisplayArea, soohyun);
+        rightOfBoard.setAlignment(Pos.CENTER);
+        rightOfBoard.setFillWidth(false);
+
+        // 보드 + 덱/컨트롤 패널 수평 정렬
+        HBox centerArea = new HBox(20, boardPane, rightOfBoard);
+        centerArea.setAlignment(Pos.CENTER);
+
+        // 버튼 영역
+        HBox bottomPanel = new HBox(30);
+        bottomPanel.setPrefHeight(1000);
+        bottomPanel.setAlignment(Pos.CENTER);
+        bottomPanel.setPadding(new Insets(20));
+        bottomPanel.getChildren().addAll(
+                controlPanel.getMoveNewPieceButton(),
+                controlPanel.getGoalButton(),
+                controlPanel.getRandomButton(),
+                controlPanel.getSelectButton());
+        controlPanel.getMoveNewPieceButton().setPrefHeight(200);
+        controlPanel.getGoalButton().setPrefHeight(200);
+        controlPanel.getRandomButton().setPrefHeight(200);
+        controlPanel.getSelectButton().setPrefHeight(200);
+
+        // 왼쪽 UI 전체 묶음
+        VBox leftUI = new VBox(20, topPanel, centerArea, bottomPanel);
+        leftUI.setAlignment(Pos.TOP_CENTER);
+        leftUI.setPadding(new Insets(10));
+
+        // 플레이어 표시 영역
+        Label statusLabel = new Label("");
+
+        VBox playersBox = new VBox(10);
+        playersBox.setAlignment(Pos.CENTER);
         for (int i = 1; i <= playerCount; i++) {
             piecesEntered.put(i, 0);
             Color color = playerColors[(i - 1) % playerColors.length];
@@ -101,8 +182,16 @@ public class GameScreenFX extends BorderPane implements GameScreenInterface {
             playerCanvases.put(i, player);
             playersBox.getChildren().add(player);
         }
-        bottomPanel.getChildren().add(playersBox);
-        setBottom(bottomPanel);
+
+        VBox playerSection = new VBox(5, statusLabel, playersBox);
+        playerSection.setAlignment(Pos.TOP_CENTER);
+        playerSection.setPadding(new Insets(10));
+
+        // 전체 배치: 좌(전체 UI) + 우(플레이어)
+        HBox mainLayout = new HBox(40, leftUI, playerSection);
+        mainLayout.setAlignment(Pos.TOP_CENTER);
+        mainLayout.setPadding(new Insets(20));
+        setCenter(mainLayout);
     }
 
     @Override
@@ -191,13 +280,41 @@ public class GameScreenFX extends BorderPane implements GameScreenInterface {
 
     @Override
     public void updateRandomResult(int yut) {
-        controlPanel.highlightYutButton(yut);
-        if (yut == 4 || yut == 5) {
-            controlPanel.getMoveNewPieceButton().setDisable(true);
-        } else {
-            controlPanel.getMoveNewPieceButton().setDisable(false);
-        }
     }
+
+    // @Override
+    // public void updateRandomResult(int[] yut) {
+    // Image image = new
+    // Image(getClass().getResource("/assets/img/yut_small_backward.png").toExternalForm());
+    // Image image2 = new
+    // Image(getClass().getResource("/assets/img/yut_small_upward.png").toExternalForm());
+    // Image image3 = new
+    // Image(getClass().getResource("/assets/img/yut_small_backdo.png").toExternalForm());
+
+    // if (yut[0] == 0) {
+    // this.firtstYut.setImage(image3);
+    // } else {
+    // this.firtstYut.setImage(image2);
+    // }
+
+    // if (yut[1] == 0) {
+    // this.secondYut.setImage(image);
+    // } else {
+    // this.secondYut.setImage(image2);
+    // }
+
+    // if (yut[2] == 0) {
+    // this.thirdYut.setImage(image);
+    // } else {
+    // this.thirdYut.setImage(image2);
+    // }
+
+    // if (yut[3] == 0) {
+    // this.fourthYut.setImage(image);
+    // } else {
+    // this.fourthYut.setImage(image2);
+    // }
+    // }
 
     @Override
     public void addRandomThrowButtonListener(EventHandler<ActionEvent> listener) {
@@ -213,7 +330,7 @@ public class GameScreenFX extends BorderPane implements GameScreenInterface {
 
     @Override
     public void addBackButtonListener(EventHandler<ActionEvent> listener) {
-        // 이미 생성자에서 처리됨. 필요시 별도 처리 가능.
+
     }
 
     @Override
@@ -241,7 +358,6 @@ public class GameScreenFX extends BorderPane implements GameScreenInterface {
         return nodeMap;
     }
 
-    // 내부 클래스 추가
     private static class PieceFX {
         Circle circle;
         int nodeID;

@@ -46,12 +46,25 @@ public class PieceFX extends Pane {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
         // 말 원 그리기
-        gc.setFill(color);
-        gc.fillOval(0, 0, radius * 2, radius * 2);
+        double centerX = radius;
+        double centerY = radius;
+        double[] xPoints = new double[8];
+        double[] yPoints = new double[8];
 
+        for (int i = 0; i < 8; i++) {
+            double angle = Math.toRadians(45 * i); // 360도 / 8 = 45도 간격
+            xPoints[i] = centerX + radius * Math.cos(angle);
+            yPoints[i] = centerY + radius * Math.sin(angle);
+        }
+
+        // 색 채우기
+        gc.setFill(color);
+        gc.fillPolygon(xPoints, yPoints, 8);
+
+        // 테두리 그리기
         gc.setStroke(Color.DARKGRAY);
         gc.setLineWidth(1.5);
-        gc.strokeOval(0, 0, radius * 2, radius * 2);
+        gc.strokePolygon(xPoints, yPoints, 8);
 
         // 말 개수 텍스트
         gc.setFill(Color.BLACK);
