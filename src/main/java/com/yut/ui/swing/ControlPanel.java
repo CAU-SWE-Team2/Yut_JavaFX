@@ -9,6 +9,8 @@ public class ControlPanel extends JPanel {
     private final JButton randomButton;
     private final JButton selectButton;
     private final JButton moveNewPieceButton;
+    private final JButton goalButton;
+
     public JButton[] getYutButtons() {
         return yutButtons;
     }
@@ -25,6 +27,9 @@ public class ControlPanel extends JPanel {
         return moveNewPieceButton;
     }
 
+    public JButton getGoalButton() {
+        return goalButton;
+    }
     // method for highlighting, called in GameScreen
     public void highlightYutButton(int yut) {
         if (yut < 0 || yut >= yutButtons.length)
@@ -75,7 +80,13 @@ public class ControlPanel extends JPanel {
         bottomButtonPanel.setBorder(BorderFactory.createEmptyBorder(30, 0, 0, 0)); // 위쪽 30px
         moveNewPieceButton = new JButton("새로운 말 움직이기"); // or any label you want
         moveNewPieceButton.setPreferredSize(new Dimension(150, 40));
+
+        goalButton = new JButton("골인!"); // or any label you want
+        goalButton.setPreferredSize(new Dimension(150, 40));
+        bottomButtonPanel.add(goalButton);
         bottomButtonPanel.add(moveNewPieceButton);
+
+        goalButton.setVisible(false);
 
         // 버튼 이벤트 설정
 

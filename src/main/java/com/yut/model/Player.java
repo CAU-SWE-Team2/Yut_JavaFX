@@ -15,6 +15,7 @@ public class Player {
     Player(int id, int numOfPieces){
         this.id = id;
         this.numOfTotalPieces = numOfPieces;
+        this.numOfCurrentPieces = numOfPieces;
     }
 
     // public int throwYut(Yut yut){
@@ -38,7 +39,9 @@ public class Player {
     }
 
     public void chooseTarget(Group target){
-        this.moveTarget = target;
+        if(target.getOwner().getId() == this.id){
+            this.moveTarget = target;
+        }
     }
 
     public Group getMoveTarget(){
@@ -54,6 +57,16 @@ public class Player {
 
     public int getId(){
         return this.id;
+    }
+
+    public int getNumOfWaitingPieces(){
+        int num = 0;
+        for(int i = 0; i < currentGroups.size(); i++){
+            if(currentGroups.get(i).currentLocation.id == 111){
+                num++;
+            }
+        }
+        return num;
     }
 
 }

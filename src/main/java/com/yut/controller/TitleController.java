@@ -5,11 +5,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import com.yut.ui.swing.MainFrame;
-import com.yut.ui.swing.GameScreen;
 import com.yut.ui.swing.StartScreen;
 import com.yut.controller.model_interfaces.GameModelInterface;
 import com.yut.model.Game;
-import com.yut.model.GameTurn;
 
 public class TitleController{
     
@@ -24,9 +22,7 @@ public class TitleController{
     }
 
     public void start(){
-
         SwingUtilities.invokeLater(() -> {
-
 
             mainFrame.setVisible(true);
             mainFrame.showStart();
@@ -34,16 +30,10 @@ public class TitleController{
             startScreen = mainFrame.getStart();
 
             startScreen.addStartButtonListener(new StartButtonListener());
-
-
-
         });
-
     }
 
-
     class StartButtonListener implements ActionListener {
-
         @Override
         public void actionPerformed(ActionEvent e) {
             int boardType = startScreen.getBoardType();
@@ -54,9 +44,6 @@ public class TitleController{
 
             mainFrame.showGame(boardType, playerCount, pieceCount);
             gameController = new GameController(gameModel, mainFrame.getGameScreen());
-            
         }
     }
-
-
 }

@@ -1,6 +1,7 @@
 package com.yut.ui.swing;
 
 import com.yut.controller.view_interfaces.GameScreenInterface;
+import com.yut.model.Yut;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,6 +13,7 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Deque;
+
 
 import java.util.HashMap;
 import java.util.Map;
@@ -41,6 +43,7 @@ public class GameScreen extends JPanel implements GameScreenInterface {
     private BoardCanvas boardCanvas;
     private Integer selectedPieceId = null;
     private boolean awaitingMove = false;
+    private ClickableNode currentHintNode = null; // for move preview
 
     private PreviewCircle previewCircle = null;
     private SelectRectangle selectRectangle = null;
@@ -221,21 +224,15 @@ public class GameScreen extends JPanel implements GameScreenInterface {
         bottomPanelWrapper.add(deckDisplayArea, BorderLayout.SOUTH);
         add(bottomPanelWrapper, BorderLayout.SOUTH);
 
-        // Test
-        // Deque<String> testDeck = new ArrayDeque<>();
-        // testDeck.add("도");
-        // testDeck.add("개");
-        // testDeck.add("윷");
-        // printDeckContents(testDeck);
     }
 
-    public void printDeckContents(Deque<?> deck) {
+    public void printDeckContents(Deque<Integer> deck) {
         StringBuilder sb = new StringBuilder();
         if (deck.isEmpty()) {
             sb.append("(덱이 비어 있습니다)");
         } else {
-            for (Object obj : deck) {
-                sb.append(obj).append("\n");
+            for (Integer obj : deck) {
+                sb.append(Yut.getYutName(obj)).append(" ");
             }
         }
         deckDisplayArea.setText(sb.toString());
@@ -303,16 +300,16 @@ public class GameScreen extends JPanel implements GameScreenInterface {
         previewCircle = new PreviewCircle(x, y, playerColors[playerID - 1]);
         previewCircle.setBounds(x, y, PreviewCircle.radius * 2, PreviewCircle.radius * 2);
         node.setPreviewPiece(true);
+        currentHintNode = node;
         layeredBoard.add(previewCircle);
     }
 
-    public void deleteMovePreview(int nodeID){
-        if (previewCircle == null) {
-            throw new RuntimeException("Preview Circle cannot be deleted because it doesn't exist");
-        }
-        else {
-            ClickableNode node = nodeMap.get(nodeID);
-            node.setPreviewPiece(false);
+    public void deleteMovePreview() {
+        if (previewCircle != null) {
+            if (currentHintNode != null) {
+                currentHintNode.setPreviewPiece(false);
+                currentHintNode = null;
+            }
             layeredBoard.remove(previewCircle);
             previewCircle = null;
             layeredBoard.revalidate();
@@ -322,10 +319,13 @@ public class GameScreen extends JPanel implements GameScreenInterface {
 
     public void drawPiece(int nodeID, int playerID, int pieceNumber) {
         ClickableNode node = nodeMap.get(nodeID);
-        if (node == null) throw new RuntimeException("Node does not exist");
+        if (node == null)
+            throw new RuntimeException("Node does not exist");
 
-        Piece piece = new Piece(node.getNodeX() - Piece.radius, node.getNodeY() - Piece.radius, playerColors[playerID - 1], pieceNumber);
-        piece.setBounds(node.getNodeX() - Piece.radius, node.getNodeY() - Piece.radius, Piece.radius*2, Piece.radius*2);
+        Piece piece = new Piece(node.getNodeX() - Piece.radius, node.getNodeY() - Piece.radius,
+                playerColors[playerID - 1], pieceNumber);
+        piece.setBounds(node.getNodeX() - Piece.radius, node.getNodeY() - Piece.radius, Piece.radius * 2,
+                Piece.radius * 2);
         layeredBoard.add(piece, JLayeredPane.PALETTE_LAYER);
         node.setOnNodePiece(piece);
         layeredBoard.revalidate();
@@ -338,6 +338,9 @@ public class GameScreen extends JPanel implements GameScreenInterface {
             throw new RuntimeException("There are no pieces to delete on node" + nodeID);
         ClickableNode node = nodeMap.get(nodeID);
         Piece piece = node.getOnNodePiece();
+
+        if(piece == null)
+            return;
         node.setOnNodePiece(null);
         layeredBoard.remove(piece);
         layeredBoard.revalidate();
@@ -371,9 +374,25 @@ public class GameScreen extends JPanel implements GameScreenInterface {
         layeredBoard.add(selectRectangle);
     }
 
+    public void highlightCurrentPlayer(int currentPlayerId) {
+        for (int i = 1; i <= playerCount; i++) {
+            PlayerCanvas canvas = playerCanvases.get(i);
+            if (canvas != null) {
+                canvas.setHighlighted(i == currentPlayerId);
+            }
+        }
+    }
+
     // highlights the yut given by backend. Updates display on the control panel
     public void updateRandomResult(int yut) {
         controlPanel.highlightYutButton(yut);
+        if (yut == 4 || yut == 5) {
+            controlPanel.getMoveNewPieceButton().setBackground(Color.LIGHT_GRAY);
+            controlPanel.getMoveNewPieceButton().setEnabled(false);
+        } else {
+            controlPanel.getMoveNewPieceButton().setBackground(null);
+            controlPanel.getMoveNewPieceButton().setEnabled(true);
+        }
     }
 
     public void addRandomThrowButtonListener(ActionListener listener) {
@@ -384,16 +403,24 @@ public class GameScreen extends JPanel implements GameScreenInterface {
         controlPanel.getYutButtons()[index].addActionListener(listener);
     }
 
-    public void addMoveNewPieceButtonListener(ActionListener listener){
+    public void addMoveNewPieceButtonListener(ActionListener listener) {
         controlPanel.getMoveNewPieceButton().addActionListener(listener);
     }
 
-    public void addBackButtonListener(ActionListener listener){
+    public void addBackButtonListener(ActionListener listener) {
         backButton.addActionListener(listener);
     }
 
     public void addNodeClickListener(ClickableNode node, MouseListener listener) {
         node.addMouseListener(listener);
+    }
+
+    public void addGoalButtonListener(ActionListener listener) {
+        controlPanel.getGoalButton().addActionListener(listener);
+    }
+
+    public void setGoalButtonVisible(boolean visible) {
+        controlPanel.getGoalButton().setVisible(visible);
     }
 
     public Map<Integer, ClickableNode> getNodeMap() {

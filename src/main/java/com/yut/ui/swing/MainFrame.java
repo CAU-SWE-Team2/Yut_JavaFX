@@ -20,7 +20,7 @@ public class MainFrame extends JFrame {
     public MainFrame() {
         setTitle("Yut Game");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setSize(1000, 675);
+        setSize(1100, 760);
         setLocationRelativeTo(null);
 
         // Screens

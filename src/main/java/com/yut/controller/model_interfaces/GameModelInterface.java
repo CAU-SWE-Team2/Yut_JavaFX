@@ -13,4 +13,5 @@ public interface GameModelInterface {
     public Player getCurrentPlayer();
     public int getPlayerCount();
     public int getNumOfTotalPieces();
+    public int getBoardType();
 }
