@@ -28,5 +28,5 @@ javafx {
 }
 
 application {
-    mainClass.set("com.yut.ui.swing.GameWindow") // 실제 실행할 클래스 지정
+    mainClass.set("com.yut.ui.swing.GameWindow")
 }
