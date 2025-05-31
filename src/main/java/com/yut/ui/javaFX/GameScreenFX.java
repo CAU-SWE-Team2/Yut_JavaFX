@@ -77,7 +77,7 @@ public class GameScreenFX extends BorderPane implements GameScreenInterface {
                 BackgroundRepeat.NO_REPEAT,
                 BackgroundRepeat.NO_REPEAT,
                 BackgroundPosition.CENTER,
-                new BackgroundSize(100, 100, true, true, true, true));
+                new BackgroundSize(950, 760, false, false, false, false));
         setBackground(new Background(backgroundImage));
 
         // 시작 버튼 상단
@@ -85,11 +85,13 @@ public class GameScreenFX extends BorderPane implements GameScreenInterface {
         topPanel.setPadding(new Insets(10));
         topPanel.setAlignment(Pos.CENTER_LEFT);
         topPanel.setPrefHeight(1000);
+        topPanel.setPadding(new Insets(0, 0, 50, 0));
 
         Button backButton = new Button("← 시작 화면으로");
         backButton.setPrefWidth(160);
         backButton.setPrefHeight(160);
         backButton.setMaxHeight(Double.MAX_VALUE);
+        backButton.setPadding(new Insets(10, 0, 10, 0));
 
         backButton.setOnAction(e -> onBack.run());
         // backButton.setFont(customFont20);
@@ -104,10 +106,12 @@ public class GameScreenFX extends BorderPane implements GameScreenInterface {
         boardCanvas.setPrefHeight(1500);
 
         layeredBoard.setId("layered-board");
+        layeredBoard.setAlignment(Pos.CENTER);
         layeredBoard.getChildren().add(boardCanvas);
 
-        StackPane boardPane = new StackPane(layeredBoard);
-        boardPane.setPadding(new Insets(10));
+        Pane boardPane = new Pane(layeredBoard);
+        // boardPane.setAlignment(Pos.CENTER);
+        boardPane.setPadding(new Insets(70, 30, 0, 0));
 
         // 덱 표시창
         deckDisplayArea = new TextArea();
@@ -146,6 +150,13 @@ public class GameScreenFX extends BorderPane implements GameScreenInterface {
         rightOfBoard.setAlignment(Pos.CENTER);
         rightOfBoard.setFillWidth(false);
 
+        // 테스트 코드
+        // Deque<Integer> testDeque = new ArrayDeque<>();
+        // testDeque.add(5);
+        // testDeque.add(3);
+        // testDeque.add(1);
+        // printDeckContents(testDeque);
+
         // 보드 + 덱/컨트롤 패널 수평 정렬
         HBox centerArea = new HBox(20, boardPane, rightOfBoard);
         centerArea.setAlignment(Pos.CENTER);
@@ -169,12 +180,17 @@ public class GameScreenFX extends BorderPane implements GameScreenInterface {
         VBox leftUI = new VBox(20, topPanel, centerArea, bottomPanel);
         leftUI.setAlignment(Pos.TOP_CENTER);
         leftUI.setPadding(new Insets(10));
+        VBox.setVgrow(centerArea, Priority.ALWAYS);
 
         // 플레이어 표시 영역
         Label statusLabel = new Label("");
 
         VBox playersBox = new VBox(10);
         playersBox.setAlignment(Pos.CENTER);
+        playersBox.setPrefHeight(760);
+        StackPane playersStack = new StackPane();
+        playersStack.setPrefSize(180, 720);
+
         for (int i = 1; i <= playerCount; i++) {
             piecesEntered.put(i, 0);
             Color color = playerColors[(i - 1) % playerColors.length];
@@ -201,7 +217,7 @@ public class GameScreenFX extends BorderPane implements GameScreenInterface {
             sb.append("(덱이 비어 있습니다)");
         } else {
             for (Integer obj : deck) {
-                sb.append(Yut.getYutName(obj)).append(" ");
+                sb.append(Yut.getYutName(obj)).append("\n");
             }
         }
         deckDisplayArea.setText(sb.toString());

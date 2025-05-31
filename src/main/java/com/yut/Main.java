@@ -8,11 +8,11 @@ import javafx.stage.Stage;
 public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
-        GameScreenFX gameScreen = new GameScreenFX(4, 4, () -> {
+        GameScreenFX gameScreen = new GameScreenFX(4, 3, () -> {
             // 시작 화면으로 돌아가는 기능 구현 시 작성
         });
 
-        Scene scene = new Scene(gameScreen, 1100, 760);
+        Scene scene = new Scene(gameScreen, 950, 760);
         scene.getStylesheets().add(
                 getClass().getResource("/com/yut/ui/CSS/StartScreenFX.css").toExternalForm());
 
