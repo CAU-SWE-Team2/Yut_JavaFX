@@ -1,0 +1,17 @@
+.root {
+    -fx-background-color: #f0f8ff;
+    /* 전체 배경색 */
+}
+
+#layered-board {
+    -fx-background-color: #e3f2fd;
+    /* 보드 배경 */
+}
+
+.text-area {
+    -fx-background-color: white;
+    -fx-border-color: lightgray;
+    -fx-border-width: 1px;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}

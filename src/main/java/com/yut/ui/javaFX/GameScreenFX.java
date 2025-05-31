@@ -67,6 +67,7 @@ public class GameScreenFX extends BorderPane implements GameScreenInterface {
         for (ClickableNodeFX node : clickableNodes) {
             nodeMap.put(node.getNodeID(), node);
         }
+        layeredBoard.setId("layered-board");
         layeredBoard.getChildren().add(boardCanvas);
 
         HBox centerPanel = new HBox(10);
@@ -122,14 +123,27 @@ public class GameScreenFX extends BorderPane implements GameScreenInterface {
         ClickableNodeFX node = nodeMap.get(nodeID);
         if (node == null)
             throw new RuntimeException("Node not found");
+
         Circle piece = new Circle(10, playerColors[playerID - 1]);
+        piece.setUserData(pieceNumber);
+        pieceList.add(new PieceFX(piece, nodeID));
+
         StackPane.setMargin(piece, new Insets(node.getNodeY(), 0, 0, node.getNodeX()));
         layeredBoard.getChildren().add(piece);
     }
 
     @Override
     public void deletePiece(int nodeID) {
-        // 제거 로직 필요시 구현
+        PieceFX toRemove = null;
+        for (PieceFX piece : pieceList) {
+            if (piece.nodeID == nodeID) {
+                layeredBoard.getChildren().remove(piece.circle);
+                toRemove = piece;
+                break;
+            }
+        }
+        if (toRemove != null)
+            pieceList.remove(toRemove);
     }
 
     @Override
@@ -177,6 +191,7 @@ public class GameScreenFX extends BorderPane implements GameScreenInterface {
 
     @Override
     public void updateRandomResult(int yut) {
+        controlPanel.highlightYutButton(yut);
         if (yut == 4 || yut == 5) {
             controlPanel.getMoveNewPieceButton().setDisable(true);
         } else {
@@ -224,5 +239,16 @@ public class GameScreenFX extends BorderPane implements GameScreenInterface {
     @Override
     public Map<Integer, ClickableNodeFX> getNodeMap() {
         return nodeMap;
+    }
+
+    // 내부 클래스 추가
+    private static class PieceFX {
+        Circle circle;
+        int nodeID;
+
+        PieceFX(Circle circle, int nodeID) {
+            this.circle = circle;
+            this.nodeID = nodeID;
+        }
     }
 }
