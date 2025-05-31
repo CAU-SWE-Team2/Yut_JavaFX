@@ -110,7 +110,15 @@ public class StartScreen extends JPanel {
         Dimension startButtonSize = new Dimension(150, 40);
         startButton.setPreferredSize(startButtonSize);
 
-        playerCount.addChangeListener(e -> {
+        boardType = 4;
+        players = 2;
+        pieces = 4;
+        startButton.addActionListener(e -> {
+            if (board5.isSelected())
+                boardType = 5;
+            else if (board6.isSelected())
+                boardType = 6;
+
             players = (Integer) playerCount.getValue();
         });
         pieceCount.addChangeListener(e -> {
@@ -163,7 +171,10 @@ public class StartScreen extends JPanel {
              * gameScreen.showMovePreview();
              * gameScreen.deleteMovePreview();
              * gameScreen.updatePlayerCanvas();
+             * <<<<<<< HEAD
+             * =======
              * gameScreen.updateRandomResult();
+             * >>>>>>> 2f1a6522b31b5a2bbf61f7cce0aaf3717633c81d
              * 
              * int nodeState = gameScreen.getNodeState();
              * 
