@@ -3,7 +3,6 @@ package com.yut.ui.javaFX;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import com.yut.ui.javaFX.ClickableNodeFX;
-import com.yut.ui.swing.ClickableNode;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -105,9 +104,6 @@ public class BoardCanvasFX extends Region {
             drawCircle(gc, startX + 3 * dStep, startY + 3 * dStep, 16);
             drawText(gc, "출발", startX + 5 * cStep, startY + 5 * cStep);
         }
-
-        // TODO: Implement boardType == 5, 6 like above (same structure, use
-        // trigonometry)
     }
 
     private void drawCircle(GraphicsContext gc, int x, int y, int r) {
