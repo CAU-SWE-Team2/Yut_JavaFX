@@ -85,7 +85,7 @@ public class GameScreenFX extends BorderPane implements GameScreenInterface {
         topPanel.setPadding(new Insets(10));
         topPanel.setAlignment(Pos.CENTER_LEFT);
         topPanel.setPrefHeight(1000);
-        topPanel.setPadding(new Insets(0, 0, 50, 0));
+        topPanel.setPadding(new Insets(0, 0, 20, 0));
 
         Button backButton = new Button("← 시작 화면으로");
         backButton.setPrefWidth(160);
@@ -110,7 +110,7 @@ public class GameScreenFX extends BorderPane implements GameScreenInterface {
         layeredBoard.setStyle("-fx-border-color:red;");
 
         StackPane boardPane = new StackPane(layeredBoard);
-        boardPane.setPadding(new Insets(70, 30, 0, 0));
+        boardPane.setPadding(new Insets(0, 30, 0, 0));
 
         // 덱 표시창
         deckDisplayArea = new TextArea();
