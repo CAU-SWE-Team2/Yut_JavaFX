@@ -49,11 +49,11 @@ public class PlayerCanvasFX extends Pane {
         gc.fillRoundRect(10, 10, canvas.getWidth() - 20, canvas.getHeight() - 20, 20, 15);
 
         // 테두리
-        gc.setStroke(Color.TRANSPARENT);
+        gc.setStroke(highlighted ? Color.YELLOW : Color.TRANSPARENT);
+        gc.setLineWidth(highlighted ? 3 : 1);
         gc.strokeRoundRect(10, 10, canvas.getWidth() - 20, canvas.getHeight() - 20, 20, 15);
 
-        // 플레이어 ID
-        // 텍스트 위치 계산
+        // 플레이어
         gc.setFill(Color.BLACK);
         gc.setFont(Font.font(14));
 
