@@ -49,8 +49,8 @@ public class TitleController{
             Scene gameScene = new Scene(gameScreen, 950, 760);
 
 
-            // gameScene.getStylesheets().add(
-            //         getClass().getResource("src/main/resources/com/yut/ui/CSS/ScreenFX.css").toExternalForm());
+            gameScene.getStylesheets().add(
+                    getClass().getResource("/com/yut/ui/CSS/StartScreenFX.css").toExternalForm());
 
 
             primaryStage.setScene(gameScene);

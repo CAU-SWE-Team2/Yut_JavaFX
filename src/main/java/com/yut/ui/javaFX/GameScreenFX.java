@@ -147,6 +147,10 @@ public class GameScreenFX extends BorderPane implements GameScreenInterface {
         deckDisplayArea.setWrapText(true);
         deckDisplayArea.setPrefWidth(180);
         deckDisplayArea.setPrefHeight(300);
+        deckDisplayArea.setStyle("""
+            -fx-background-insets: 0;
+            -fx-effect: none;
+        """);
 
         // 컨트롤 패널 (사진, 버튼 등)
         controlPanel = new ControlPanelFX();
