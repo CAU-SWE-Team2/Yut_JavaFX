@@ -21,11 +21,11 @@ public class StartScreenFX extends VBox {
 
     public StartScreenFX() {
         Font customFont20 = Font.loadFont(
-                getClass().getResource("assets/fonts/SF_HailSnow.ttf").toExternalForm(),
+                getClass().getResource("/assets/fonts/SF_HailSnow.ttf").toExternalForm(),
                 20);
 
         Font customFont50 = Font.loadFont(
-                getClass().getResource("assets/fonts/SF_HailSnow.ttf").toExternalForm(),
+                getClass().getResource("/assets/fonts/SF_HailSnow.ttf").toExternalForm(),
                 50);
 
         setSpacing(30);
@@ -77,14 +77,14 @@ public class StartScreenFX extends VBox {
         // choiceBox
 
         VBox choiceBox = new VBox(0);
-        HBox.setMargin(choiceBox, new Insets(0, 0, 0, 30));
+        HBox.setMargin(choiceBox, new Insets(0, 0, 0, 100));
         middleBox.getChildren().add(choiceBox);
 
         // Preload images into an array
-        Image[] playerImages = new Image[3];
-        for (int i = 0; i < 3; i++) {
+        Image[] playerImages = new Image[4];
+        for (int i = 0; i < 4; i++) {
             playerImages[i] = new Image(
-                    getClass().getResource("/assets/img/retro_num_button_" + (i + 2) + ".png").toExternalForm());
+                    getClass().getResource("/assets/img/retro_num_button_" + (i + 1) + ".png").toExternalForm());
         }
 
         ImageView playerImageView = new ImageView(playerImages[0]);
@@ -100,10 +100,10 @@ public class StartScreenFX extends VBox {
 
         choiceBox.getChildren().addAll(playerImageView);
 
-        Image[] pieceImages = new Image[4];
-        for (int i = 0; i < 4; i++) {
+        Image[] pieceImages = new Image[5];
+        for (int i = 0; i < 5; i++) {
             pieceImages[i] = new Image(
-                    getClass().getResource("assets/img/retro_num_button_" + (i + 2) + ".png").toExternalForm());
+                    getClass().getResource("/assets/img/retro_num_button_" + (i + 1) + ".png").toExternalForm());
         }
 
         ImageView pieceImageView = new ImageView(playerImages[0]);
@@ -147,12 +147,12 @@ public class StartScreenFX extends VBox {
         getChildren().add(gameStart); // ✔ Add HBox to parent layout (e.g., VBox)
 
         BackgroundImage backgroundImage = new BackgroundImage(
-                new javafx.scene.image.Image(getClass().getResource("/assets/img/background.png").toExternalForm()),
-                BackgroundRepeat.NO_REPEAT,
-                BackgroundRepeat.NO_REPEAT,
-                BackgroundPosition.CENTER,
-                new BackgroundSize(1280, 832, false, false, true, false));
-
+            new javafx.scene.image.Image(getClass().getResource("/assets/img/background.png").toExternalForm()),
+            BackgroundRepeat.NO_REPEAT,
+            BackgroundRepeat.NO_REPEAT,
+            BackgroundPosition.CENTER,
+            new BackgroundSize(100, 100, true, true, false, true)
+        );
         setBackground(new Background(backgroundImage));
 
     }

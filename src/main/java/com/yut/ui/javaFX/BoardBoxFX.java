@@ -17,7 +17,7 @@ public class BoardBoxFX extends VBox {
     private Line underline;
 
     Font customFont = Font.loadFont(
-            getClass().getResource("/fonts/SF_HailSnow.ttf").toExternalForm(),
+            getClass().getResource("/assets/fonts/SF_HailSnow.ttf").toExternalForm(),
             30);
 
     BoardBoxFX(String label) {
@@ -36,6 +36,7 @@ public class BoardBoxFX extends VBox {
         this.underline.setEndX(width - 20);
         this.underline.setStrokeWidth(1);
         this.underline.setStroke(Color.web("#C16D00"));
+        this.underline.setStrokeWidth(3);
         this.underline.setVisible(false); // hidden by default
 
         this.label.setOnMouseClicked(event -> {
