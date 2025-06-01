@@ -9,6 +9,7 @@ import com.yut.model.Group;
 import com.yut.model.Node;
 import com.yut.model.Player;
 import com.yut.model.Yut;
+import com.yut.ui.javaFX.EndingStageFX;
 import com.yut.ui.javaFX.GameScreenFX;
 import com.yut.ui.javaFX.StartScreenFX;
 
@@ -20,6 +21,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 
 public class GameControllerFX {
 
@@ -229,7 +231,6 @@ public class GameControllerFX {
             
 
             if(currentPlayer.getNumOfCurrentPieces() == 0){
-                
             }
             
         }

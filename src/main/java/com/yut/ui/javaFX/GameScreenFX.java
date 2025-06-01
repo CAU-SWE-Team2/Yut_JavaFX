@@ -133,6 +133,7 @@ public class GameScreenFX extends BorderPane implements GameScreenInterface {
             nodeMap.put(node.getNodeID(), node);
         }
         boardCanvas.setPrefHeight(1500);
+        boardCanvas.setPrefWidth(510);
 
         layeredBoard.setId("layered-board");
         layeredBoard.getChildren().add(boardCanvas);
