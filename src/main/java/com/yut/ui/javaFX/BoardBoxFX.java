@@ -9,6 +9,7 @@ import javafx.scene.text.Font;
 
 public class BoardBoxFX extends VBox {
     private static BoardBoxFX currentlySelected = null;
+    static int selectedBoardType = 4;
     private int width = 80;
     private int height = 200;
     private int boardType;
@@ -20,7 +21,8 @@ public class BoardBoxFX extends VBox {
             getClass().getResource("/assets/fonts/SF_HailSnow.ttf").toExternalForm(),
             30);
 
-    BoardBoxFX(String label) {
+    BoardBoxFX(String label, int boardType) {
+        this.boardType = boardType;
         setAlignment(Pos.CENTER);
         this.label = new Label(label);
         this.label.setFont(customFont);
@@ -40,7 +42,7 @@ public class BoardBoxFX extends VBox {
         this.underline.setVisible(false); // hidden by default
 
         this.label.setOnMouseClicked(event -> {
-            this.boardType = 4;
+            selectedBoardType = this.boardType;
             if (currentlySelected != null) {
                 currentlySelected.underline.setVisible(false);
             }

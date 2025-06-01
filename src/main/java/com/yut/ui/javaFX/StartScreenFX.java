@@ -1,5 +1,7 @@
 package com.yut.ui.javaFX;
 
+import com.yut.model.Board;
+
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -124,9 +126,9 @@ public class StartScreenFX extends VBox {
         // boardBox.setAlignment(Pos.CENTER_LEFT);
         HBox.setMargin(boardBox, new Insets(0, 0, 0, 220)); // Top = 100px
 
-        BoardBoxFX board4Box = new BoardBoxFX("사\n각\n형\n판");
-        BoardBoxFX board5Box = new BoardBoxFX("오\n각\n형\n판");
-        BoardBoxFX board6Box = new BoardBoxFX("육\n각\n형\n판");
+        BoardBoxFX board4Box = new BoardBoxFX("사\n각\n형\n판", 4);
+        BoardBoxFX board5Box = new BoardBoxFX("오\n각\n형\n판", 5);
+        BoardBoxFX board6Box = new BoardBoxFX("육\n각\n형\n판", 6);
 
         boardBox.getChildren().addAll(board4Box, board5Box, board6Box);
         middleBox.getChildren().add(boardBox);
@@ -142,6 +144,11 @@ public class StartScreenFX extends VBox {
         gameStartBtn.setPrefWidth(120); // width in pixels
         gameStartBtn.setPrefHeight(60); // height in pixels
         gameStartBtn.setFont(customFont20);
+        gameStartBtn.setOnAction(e -> {
+            if (startButtonAction != null) {
+                startButtonAction.run();
+            }
+        });
 
         gameStart.getChildren().add(gameStartBtn); // ✔ Add button to HBox
         getChildren().add(gameStart); // ✔ Add HBox to parent layout (e.g., VBox)
@@ -165,16 +172,16 @@ public class StartScreenFX extends VBox {
     }
 
     public int getBoardType() {
-        return boardType;
+        return BoardBoxFX.selectedBoardType;
     }
 
     // index starts from 0 (index 0 is retro_num_button_2.png)
     public int getPlayerCount() {
-        return currentPieceIndex[0] + 2;
+        return currentPieceIndex[0] + 1;
     }
 
     public int getPieceCount() {
-        return currentPieceIndex[0] + 2;
+        return currentPieceIndex[0] + 1;
     }
 
     public void setStartButtonListener(Runnable action) {
