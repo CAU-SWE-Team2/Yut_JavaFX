@@ -401,14 +401,4 @@ public class GameScreenFX extends BorderPane implements GameScreenInterface {
     public Map<Integer, ClickableNodeFX> getNodeMap() {
         return nodeMap;
     }
-
-    private static class PieceFX {
-        Circle circle;
-        int nodeID;
-
-        PieceFX(Circle circle, int nodeID) {
-            this.circle = circle;
-            this.nodeID = nodeID;
-        }
-    }
 }
