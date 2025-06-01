@@ -65,7 +65,6 @@ public class GameTurn implements GameTurnModelInterface {
                 alert.setHeaderText("뒤로 갈 수 있는 말이 없습니다.");
                 alert.setContentText("한 번 더 던지세요!");
                 alert.showAndWait();
-                leftYuts.addLast(result);
                 rollCount++;
             }
         }
