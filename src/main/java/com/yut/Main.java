@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
-        GameScreenFX gameScreen = new GameScreenFX(4, 3, () -> {
+        GameScreenFX gameScreen = new GameScreenFX(4, 4, () -> {
             // 시작 화면으로 돌아가는 기능 구현 시 작성
         });
 

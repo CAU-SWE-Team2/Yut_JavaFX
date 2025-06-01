@@ -107,7 +107,6 @@ public class GameScreenFX extends BorderPane implements GameScreenInterface {
 
         layeredBoard.setId("layered-board");
         layeredBoard.getChildren().add(boardCanvas);
-        layeredBoard.setStyle("-fx-border-color:red;");
 
         StackPane boardPane = new StackPane(layeredBoard);
         boardPane.setPadding(new Insets(0, 30, 0, 0));
