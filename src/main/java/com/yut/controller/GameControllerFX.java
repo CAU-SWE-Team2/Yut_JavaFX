@@ -159,17 +159,26 @@ public class GameControllerFX {
             gameTurnModel.move(targetGroup);
             gameScreen.printDeckContents(gameTurnModel.getLeftYuts());
             targetGroup.goal();
+            
+            gameScreen.updatePlayerCanvas(currentPlayer.getId(), gameModel.getCurrentPlayer().getNumOfCurrentPieces());
+            gameScreen.setGoalButtonVisible(false);
 
-            if ((gameTurnModel.getLeftYuts().isEmpty() && gameTurnModel.getRollCount() == 0)
-                    || (gameTurnModel.getLeftYuts().size() == 1
-                            && gameTurnModel.getLeftYuts().getFirst() == Yut.BACKDO)) {
+            if (gameTurnModel.getLeftYuts().isEmpty() && gameTurnModel.getRollCount() == 0){
+                gameModel.switchTurn();
+                gameScreen.highlightCurrentPlayer(gameModel.getCurrentPlayer().getId());
+            }
+            if(gameTurnModel.getLeftYuts().size() == 1 && gameTurnModel.getLeftYuts().getFirst() == Yut.BACKDO){
                 gameTurnModel.getLeftYuts().removeFirst();
                 gameModel.switchTurn();
                 gameScreen.highlightCurrentPlayer(gameModel.getCurrentPlayer().getId());
             }
 
-            gameScreen.updatePlayerCanvas(currentPlayer.getId(), currentPlayer.getNumOfCurrentPieces());
-            gameScreen.setGoalButtonVisible(false);
+            
+
+            if(currentPlayer.getNumOfCurrentPieces() == 0){
+                
+            }
+            
         }
     }
 }

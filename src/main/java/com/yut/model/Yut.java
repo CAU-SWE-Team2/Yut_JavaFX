@@ -44,11 +44,10 @@ public class Yut {
     void rollYutRandomly(){
         Random random = new Random();
         
-        yuts[0] = random.nextInt(5) < 2 ? 1 : 0;
-        yuts[1] = random.nextInt(5) < 2 ? 1 : 0;
-        yuts[2] = random.nextInt(5) < 2 ? 1 : 0;
-        yuts[3] = random.nextInt(5) < 2 ? 1 : 0;
-        current = random.nextInt(16);
+        yuts[0] = random.nextInt(4) < 2 ? 1 : 0;
+        yuts[1] = random.nextInt(4) < 2 ? 1 : 0;
+        yuts[2] = random.nextInt(4) < 2 ? 1 : 0;
+        yuts[3] = random.nextInt(4) < 2 ? 1 : 0;
 
         if(yuts[0] == 0 && yuts[1] == 1 && yuts[2] == 1 && yuts[3] == 1){
             current = Yut.BACKDO;
