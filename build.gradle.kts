@@ -20,6 +20,8 @@ repositories {
 dependencies {
     testImplementation(platform("org.junit:junit-bom:5.10.0"))
     testImplementation("org.junit.jupiter:junit-jupiter")
+    implementation ("org.openjfx:javafx-controls:20")
+    implementation ("org.openjfx:javafx-fxml:20")
 }
 
 javafx {
@@ -28,5 +30,5 @@ javafx {
 }
 
 application {
-    mainClass.set("com.yut.ui.swing.GameWindow")
+    mainClass.set("com.yut.Main")
 }
