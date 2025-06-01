@@ -3,8 +3,8 @@ package com.yut.model;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
-import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
 import com.yut.controller.model_interfaces.GameTurnModelInterface;   
 
@@ -45,9 +45,11 @@ public class GameTurn implements GameTurnModelInterface {
 
         if(result == Yut.YUT || result == Yut.MO){
             rollCount++;
-            SwingUtilities.invokeLater(() -> {
-                JOptionPane.showMessageDialog(null, "한 번 더 던지세요!", "추가 턴", JOptionPane.INFORMATION_MESSAGE);
-            });
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("One More Turn");
+            alert.setHeaderText("한 번 더 던지세요!");
+            alert.setContentText("윷, 모가 나와서 추가 턴을 획득했습니다.");
+            alert.showAndWait();
             leftYuts.addLast(result);
         }
         else if(result == Yut.BACKDO && (currentPlayer.getNumOfWaitingPieces() == currentPlayer.getNumOfCurrentPieces()) && leftYuts.isEmpty()){
@@ -56,7 +58,12 @@ public class GameTurn implements GameTurnModelInterface {
                 result = yut.getCurrent();
             }
             else{
-                JOptionPane.showMessageDialog(null, "뒤로 갈 수 있는 말이 없습니다!", "Backdo", JOptionPane.INFORMATION_MESSAGE);
+                Alert alert = new Alert(AlertType.INFORMATION);
+                alert.setTitle("Backdo");
+                alert.setHeaderText("뒤로 갈 수 있는 말이 없습니다.");
+                alert.setContentText("한 번 더 던지세요!");
+                alert.showAndWait();
+                leftYuts.addLast(result);
                 rollCount++;
             }
         }
@@ -83,9 +90,11 @@ public class GameTurn implements GameTurnModelInterface {
         int result = group.move(group.getNextNode(nextYut));
         
         if(result == 1 && currentPlayer.getNumOfCurrentPieces() != 0){
-            SwingUtilities.invokeLater(() -> {
-                JOptionPane.showMessageDialog(null, "한 번 더 던지세요!", "추가 턴", JOptionPane.INFORMATION_MESSAGE);
-            });
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("One More Turn");
+            alert.setHeaderText("한 번 더 던지세요!");
+            alert.setContentText("다른 말을 잡았습니다.");
+            alert.showAndWait();
             rollCount++;
             state = GameTurnModelInterface.THROWABLE;
         }           

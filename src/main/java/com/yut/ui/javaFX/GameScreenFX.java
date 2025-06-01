@@ -26,7 +26,7 @@ public class GameScreenFX extends BorderPane implements GameScreenInterface {
 
     private int boardType;
     private int playerCount;
-    private static int defaultPieceCount = 4;
+    private int pieceCount = 4;
 
     private Color[] playerColors = {
             Color.LIGHTCORAL,
@@ -57,7 +57,7 @@ public class GameScreenFX extends BorderPane implements GameScreenInterface {
     ImageView thirdYut;
     ImageView fourthYut;
 
-    public GameScreenFX(int boardType, int playerCount, Runnable onBack) {
+    public GameScreenFX(int boardType, int playerCount, int pieceCount) {
 
         // Font customFont20 = Font.loadFont(
         // getClass().getResource("/assets/fonts/SF_HailSnow.ttf").toExternalForm(),
@@ -69,7 +69,8 @@ public class GameScreenFX extends BorderPane implements GameScreenInterface {
 
         this.boardType = boardType;
         this.playerCount = playerCount;
-        this.onBack = onBack;
+        this.pieceCount = pieceCount;
+        // this.onBack = onBack;
 
         BackgroundImage backgroundImage = new BackgroundImage(
                 new javafx.scene.image.Image(
@@ -108,7 +109,7 @@ public class GameScreenFX extends BorderPane implements GameScreenInterface {
         backButton.setMaxHeight(Double.MAX_VALUE);
         backButton.setPadding(new Insets(10, 0, 10, 0));
 
-        backButton.setOnAction(e -> onBack.run());
+        // backButton.setOnAction(e -> onBack.run());
         // backButton.setFont(customFont20);
         topPanel.getChildren().add(backButton);
 
@@ -207,7 +208,7 @@ public class GameScreenFX extends BorderPane implements GameScreenInterface {
         for (int i = 1; i <= playerCount; i++) {
             piecesEntered.put(i, 0);
             Color color = playerColors[(i - 1) % playerColors.length];
-            PlayerCanvasFX player = new PlayerCanvasFX(i, defaultPieceCount, color);
+            PlayerCanvasFX player = new PlayerCanvasFX(i, pieceCount, color);
             playerCanvases.put(i, player);
             playersBox.getChildren().add(player);
         }
@@ -287,6 +288,7 @@ public class GameScreenFX extends BorderPane implements GameScreenInterface {
         previewCircle.setOpacity(0.5); // optional: make it semi-transparent for preview
         previewCircle.setLayoutX(node.getNodeX());
         previewCircle.setLayoutY(node.getNodeY());
+        previewCircle.setMouseTransparent(true);
         layeredBoard.getChildren().add(previewCircle);
         currentHintNode = node;
         node.setPreviewPiece(true);
@@ -295,6 +297,11 @@ public class GameScreenFX extends BorderPane implements GameScreenInterface {
     @Override
     public void deleteMovePreview() {
         if (previewCircle != null) {
+            if (currentHintNode != null) {
+                
+                currentHintNode.setPreviewPiece(false);
+                currentHintNode = null;
+            }
             layeredBoard.getChildren().remove(previewCircle);
             previewCircle = null;
         }

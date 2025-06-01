@@ -12,16 +12,11 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
 
-        StartScreenFX startScreen = new StartScreenFX();
-        Scene scene = new Scene(startScreen, 950, 760);
-        scene.getStylesheets().add(
-                getClass().getResource("/com/yut/ui/CSS/StartScreenFX.css").toExternalForm());
-
-        primaryStage.setScene(scene);
+       
         primaryStage.setTitle("Yut Game - Game Screen");
         primaryStage.show();
 
-        TitleController titleController = new TitleController(startScreen);
+        TitleController titleController = new TitleController(primaryStage);
         titleController.start();
         
     }
