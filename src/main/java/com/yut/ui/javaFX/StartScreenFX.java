@@ -3,89 +3,182 @@ package com.yut.ui.javaFX;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 
 public class StartScreenFX extends VBox {
 
     private int boardType = 4;
-    private int playerCount = 2;
-    private int pieceCount = 4;
+
+    // Track the current image index
+    final int[] currentPlayerIndex = { 0 };
+    // Track the current image index
+    final int[] currentPieceIndex = { 0 };
 
     private Runnable startButtonAction;
 
     public StartScreenFX() {
+        Font customFont20 = Font.loadFont(
+                getClass().getResource("/fonts/SF_HailSnow.ttf").toExternalForm(),
+                20);
+
+        Font customFont50 = Font.loadFont(
+                getClass().getResource("/fonts/SF_HailSnow.ttf").toExternalForm(),
+                50);
+
         setSpacing(30);
         setPadding(new Insets(30));
         setAlignment(Pos.TOP_CENTER);
 
-        Label title = new Label("Start Screen");
-        title.setFont(new Font(24));
-        getChildren().add(title);
+        Image image = new Image(getClass().getResource("/images/yut!_logo.png").toExternalForm());
+        ImageView titleImage = new ImageView(image);
+        titleImage.setFitWidth(500);
+        titleImage.setPreserveRatio(true);
 
-        HBox boardButtonBox = new HBox(30);
-        boardButtonBox.setAlignment(Pos.CENTER);
+        // titleBox
+        HBox titleBox = new HBox();
+        titleBox.setAlignment(Pos.TOP_CENTER); // center the label horizontally
+        titleBox.setPadding(new Insets(60, 0, 20, 0)); // optional padding
+        titleBox.getChildren().add(titleImage); // add the Label into the box
+        getChildren().add(titleBox);
 
-        ToggleGroup boardGroup = new ToggleGroup();
-        RadioButton board4 = new RadioButton("4각형");
-        RadioButton board5 = new RadioButton("5각형");
-        RadioButton board6 = new RadioButton("6각형");
+        /*
+         * titleBox.setStyle(
+         * "-fx-border-color: blue;" +
+         * "-fx-border-width: 3px;" +
+         * "-fx-border-radius: 5px;" + // rounded corners
+         * "-fx-background-color: lightgray;" // optional background to see it better
+         * );
+         * 
+         */
 
-        board4.setToggleGroup(boardGroup);
-        board5.setToggleGroup(boardGroup);
-        board6.setToggleGroup(boardGroup);
-        board4.setSelected(true);
+        // middleBox
+        HBox middleBox = new HBox(10);
+        // middleBox.setAlignment(Pos.CENTER);
+        VBox.setMargin(middleBox, new Insets(100, 0, 0, 0));
+        getChildren().add(middleBox);
 
-        boardButtonBox.getChildren().addAll(board4, board5, board6);
-        getChildren().add(boardButtonBox);
+        // optionBox
+        VBox optionBox = new VBox(30);
+        optionBox.setAlignment(Pos.CENTER_LEFT);
+        HBox.setMargin(optionBox, new Insets(0, 0, 0, 200));
+        middleBox.getChildren().add(optionBox);
 
-        boardGroup.selectedToggleProperty().addListener((obs, oldVal, newVal) -> {
-            if (newVal == board4)
-                boardType = 4;
-            else if (newVal == board5)
-                boardType = 5;
-            else if (newVal == board6)
-                boardType = 6;
+        Label playerLabel = new Label("인원 수:");
+        playerLabel.setFont(customFont50);
+
+        Label pieceLabel = new Label("말 수:");
+        pieceLabel.setFont(customFont50);
+
+        optionBox.getChildren().addAll(playerLabel, pieceLabel);
+
+        // choiceBox
+
+        VBox choiceBox = new VBox(0);
+        HBox.setMargin(choiceBox, new Insets(0, 0, 0, 30));
+        middleBox.getChildren().add(choiceBox);
+
+        // Preload images into an array
+        Image[] playerImages = new Image[3];
+        for (int i = 0; i < 3; i++) {
+            playerImages[i] = new Image(
+                    getClass().getResource("/images/retro_num_button_" + (i + 2) + ".png").toExternalForm());
+        }
+
+        ImageView playerImageView = new ImageView(playerImages[0]);
+        playerImageView.setFitWidth(100);
+        playerImageView.setPreserveRatio(true);
+        playerImageView.setPickOnBounds(true);
+
+        // Change image on click
+        playerImageView.setOnMouseClicked(event -> {
+            currentPlayerIndex[0] = (currentPlayerIndex[0] + 1) % playerImages.length;
+            playerImageView.setImage(playerImages[currentPlayerIndex[0]]);
         });
 
-        VBox configBox = new VBox(20);
-        configBox.setAlignment(Pos.CENTER);
+        choiceBox.getChildren().addAll(playerImageView);
 
-        Label playerLabel = new Label("플레이어 수:");
-        Spinner<Integer> playerSpinner = new Spinner<>(2, 4, 2);
-        playerSpinner.valueProperty().addListener((obs, oldVal, newVal) -> playerCount = newVal);
+        Image[] pieceImages = new Image[4];
+        for (int i = 0; i < 4; i++) {
+            pieceImages[i] = new Image(
+                    getClass().getResource("/images/retro_num_button_" + (i + 2) + ".png").toExternalForm());
+        }
 
-        Label pieceLabel = new Label("말 개수:");
-        Spinner<Integer> pieceSpinner = new Spinner<>(2, 5, 4);
-        pieceSpinner.valueProperty().addListener((obs, oldVal, newVal) -> pieceCount = newVal);
+        ImageView pieceImageView = new ImageView(playerImages[0]);
+        pieceImageView.setFitWidth(100);
+        pieceImageView.setPreserveRatio(true);
+        pieceImageView.setPickOnBounds(true);
 
-        configBox.getChildren().addAll(playerLabel, playerSpinner, pieceLabel, pieceSpinner);
-        getChildren().add(configBox);
-
-        Button startButton = new Button("게임 시작");
-        startButton.setPrefSize(150, 40);
-        startButton.setOnAction(e -> {
-            if (startButtonAction != null) {
-                startButtonAction.run();
-            }
+        // Change image on click
+        pieceImageView.setOnMouseClicked(event -> {
+            currentPieceIndex[0] = (currentPieceIndex[0] + 1) % pieceImages.length;
+            pieceImageView.setImage(pieceImages[currentPieceIndex[0]]);
         });
 
-        getChildren().add(startButton);
+        choiceBox.getChildren().addAll(pieceImageView);
+
+        // boardBox
+        HBox boardBox = new HBox(10);
+        // boardBox.setAlignment(Pos.CENTER_LEFT);
+        HBox.setMargin(boardBox, new Insets(0, 0, 0, 220)); // Top = 100px
+
+        BoardBoxFX board4Box = new BoardBoxFX("사\n각\n형\n판");
+        BoardBoxFX board5Box = new BoardBoxFX("오\n각\n형\n판");
+        BoardBoxFX board6Box = new BoardBoxFX("육\n각\n형\n판");
+
+        boardBox.getChildren().addAll(board4Box, board5Box, board6Box);
+        middleBox.getChildren().add(boardBox);
+
+        // gameStart
+        HBox gameStart = new HBox(20);
+        gameStart.setAlignment(Pos.BOTTOM_CENTER);
+        // gameStart.setPadding(new Insets(0, 0, 0, 0));
+        VBox.setMargin(gameStart, new Insets(100, 0, 0, 0));
+
+        Button gameStartBtn = new Button("게임 시작!");
+
+        gameStartBtn.setPrefWidth(120); // width in pixels
+        gameStartBtn.setPrefHeight(60); // height in pixels
+        gameStartBtn.setFont(customFont20);
+
+        gameStart.getChildren().add(gameStartBtn); // ✔ Add button to HBox
+        getChildren().add(gameStart); // ✔ Add HBox to parent layout (e.g., VBox)
+
+        BackgroundImage backgroundImage = new BackgroundImage(
+                new javafx.scene.image.Image(getClass().getResource("/images/background.png").toExternalForm()),
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.CENTER,
+                new BackgroundSize(1280, 832, false, false, true, false));
+
+        setBackground(new Background(backgroundImage));
+
+    }
+
+    private void highlight(Button selected, Button... others) {
+        selected.setStyle("-fx-border-color: blue; -fx-border-width: 3;");
+        for (Button btn : others) {
+            btn.setStyle(""); // Clear highlight
+        }
     }
 
     public int getBoardType() {
         return boardType;
     }
 
+    // index starts from 0 (index 0 is retro_num_button_2.png)
     public int getPlayerCount() {
-        return playerCount;
+        return currentPieceIndex[0] + 2;
     }
 
     public int getPieceCount() {
-        return pieceCount;
+        return currentPieceIndex[0] + 2;
     }
 
-    public void setStartButtonAction(Runnable action) {
+    public void setStartButtonListener(Runnable action) {
         this.startButtonAction = action;
     }
+
 }

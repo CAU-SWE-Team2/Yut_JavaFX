@@ -46,7 +46,7 @@ public class GameScreenFX extends BorderPane implements GameScreenInterface {
     private Circle previewCircle;
     private Rectangle selectRectangle;
 
-    private StackPane layeredBoard = new StackPane();
+    private Pane layeredBoard = new Pane();
     private Runnable onBack;
 
     private ControlPanelFX controlPanel;
@@ -98,7 +98,7 @@ public class GameScreenFX extends BorderPane implements GameScreenInterface {
         topPanel.getChildren().add(backButton);
 
         // 보드 및 노드
-        boardCanvas = new BoardCanvasFX(boardType);
+        boardCanvas = new BoardCanvasFX(boardType, 500);
         clickableNodes = boardCanvas.getClickableNodes();
         for (ClickableNodeFX node : clickableNodes) {
             nodeMap.put(node.getNodeID(), node);
@@ -106,11 +106,10 @@ public class GameScreenFX extends BorderPane implements GameScreenInterface {
         boardCanvas.setPrefHeight(1500);
 
         layeredBoard.setId("layered-board");
-        layeredBoard.setAlignment(Pos.CENTER);
         layeredBoard.getChildren().add(boardCanvas);
+        layeredBoard.setStyle("-fx-border-color:red;");
 
-        Pane boardPane = new Pane(layeredBoard);
-        // boardPane.setAlignment(Pos.CENTER);
+        StackPane boardPane = new StackPane(layeredBoard);
         boardPane.setPadding(new Insets(70, 30, 0, 0));
 
         // 덱 표시창
@@ -171,10 +170,10 @@ public class GameScreenFX extends BorderPane implements GameScreenInterface {
                 controlPanel.getGoalButton(),
                 controlPanel.getRandomButton(),
                 controlPanel.getSelectButton());
-        controlPanel.getMoveNewPieceButton().setPrefHeight(200);
-        controlPanel.getGoalButton().setPrefHeight(200);
-        controlPanel.getRandomButton().setPrefHeight(200);
-        controlPanel.getSelectButton().setPrefHeight(200);
+        controlPanel.getMoveNewPieceButton().setPadding(new Insets(10, 10, 10, 10));
+        controlPanel.getGoalButton().setPadding(new Insets(10, 10, 10, 10));
+        controlPanel.getRandomButton().setPadding(new Insets(10, 10, 10, 10));
+        controlPanel.getSelectButton().setPadding(new Insets(10, 10, 10, 10));
 
         // 왼쪽 UI 전체 묶음
         VBox leftUI = new VBox(20, topPanel, centerArea, bottomPanel);
@@ -229,26 +228,29 @@ public class GameScreenFX extends BorderPane implements GameScreenInterface {
         if (node == null)
             throw new RuntimeException("Node not found");
 
-        Circle piece = new Circle(10, playerColors[playerID - 1]);
-        piece.setUserData(pieceNumber);
-        pieceList.add(new PieceFX(piece, nodeID));
+        // Adjust for radius since PieceFX draws at top-left
+        int x = node.getNodeX() - 10;
+        int y = node.getNodeY() - 10;
 
-        StackPane.setMargin(piece, new Insets(node.getNodeY(), 0, 0, node.getNodeX()));
+        PieceFX piece = new PieceFX(x, y, playerColors[playerID - 1], pieceNumber);
+        pieceList.add(piece);
+
+        node.setOnNodePiece(piece);
         layeredBoard.getChildren().add(piece);
     }
 
     @Override
     public void deletePiece(int nodeID) {
-        PieceFX toRemove = null;
-        for (PieceFX piece : pieceList) {
-            if (piece.nodeID == nodeID) {
-                layeredBoard.getChildren().remove(piece.circle);
-                toRemove = piece;
-                break;
-            }
-        }
-        if (toRemove != null)
-            pieceList.remove(toRemove);
+        ClickableNodeFX node = nodeMap.get(nodeID);
+        if (node == null)
+            throw new RuntimeException("Node " + nodeID + " not found");
+
+        PieceFX piece = node.getOnNodePiece();
+        if (piece == null)
+            return;
+
+        node.setOnNodePiece(null);
+        layeredBoard.getChildren().remove(piece);
     }
 
     @Override
@@ -264,9 +266,16 @@ public class GameScreenFX extends BorderPane implements GameScreenInterface {
     @Override
     public void showMovePreview(int nodeID, int playerID) {
         ClickableNodeFX node = nodeMap.get(nodeID);
-        previewCircle = new Circle(10, playerColors[playerID - 1]);
-        StackPane.setMargin(previewCircle, new Insets(node.getNodeY(), 0, 0, node.getNodeX()));
+        previewCircle = new Circle(20);
+        previewCircle.setFill(Color.TRANSPARENT);
+        previewCircle.setStroke(playerColors[playerID - 1]);
+        previewCircle.setStrokeWidth(5);
+        previewCircle.setOpacity(0.5); // optional: make it semi-transparent for preview
+        previewCircle.setLayoutX(node.getNodeX());
+        previewCircle.setLayoutY(node.getNodeY());
         layeredBoard.getChildren().add(previewCircle);
+        currentHintNode = node;
+        node.setPreviewPiece(true);
     }
 
     @Override
@@ -279,11 +288,21 @@ public class GameScreenFX extends BorderPane implements GameScreenInterface {
 
     @Override
     public void select(int nodeID) {
+        if (selectRectangle != null) {
+            layeredBoard.getChildren().remove(selectRectangle);
+        }
         ClickableNodeFX node = nodeMap.get(nodeID);
+        if (node == null) {
+            throw new RuntimeException("Node " + nodeID + " does not exist");
+        }
+
         selectRectangle = new Rectangle(20, 20);
         selectRectangle.setStroke(Color.BLACK);
         selectRectangle.setFill(Color.TRANSPARENT);
-        StackPane.setMargin(selectRectangle, new Insets(node.getNodeY(), 0, 0, node.getNodeX()));
+        selectRectangle.setLayoutX(node.getNodeX() - 10); // 10 = half of width (20/2)
+        selectRectangle.setLayoutY(node.getNodeY() - 10); // 10 = half of height (20/2)
+
+        node.setPreviewPiece(true);
         layeredBoard.getChildren().add(selectRectangle);
     }
 
@@ -296,6 +315,15 @@ public class GameScreenFX extends BorderPane implements GameScreenInterface {
 
     @Override
     public void updateRandomResult(int yut) {
+        controlPanel.highlightYutButton(yut);
+
+        if (yut == 4 || yut == 5) {
+            controlPanel.getMoveNewPieceButton().setStyle("-fx-background-color: lightgray;");
+            controlPanel.getMoveNewPieceButton().setDisable(true);
+        } else {
+            controlPanel.getMoveNewPieceButton().setStyle(""); // Reset to default style
+            controlPanel.getMoveNewPieceButton().setDisable(false);
+        }
     }
 
     // @Override

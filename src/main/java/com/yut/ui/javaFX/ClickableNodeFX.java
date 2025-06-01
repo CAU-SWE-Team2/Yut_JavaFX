@@ -28,6 +28,20 @@ public class ClickableNodeFX extends Pane {
         visualCircle.setCenterX(radius);
         visualCircle.setCenterY(radius);
         getChildren().add(visualCircle);
+
+        // Debug visuals
+        /*
+         * visualCircle.setFill(Color.rgb(255, 0, 0, 0.3)); // Semi-transparent red
+         * visualCircle.setStroke(Color.BLUE); // Optional: outline for clarity
+         * visualCircle.setStrokeWidth(1.5);
+         * 
+         * 
+         */
+
+        // Interaction
+        setOnMouseClicked(e -> {
+            System.out.println("Clicked node ID: " + nodeID + " at (" + getNodeX() + ", " + getNodeY() + ")");
+        });
     }
 
     public int getNodeX() {
@@ -54,7 +68,7 @@ public class ClickableNodeFX extends Pane {
 
     public void setPreviewPiece(boolean hasPreview) {
         this.hasPreview = hasPreview;
-        visualCircle.setStroke(hasPreview ? Color.RED : Color.GRAY);
+        // visualCircle.setStroke(hasPreview ? Color.RED : Color.GRAY);
     }
 
     public int getState() {

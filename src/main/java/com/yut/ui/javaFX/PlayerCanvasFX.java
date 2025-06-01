@@ -103,8 +103,6 @@ public class PlayerCanvasFX extends Pane {
 
             gc.setFill(color);
             gc.fillPolygon(xPoints, yPoints, 8);
-            gc.setStroke(Color.DARKGRAY);
-            gc.setLineWidth(1.5);
             gc.strokePolygon(xPoints, yPoints, 8);
         }
 
