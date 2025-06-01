@@ -45,7 +45,7 @@ public class TitleController{
 
             Game gameModel = new Game(boardType, playerCount, pieceCount);
 
-            GameScreenFX gameScreen = new GameScreenFX(boardType, playerCount, pieceCount);
+            GameScreenFX gameScreen = new GameScreenFX(startScene, boardType, playerCount, pieceCount);
             Scene gameScene = new Scene(gameScreen, 950, 760);
 
 

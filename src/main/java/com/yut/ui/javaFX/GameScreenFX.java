@@ -15,6 +15,8 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
 import java.util.*;
 
@@ -57,7 +59,9 @@ public class GameScreenFX extends BorderPane implements GameScreenInterface {
     ImageView thirdYut;
     ImageView fourthYut;
 
-    public GameScreenFX(int boardType, int playerCount, int pieceCount) {
+    Button backButton;
+
+    public GameScreenFX(Scene startScene, int boardType, int playerCount, int pieceCount) {
 
         // Font customFont20 = Font.loadFont(
         // getClass().getResource("/assets/fonts/SF_HailSnow.ttf").toExternalForm(),
@@ -103,11 +107,15 @@ public class GameScreenFX extends BorderPane implements GameScreenInterface {
         topPanel.setPrefHeight(1000);
         topPanel.setPadding(new Insets(0, 0, 20, 0));
 
-        Button backButton = new Button("← 시작 화면으로");
+        backButton = new Button("← 시작 화면으로");
         backButton.setPrefWidth(160);
         backButton.setPrefHeight(160);
         backButton.setMaxHeight(Double.MAX_VALUE);
         backButton.setPadding(new Insets(10, 0, 10, 0));
+        backButton.setOnAction(e -> {
+            Stage currentStage = (Stage) this.getScene().getWindow();
+            currentStage.setScene(startScene);
+        });
 
         // backButton.setOnAction(e -> onBack.run());
         // backButton.setFont(customFont20);
@@ -395,7 +403,7 @@ public class GameScreenFX extends BorderPane implements GameScreenInterface {
 
     @Override
     public void addBackButtonListener(EventHandler<ActionEvent> listener) {
-
+        backButton.setOnAction(listener);
     }
 
     @Override

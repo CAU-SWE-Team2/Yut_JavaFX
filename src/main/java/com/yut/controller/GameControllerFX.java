@@ -8,9 +8,11 @@ import com.yut.model.Node;
 import com.yut.model.Player;
 import com.yut.model.Yut;
 import com.yut.ui.javaFX.GameScreenFX;
+import com.yut.ui.javaFX.StartScreenFX;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 
 public class GameControllerFX {
@@ -33,7 +35,6 @@ public class GameControllerFX {
 
         gameScreen.addMoveNewPieceButtonListener(new MoveNewPieceButtonListener());
         gameScreen.addGoalButtonListener(new GoalButtonListener());
-        gameScreen.addBackButtonListener(event -> System.exit(0));
 
         for (int i = 1; i <= gameModel.getPlayerCount(); i++) {
             gameScreen.updatePlayerCanvas(i, gameModel.getNumOfTotalPieces());
