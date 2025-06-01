@@ -423,7 +423,7 @@ public class GameScreenFX extends BorderPane implements GameScreenInterface {
 
     @Override
     public void setGoalButtonVisible(boolean visible) {
-        controlPanel.getGoalButton().setVisible(visible);
+        controlPanel.getGoalButton().setDisable(!visible);
     }
 
     @Override

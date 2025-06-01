@@ -75,7 +75,7 @@ public class ControlPanelFX extends VBox {
         bottomButtonPanel.setPadding(new Insets(10, 0, 0, 0));
         goalButton = new Button("골인!");
         goalButton.setPrefSize(150, 40);
-        goalButton.setVisible(false);
+        goalButton.setDisable(true);
 
         moveNewPieceButton = new Button("새로운 말 움직이기");
         moveNewPieceButton.setPrefSize(150, 40);
