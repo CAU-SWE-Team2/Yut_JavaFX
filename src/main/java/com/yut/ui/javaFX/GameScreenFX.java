@@ -74,11 +74,26 @@ public class GameScreenFX extends BorderPane implements GameScreenInterface {
         BackgroundImage backgroundImage = new BackgroundImage(
                 new javafx.scene.image.Image(
                         getClass().getResource("/assets/img/background_game.png").toExternalForm()),
+
                 BackgroundRepeat.NO_REPEAT,
                 BackgroundRepeat.NO_REPEAT,
                 BackgroundPosition.CENTER,
                 new BackgroundSize(950, 760, false, false, false, false));
-        setBackground(new Background(backgroundImage));
+
+        BackgroundImage backgroundImage2 = new BackgroundImage(
+                new javafx.scene.image.Image(
+                        getClass().getResource("/assets/img/background_game2.png").toExternalForm()),
+
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.CENTER,
+                new BackgroundSize(950, 760, false, false, false, false));
+
+        if (playerCount == 3) {
+            setBackground(new Background(backgroundImage2));
+        } else {
+            setBackground(new Background(backgroundImage));
+        }
 
         // 시작 버튼 상단
         HBox topPanel = new HBox();
