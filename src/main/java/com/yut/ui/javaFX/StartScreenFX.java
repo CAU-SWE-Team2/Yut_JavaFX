@@ -21,18 +21,18 @@ public class StartScreenFX extends VBox {
 
     public StartScreenFX() {
         Font customFont20 = Font.loadFont(
-                getClass().getResource("/fonts/SF_HailSnow.ttf").toExternalForm(),
+                getClass().getResource("assets/fonts/SF_HailSnow.ttf").toExternalForm(),
                 20);
 
         Font customFont50 = Font.loadFont(
-                getClass().getResource("/fonts/SF_HailSnow.ttf").toExternalForm(),
+                getClass().getResource("assets/fonts/SF_HailSnow.ttf").toExternalForm(),
                 50);
 
         setSpacing(30);
         setPadding(new Insets(30));
         setAlignment(Pos.TOP_CENTER);
 
-        Image image = new Image(getClass().getResource("/images/yut!_logo.png").toExternalForm());
+        Image image = new Image(getClass().getResource("/assets/img/yut!_logo.png").toExternalForm());
         ImageView titleImage = new ImageView(image);
         titleImage.setFitWidth(500);
         titleImage.setPreserveRatio(true);
@@ -84,7 +84,7 @@ public class StartScreenFX extends VBox {
         Image[] playerImages = new Image[3];
         for (int i = 0; i < 3; i++) {
             playerImages[i] = new Image(
-                    getClass().getResource("/images/retro_num_button_" + (i + 2) + ".png").toExternalForm());
+                    getClass().getResource("/assets/img/retro_num_button_" + (i + 2) + ".png").toExternalForm());
         }
 
         ImageView playerImageView = new ImageView(playerImages[0]);
@@ -103,7 +103,7 @@ public class StartScreenFX extends VBox {
         Image[] pieceImages = new Image[4];
         for (int i = 0; i < 4; i++) {
             pieceImages[i] = new Image(
-                    getClass().getResource("/images/retro_num_button_" + (i + 2) + ".png").toExternalForm());
+                    getClass().getResource("assets/img/retro_num_button_" + (i + 2) + ".png").toExternalForm());
         }
 
         ImageView pieceImageView = new ImageView(playerImages[0]);
@@ -147,7 +147,7 @@ public class StartScreenFX extends VBox {
         getChildren().add(gameStart); // ✔ Add HBox to parent layout (e.g., VBox)
 
         BackgroundImage backgroundImage = new BackgroundImage(
-                new javafx.scene.image.Image(getClass().getResource("/images/background.png").toExternalForm()),
+                new javafx.scene.image.Image(getClass().getResource("/assets/img/background.png").toExternalForm()),
                 BackgroundRepeat.NO_REPEAT,
                 BackgroundRepeat.NO_REPEAT,
                 BackgroundPosition.CENTER,
