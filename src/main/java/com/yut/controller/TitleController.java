@@ -56,7 +56,7 @@ public class TitleController{
             primaryStage.setScene(gameScene);
             primaryStage.show();
 
-            gameController = new GameControllerFX(gameModel, gameScreen);
+            gameController = new GameControllerFX(gameModel, gameScreen, primaryStage, startScene);
         });
 
     }

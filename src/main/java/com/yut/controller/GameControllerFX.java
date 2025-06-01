@@ -27,10 +27,16 @@ public class GameControllerFX {
 
     private GameModelInterface gameModel;
     private GameScreenInterface gameScreen;
+    private Stage primaryStage;
+    private Scene startScreenScene;
+    
 
-    public GameControllerFX(GameModelInterface gameModel, GameScreenInterface gameScreen) {
+    public GameControllerFX(GameModelInterface gameModel, GameScreenInterface gameScreen, Stage primaryStage, Scene startScreenScene) {
         this.gameModel = gameModel;
         this.gameScreen = gameScreen;
+        this.primaryStage = primaryStage;
+        this.startScreenScene = startScreenScene;
+        
 
         gameScreen.getNodeMap().forEach((nodeId, node) -> {
             gameScreen.addNodeClickListener(node, new NodeClickListener(nodeId));
@@ -231,6 +237,22 @@ public class GameControllerFX {
             
 
             if(currentPlayer.getNumOfCurrentPieces() == 0){
+                Alert alert = new Alert(AlertType.CONFIRMATION);
+                alert.setTitle("우승!");
+                alert.setHeaderText("우승자는 플레이어 " + currentPlayer.getId() + " 입니다!");
+                
+                ButtonType buttonRestart = new ButtonType("재시작");
+                ButtonType buttonEnd = new ButtonType("종료");
+                
+                alert.getButtonTypes().setAll(buttonRestart, buttonEnd);
+                
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.get() == buttonRestart){
+                    primaryStage.setScene(startScreenScene);
+                } else 
+                {
+                    primaryStage.close();
+                }
             }
             
         }
