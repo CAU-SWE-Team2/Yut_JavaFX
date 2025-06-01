@@ -4,7 +4,9 @@ import javax.swing.SwingUtilities;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import com.yut.ui.javaFX.GameScreenFX;
 import com.yut.ui.javaFX.StartScreenFX;
+import javafx.stage.Stage;
 
 import javafx.scene.Scene;
 
@@ -17,27 +19,45 @@ public class TitleController{
 
     GameModelInterface gameModel;
     GameControllerFX gameController;
+    Stage primaryStage;
 
-    public TitleController(StartScreenFX startScreen) {
-        this.startScreen = startScreen;
+    public TitleController(Stage primaryStage) {
+        this.primaryStage = primaryStage;
     }
 
     public void start(){
+        StartScreenFX startScreen = new StartScreenFX();
+        Scene startScene = new Scene(startScreen, 950, 760);
+        startScene.getStylesheets().add(
+                getClass().getResource("/com/yut/ui/CSS/StartScreenFX.css").toExternalForm());
+        primaryStage.setScene(startScene);
+
 
 
         startScreen.setStartButtonListener(() -> {
-        int boardType = startScreen.getBoardType();
-        int playerCount = startScreen.getPlayerCount();
-        int pieceCount = startScreen.getPieceCount();
+            int boardType = startScreen.getBoardType();
+            int playerCount = startScreen.getPlayerCount();
+            int pieceCount = startScreen.getPieceCount();
 
-        gameModel = new Game(boardType, playerCount, pieceCount);
+            // System.out.println("Board Type: " + boardType);
+            // System.out.println("Player Count: " + playerCount);
+            // System.out.println("Piece Count: " + pieceCount);
+
+            Game gameModel = new Game(boardType, playerCount, pieceCount);
+
+            GameScreenFX gameScreen = new GameScreenFX(boardType, playerCount, pieceCount);
+            Scene gameScene = new Scene(gameScreen, 950, 760);
 
 
-        System.out.println("Board Type: " + boardType);
-        System.out.println("Player Count: " + playerCount);
-        System.out.println("Piece Count: " + pieceCount);
-        // gameController = new GameController(gameModel, mainFrame.getGameScreen());
-     });
+            // gameScene.getStylesheets().add(
+            //         getClass().getResource("src/main/resources/com/yut/ui/CSS/ScreenFX.css").toExternalForm());
+
+
+            primaryStage.setScene(gameScene);
+            primaryStage.show();
+
+            gameController = new GameControllerFX(gameModel, gameScreen);
+        });
 
     }
 

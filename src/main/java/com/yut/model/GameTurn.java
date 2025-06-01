@@ -51,7 +51,6 @@ public class GameTurn implements GameTurnModelInterface {
             alert.setContentText("윷, 모가 나와서 추가 턴을 획득했습니다.");
             alert.showAndWait();
             leftYuts.addLast(result);
-            leftYuts.addLast(result);
         }
         else if(result == Yut.BACKDO && (currentPlayer.getNumOfWaitingPieces() == currentPlayer.getNumOfCurrentPieces()) && leftYuts.isEmpty()){
             if(type == -2){
@@ -94,9 +93,8 @@ public class GameTurn implements GameTurnModelInterface {
             Alert alert = new Alert(AlertType.INFORMATION);
             alert.setTitle("One More Turn");
             alert.setHeaderText("한 번 더 던지세요!");
-            alert.setContentText("윷, 모가 나와서 추가 턴을 획득했습니다.");
+            alert.setContentText("다른 말을 잡았습니다.");
             alert.showAndWait();
-            leftYuts.addLast(result);
             rollCount++;
             state = GameTurnModelInterface.THROWABLE;
         }           

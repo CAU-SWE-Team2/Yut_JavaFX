@@ -15,9 +15,9 @@ public class StartScreenFX extends VBox {
     private int boardType = 4;
 
     // Track the current image index
-    final int[] currentPlayerIndex = { 0 };
+    Integer currentPlayerIndex = 0;
     // Track the current image index
-    final int[] currentPieceIndex = { 0 };
+    Integer currentPieceIndex = 0;
 
     private Runnable startButtonAction;
 
@@ -83,40 +83,40 @@ public class StartScreenFX extends VBox {
         middleBox.getChildren().add(choiceBox);
 
         // Preload images into an array
-        Image[] playerImages = new Image[4];
-        for (int i = 0; i < 4; i++) {
+        Image[] playerImages = new Image[5];
+        for (int i = 1; i <= 4; i++) {
             playerImages[i] = new Image(
-                    getClass().getResource("/assets/img/retro_num_button_" + (i + 1) + ".png").toExternalForm());
+                    getClass().getResource("/assets/img/retro_num_button_" + (i) + ".png").toExternalForm());
         }
 
-        ImageView playerImageView = new ImageView(playerImages[0]);
+        ImageView playerImageView = new ImageView(playerImages[2]);
         playerImageView.setFitWidth(100);
         playerImageView.setPreserveRatio(true);
         playerImageView.setPickOnBounds(true);
 
         // Change image on click
         playerImageView.setOnMouseClicked(event -> {
-            currentPlayerIndex[0] = (currentPlayerIndex[0] + 1) % playerImages.length;
-            playerImageView.setImage(playerImages[currentPlayerIndex[0]]);
+            currentPlayerIndex = (currentPlayerIndex + 1) % (playerImages.length - 2);
+            playerImageView.setImage(playerImages[currentPlayerIndex + 2]);
         });
 
         choiceBox.getChildren().addAll(playerImageView);
 
-        Image[] pieceImages = new Image[5];
-        for (int i = 0; i < 5; i++) {
+        Image[] pieceImages = new Image[6];
+        for (int i = 1; i <= 5; i++) {
             pieceImages[i] = new Image(
-                    getClass().getResource("/assets/img/retro_num_button_" + (i + 1) + ".png").toExternalForm());
+                    getClass().getResource("/assets/img/retro_num_button_" + (i) + ".png").toExternalForm());
         }
 
-        ImageView pieceImageView = new ImageView(playerImages[0]);
+        ImageView pieceImageView = new ImageView(playerImages[2]);
         pieceImageView.setFitWidth(100);
         pieceImageView.setPreserveRatio(true);
         pieceImageView.setPickOnBounds(true);
 
         // Change image on click
         pieceImageView.setOnMouseClicked(event -> {
-            currentPieceIndex[0] = (currentPieceIndex[0] + 1) % pieceImages.length;
-            pieceImageView.setImage(pieceImages[currentPieceIndex[0]]);
+            currentPieceIndex = (currentPieceIndex + 1) % (pieceImages.length - 2);
+            pieceImageView.setImage(pieceImages[currentPieceIndex + 2]);
         });
 
         choiceBox.getChildren().addAll(pieceImageView);
@@ -177,11 +177,11 @@ public class StartScreenFX extends VBox {
 
     // index starts from 0 (index 0 is retro_num_button_2.png)
     public int getPlayerCount() {
-        return currentPieceIndex[0] + 1;
+        return currentPlayerIndex + 2;
     }
 
     public int getPieceCount() {
-        return currentPieceIndex[0] + 1;
+        return currentPieceIndex + 2;
     }
 
     public void setStartButtonListener(Runnable action) {

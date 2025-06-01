@@ -89,6 +89,7 @@ public class GameControllerFX {
                         gameScreen.setGoalButtonVisible(true);
                     }
                 }
+
             }
         }
     }

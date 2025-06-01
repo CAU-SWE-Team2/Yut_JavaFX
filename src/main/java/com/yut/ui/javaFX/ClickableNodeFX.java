@@ -39,9 +39,9 @@ public class ClickableNodeFX extends Pane {
          */
 
         // Interaction
-        setOnMouseClicked(e -> {
-            System.out.println("Clicked node ID: " + nodeID + " at (" + getNodeX() + ", " + getNodeY() + ")");
-        });
+        // setOnMouseClicked(e -> {
+        //     System.out.println("Clicked node ID: " + nodeID + " at (" + getNodeX() + ", " + getNodeY() + ")");
+        // });
     }
 
     public int getNodeX() {

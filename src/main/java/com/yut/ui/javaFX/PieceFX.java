@@ -29,7 +29,7 @@ public class PieceFX extends Pane {
         this.getChildren().add(canvas);
         setLayoutX(x);
         setLayoutY(y);
-
+        this.setMouseTransparent(true);
         draw();
     }
 
