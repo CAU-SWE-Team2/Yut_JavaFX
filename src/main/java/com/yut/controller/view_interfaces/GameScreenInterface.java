@@ -32,10 +32,10 @@ public interface GameScreenInterface {
     void select(int nodeID);
 
     // 윷 결과(도/개/걸/윷/모 등) 반영
-    void updateRandomResult(int yut);
+    void updateRandomResult(int yut[]);
 
     // 현재 덱 상태 출력
-    void printDeckContents(Deque<Integer> deck);
+    void printDeckContents(Deque<int[]> deck);
 
     // 노드 상태 반환 (힌트/빈칸/말 있는 칸)
     int getNodeState(int nodeID);

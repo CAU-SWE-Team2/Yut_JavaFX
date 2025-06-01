@@ -14,6 +14,7 @@ public class Main extends Application {
 
        
         primaryStage.setTitle("Yut Game - Game Screen");
+        primaryStage.setResizable(false);
         primaryStage.show();
 
         TitleController titleController = new TitleController(primaryStage);

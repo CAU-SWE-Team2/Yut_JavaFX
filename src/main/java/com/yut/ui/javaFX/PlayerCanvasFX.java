@@ -55,7 +55,11 @@ public class PlayerCanvasFX extends Pane {
 
         // 플레이어
         gc.setFill(Color.BLACK);
-        gc.setFont(Font.font(14));
+
+        Font customFont12 = Font.loadFont(
+                getClass().getResource("/assets/fonts/SF_HailSnow.ttf").toExternalForm(),
+                12);
+        gc.setFont(customFont12);
 
         String label = switch (playerID) {
             case 1 -> "첫 번째 놀이꾼";

@@ -74,7 +74,9 @@ public class Yut {
     }
 
 
-    int getCurrent(){return current;}
+    int[] getCurrent(){
+        return new int[] {current, yuts[0], yuts[1], yuts[2], yuts[3]};
+    }
 
 
 }

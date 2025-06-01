@@ -12,7 +12,7 @@ public class GameTurn implements GameTurnModelInterface {
 
     
     
-    private Deque<Integer> leftYuts;
+    private Deque<int[]> leftYuts;
 
     private Player currentPlayer;
 
@@ -26,7 +26,7 @@ public class GameTurn implements GameTurnModelInterface {
         this.currentPlayer = currentPlayer;
         this.rollCount = 1;
         this.yut = Yut.getYut();
-        leftYuts = new ArrayDeque<Integer>();
+        leftYuts = new ArrayDeque<int[]>();
 
         state = GameTurnModelInterface.THROWABLE;
     }
@@ -39,11 +39,13 @@ public class GameTurn implements GameTurnModelInterface {
         else
             yut.rollYutSelected(type);
 
-        int result = yut.getCurrent();
+        int[] result = yut.getCurrent();
+
+        int yut_type = result[0];
 
         rollCount--;
 
-        if(result == Yut.YUT || result == Yut.MO){
+        if(yut_type == Yut.YUT || yut_type == Yut.MO){
             rollCount++;
             Alert alert = new Alert(AlertType.INFORMATION);
             alert.setTitle("One More Turn");
@@ -52,7 +54,7 @@ public class GameTurn implements GameTurnModelInterface {
             alert.showAndWait();
             leftYuts.addLast(result);
         }
-        else if(result == Yut.BACKDO && (currentPlayer.getNumOfWaitingPieces() == currentPlayer.getNumOfCurrentPieces()) && leftYuts.isEmpty()){
+        else if(yut_type == Yut.BACKDO && (currentPlayer.getNumOfWaitingPieces() == currentPlayer.getNumOfCurrentPieces()) && leftYuts.isEmpty()){
             if(type == -2){
                 yut.rollYutRandomly();
                 result = yut.getCurrent();
@@ -78,14 +80,14 @@ public class GameTurn implements GameTurnModelInterface {
 
     // 그룹을 보내면 현재 가지고 있는 윷을 사용해 이동할 수 있는 노드를 보여줌
     public Node showNextMove(Group group){
-        int nextYut = leftYuts.getFirst();
+        int nextYut = leftYuts.getFirst()[0];
         if(nextYut == Yut.BACKDO) nextYut = -1;
         return group.getNextNode(nextYut);
     }
 
     //result == 0 업음, 1 잡음, 2 그냥 이동
     public void move(Group group){
-        int nextYut = leftYuts.getFirst();
+        int nextYut = leftYuts.getFirst()[0];
         if(nextYut == Yut.BACKDO) nextYut = -1;
         int result = group.move(group.getNextNode(nextYut));
         
@@ -108,7 +110,7 @@ public class GameTurn implements GameTurnModelInterface {
     //     this.state = state;
     // }
     
-    public Deque<Integer> getLeftYuts(){
+    public Deque<int[]> getLeftYuts(){
         return leftYuts;
     }
 

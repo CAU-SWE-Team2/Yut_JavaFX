@@ -168,7 +168,7 @@ public class GameControllerFX {
                 gameModel.switchTurn();
                 gameScreen.highlightCurrentPlayer(gameModel.getCurrentPlayer().getId());
             }
-            if(gameTurnModel.getLeftYuts().size() == 1 && gameTurnModel.getLeftYuts().getFirst() == Yut.BACKDO){
+            if(gameTurnModel.getLeftYuts().size() == 1 && gameTurnModel.getLeftYuts().getFirst()[0] == Yut.BACKDO){
                 gameTurnModel.getLeftYuts().removeFirst();
                 gameModel.switchTurn();
                 gameScreen.highlightCurrentPlayer(gameModel.getCurrentPlayer().getId());

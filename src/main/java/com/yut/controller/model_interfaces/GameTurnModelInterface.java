@@ -17,7 +17,7 @@ public interface GameTurnModelInterface {
     // public void setState(int state);
     public int getState();
 
-    public Deque<Integer> getLeftYuts();
+    public Deque<int[]> getLeftYuts();
     public int getRollCount();
 
 }

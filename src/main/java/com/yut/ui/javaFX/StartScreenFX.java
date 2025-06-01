@@ -28,7 +28,7 @@ public class StartScreenFX extends VBox {
 
         Font customFont50 = Font.loadFont(
                 getClass().getResource("/assets/fonts/SF_HailSnow.ttf").toExternalForm(),
-                50);
+                40);
 
         setSpacing(30);
         setPadding(new Insets(30));
@@ -65,7 +65,7 @@ public class StartScreenFX extends VBox {
         // optionBox
         VBox optionBox = new VBox(30);
         optionBox.setAlignment(Pos.CENTER_LEFT);
-        HBox.setMargin(optionBox, new Insets(0, 0, 0, 200));
+        HBox.setMargin(optionBox, new Insets(0, 0, 0, 50));
         middleBox.getChildren().add(optionBox);
 
         Label playerLabel = new Label("인원 수:");
@@ -79,7 +79,7 @@ public class StartScreenFX extends VBox {
         // choiceBox
 
         VBox choiceBox = new VBox(0);
-        HBox.setMargin(choiceBox, new Insets(0, 0, 0, 100));
+        HBox.setMargin(choiceBox, new Insets(0, 0, 0, 30));
         middleBox.getChildren().add(choiceBox);
 
         // Preload images into an array

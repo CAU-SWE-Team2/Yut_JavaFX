@@ -76,6 +76,10 @@ public class GameScreenFX extends BorderPane implements GameScreenInterface {
         this.pieceCount = pieceCount;
         // this.onBack = onBack;
 
+        Font customFont18 = Font.loadFont(
+                getClass().getResource("/assets/fonts/SF_HailSnow.ttf").toExternalForm(),
+                18);
+
         BackgroundImage backgroundImage = new BackgroundImage(
                 new javafx.scene.image.Image(
                         getClass().getResource("/assets/img/background_game.png").toExternalForm()),
@@ -107,7 +111,8 @@ public class GameScreenFX extends BorderPane implements GameScreenInterface {
         topPanel.setPrefHeight(1000);
         topPanel.setPadding(new Insets(0, 0, 20, 0));
 
-        backButton = new Button("← 시작 화면으로");
+        backButton = new Button("시작 화면으로");
+        backButton.setFont(customFont18);
         backButton.setPrefWidth(160);
         backButton.setPrefHeight(160);
         backButton.setMaxHeight(Double.MAX_VALUE);
@@ -233,14 +238,15 @@ public class GameScreenFX extends BorderPane implements GameScreenInterface {
     }
 
     @Override
-    public void printDeckContents(Deque<Integer> deck) {
+    public void printDeckContents(Deque<int[]> deck) {
+        Font customFont18 = Font.loadFont(
+                getClass().getResource("/assets/fonts/SF_HailSnow.ttf").toExternalForm(),
+                18);
+        deckDisplayArea.setFont(customFont18);
+
         StringBuilder sb = new StringBuilder();
-        if (deck.isEmpty()) {
-            sb.append("(덱이 비어 있습니다)");
-        } else {
-            for (Integer obj : deck) {
-                sb.append(Yut.getYutName(obj)).append("\n");
-            }
+        for (int[] obj : deck) {
+            sb.append(Yut.getYutName(obj[0])).append("\n");
         }
         deckDisplayArea.setText(sb.toString());
     }
@@ -342,52 +348,65 @@ public class GameScreenFX extends BorderPane implements GameScreenInterface {
         }
     }
 
-    @Override
-    public void updateRandomResult(int yut) {
-        controlPanel.highlightYutButton(yut);
+    // @Override
+    // public void updateRandomResult(int yut) {
+    //     controlPanel.highlightYutButton(yut);
 
-        if (yut == 4 || yut == 5) {
+    //     if (yut == 4 || yut == 5) {
+    //         controlPanel.getMoveNewPieceButton().setStyle("-fx-background-color: lightgray;");
+    //         controlPanel.getMoveNewPieceButton().setDisable(true);
+    //     } else {
+    //         controlPanel.getMoveNewPieceButton().setStyle(""); // Reset to default style
+    //         controlPanel.getMoveNewPieceButton().setDisable(false);
+    //     }
+    // }
+
+    @Override
+    public void updateRandomResult(int[] yut) {
+
+
+        controlPanel.highlightYutButton(yut[0]);
+
+        if (yut[0] == 4 || yut[0] == 5) {
             controlPanel.getMoveNewPieceButton().setStyle("-fx-background-color: lightgray;");
             controlPanel.getMoveNewPieceButton().setDisable(true);
         } else {
             controlPanel.getMoveNewPieceButton().setStyle(""); // Reset to default style
             controlPanel.getMoveNewPieceButton().setDisable(false);
         }
+
+
+        Image image = new
+        Image(getClass().getResource("/assets/img/yut_small_backward.png").toExternalForm());
+        Image image2 = new
+        Image(getClass().getResource("/assets/img/yut_small_upward.png").toExternalForm());
+        Image image3 = new
+        Image(getClass().getResource("/assets/img/yut_small_backdo.png").toExternalForm());
+
+        if (yut[1] == 0) {
+        this.firtstYut.setImage(image3);
+        } else {
+        this.firtstYut.setImage(image2);
+        }
+
+        if (yut[2] == 0) {
+        this.secondYut.setImage(image);
+        } else {
+        this.secondYut.setImage(image2);
+        }
+
+        if (yut[3] == 0) {
+        this.thirdYut.setImage(image);
+        } else {
+        this.thirdYut.setImage(image2);
+        }
+
+        if (yut[4] == 0) {
+        this.fourthYut.setImage(image);
+        } else {
+        this.fourthYut.setImage(image2);
+        }
     }
-
-    // @Override
-    // public void updateRandomResult(int[] yut) {
-    // Image image = new
-    // Image(getClass().getResource("/assets/img/yut_small_backward.png").toExternalForm());
-    // Image image2 = new
-    // Image(getClass().getResource("/assets/img/yut_small_upward.png").toExternalForm());
-    // Image image3 = new
-    // Image(getClass().getResource("/assets/img/yut_small_backdo.png").toExternalForm());
-
-    // if (yut[0] == 0) {
-    // this.firtstYut.setImage(image3);
-    // } else {
-    // this.firtstYut.setImage(image2);
-    // }
-
-    // if (yut[1] == 0) {
-    // this.secondYut.setImage(image);
-    // } else {
-    // this.secondYut.setImage(image2);
-    // }
-
-    // if (yut[2] == 0) {
-    // this.thirdYut.setImage(image);
-    // } else {
-    // this.thirdYut.setImage(image2);
-    // }
-
-    // if (yut[3] == 0) {
-    // this.fourthYut.setImage(image);
-    // } else {
-    // this.fourthYut.setImage(image2);
-    // }
-    // }
 
     @Override
     public void addRandomThrowButtonListener(EventHandler<ActionEvent> listener) {
