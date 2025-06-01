@@ -89,12 +89,6 @@ public class ControlPanelFX extends VBox {
         moveNewPieceButton.setPrefSize(150, 40);
         bottomButtonPanel.getChildren().addAll(goalButton, moveNewPieceButton);
         moveNewPieceButton.setFont(customFont15);
-        // 지정 버튼 클릭 시 윷 버튼 활성화
-        selectButton.setOnAction(e -> {
-            for (Button b : yutButtons) {
-                b.setDisable(false);
-            }
-        });
 
         getChildren().addAll(throwButtonsPanel, choosePanel, bottomButtonPanel);
     }

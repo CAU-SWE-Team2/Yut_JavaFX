@@ -414,10 +414,8 @@ public class GameScreenFX extends BorderPane implements GameScreenInterface {
     }
 
     @Override
-    public void addSelectedThrowButtonListener(int index, EventHandler<ActionEvent> listener) {
-        if (index >= 0 && index < controlPanel.getYutButtons().length) {
-            controlPanel.getYutButtons()[index].setOnAction(listener);
-        }
+    public void addSelectedThrowButtonListener(EventHandler<ActionEvent> listener) {
+        controlPanel.getSelectButton().setOnAction(listener);
     }
 
     @Override

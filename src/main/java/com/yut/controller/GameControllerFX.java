@@ -1,5 +1,7 @@
 package com.yut.controller;
 
+import java.util.Optional;
+
 import com.yut.controller.model_interfaces.GameModelInterface;
 import com.yut.controller.model_interfaces.GameTurnModelInterface;
 import com.yut.controller.view_interfaces.GameScreenInterface;
@@ -13,6 +15,10 @@ import com.yut.ui.javaFX.StartScreenFX;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.control.ButtonType;
 import javafx.scene.input.MouseEvent;
 
 public class GameControllerFX {
@@ -29,9 +35,7 @@ public class GameControllerFX {
         });
 
         gameScreen.addRandomThrowButtonListener(new RandomThrowButtonListener());
-
-        for (int i = 0; i < 6; i++)
-            gameScreen.addSelectedThrowButtonListener(i, new SelectThrowButtonListener(i));
+        gameScreen.addSelectedThrowButtonListener(new SelectThrowButtonListener());
 
         gameScreen.addMoveNewPieceButtonListener(new MoveNewPieceButtonListener());
         gameScreen.addGoalButtonListener(new GoalButtonListener());
@@ -128,21 +132,69 @@ public class GameControllerFX {
     }
 
     class SelectThrowButtonListener implements EventHandler<ActionEvent> {
-        private final int type;
-
-        public SelectThrowButtonListener(int type) {
-            this.type = type;
-        }
-
         @Override
         public void handle(ActionEvent e) {
-            GameTurnModelInterface gameTurnModel = gameModel.getGameTurn();
-            if (gameTurnModel.getState() == GameTurnModelInterface.HASTOMOVE)
-                return;
+            int[] yutResult = new int[5];
 
-            gameTurnModel.roll(type);
-            gameScreen.updateRandomResult(gameTurnModel.getLeftYuts().getLast());
-            gameScreen.printDeckContents(gameTurnModel.getLeftYuts());
+            Alert alert = new Alert(AlertType.CONFIRMATION);
+            alert.setTitle("지정 윷 던지기");
+            alert.setHeaderText("결과를 선택하세요");
+            alert.setContentText("빽도/도/개/걸/윷/모");
+
+            ButtonType buttonTypeBack = new ButtonType("빽도");
+            ButtonType buttonTypeDo = new ButtonType("도");
+            ButtonType buttonTypeGae = new ButtonType("개");
+            ButtonType buttonTypeGeol = new ButtonType("걸");
+            ButtonType buttonTypeYut = new ButtonType("윷");
+            ButtonType buttonTypeMo = new ButtonType("모");
+            ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
+
+            alert.getButtonTypes().setAll(buttonTypeBack, buttonTypeDo, buttonTypeGae, buttonTypeGeol, buttonTypeYut, buttonTypeMo, buttonTypeCancel);
+
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == buttonTypeBack){
+                yutResult[0] = Yut.BACKDO;
+                yutResult[1] = 0;
+                yutResult[2] = 1;
+                yutResult[3] = 1;
+                yutResult[4] = 1;
+            } else if (result.get() == buttonTypeDo) {
+                yutResult[0] = Yut.DO;
+                yutResult[1] = 1;
+                yutResult[2] = 1;
+                yutResult[3] = 0;
+                yutResult[4] = 1;
+            } else if (result.get() == buttonTypeGae) {
+                yutResult[0] = Yut.GE;
+                yutResult[1] = 0;
+                yutResult[2] = 1;
+                yutResult[3] = 1;
+                yutResult[4] = 0;
+            } else if (result.get() == buttonTypeGeol) {
+                yutResult[0] = Yut.GUL;
+                yutResult[1] = 0;
+                yutResult[2] = 0;
+                yutResult[3] = 0;
+                yutResult[4] = 1;
+            } else if (result.get() == buttonTypeYut) {
+                yutResult[0] = Yut.YUT;
+                yutResult[1] = 0;
+                yutResult[2] = 0;
+                yutResult[3] = 0;
+                yutResult[4] = 0;
+            } else if (result.get() == buttonTypeMo) {
+                yutResult[0] = Yut.MO;
+                yutResult[1] = 1;
+                yutResult[2] = 1;
+                yutResult[3] = 1;
+                yutResult[4] = 1;
+            }else {
+                // ... user chose CANCEL or closed the dialog
+            }
+            gameModel.getGameTurn().roll(yutResult[0]);
+
+            gameScreen.updateRandomResult(gameModel.getGameTurn().getLeftYuts().getLast());
+            gameScreen.printDeckContents(gameModel.getGameTurn().getLeftYuts());
         }
     }
 

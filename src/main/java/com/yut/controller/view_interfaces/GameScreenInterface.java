@@ -44,7 +44,7 @@ public interface GameScreenInterface {
     void addRandomThrowButtonListener(EventHandler<ActionEvent> listener);
 
     // 선택 던지기 버튼 리스너 (여러 개일 경우 index로 구분)
-    void addSelectedThrowButtonListener(int index, EventHandler<ActionEvent> listener);
+    void addSelectedThrowButtonListener(EventHandler<ActionEvent> listener);
 
     // 뒤로가기 버튼 리스너
     void addBackButtonListener(EventHandler<ActionEvent> listener);
