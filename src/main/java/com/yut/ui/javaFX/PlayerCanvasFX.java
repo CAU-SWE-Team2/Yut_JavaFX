@@ -49,7 +49,7 @@ public class PlayerCanvasFX extends Pane {
         gc.fillRoundRect(10, 10, canvas.getWidth() - 20, canvas.getHeight() - 20, 20, 15);
 
         // 테두리
-        gc.setStroke(highlighted ? Color.YELLOW : Color.TRANSPARENT);
+        gc.setStroke(highlighted ? Color.rgb(81, 58, 29) : Color.TRANSPARENT);
         gc.setLineWidth(highlighted ? 3 : 1);
         gc.strokeRoundRect(10, 10, canvas.getWidth() - 20, canvas.getHeight() - 20, 20, 15);
 

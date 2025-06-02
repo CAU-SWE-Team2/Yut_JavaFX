@@ -44,7 +44,7 @@ public class ControlPanelFX extends VBox {
 
         Button highlight = yutButtons[yut];
         highlight.setDisable(false);
-        highlight.setStyle("-fx-background-color: yellow;");
+        highlight.setStyle("-fx-background-color:rgb(81, 58, 29);");
     }
 
     public ControlPanelFX() {
