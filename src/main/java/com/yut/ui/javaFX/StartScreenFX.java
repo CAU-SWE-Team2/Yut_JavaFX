@@ -141,7 +141,7 @@ public class StartScreenFX extends VBox {
 
         Button gameStartBtn = new Button("게임 시작!");
 
-        gameStartBtn.setPrefWidth(150); // width in pixels
+        gameStartBtn.setPrefWidth(160); // width in pixels
         gameStartBtn.setPrefHeight(60); // height in pixels
         gameStartBtn.setPadding(new Insets(0, 20, 0, 20));
         gameStartBtn.setFont(customFont20);
