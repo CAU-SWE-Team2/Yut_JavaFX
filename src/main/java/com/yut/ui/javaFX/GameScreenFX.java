@@ -124,10 +124,10 @@ public class GameScreenFX extends BorderPane implements GameScreenInterface {
 
         backButton = new Button("시작 화면으로");
         backButton.setFont(customFont18);
-        backButton.setPrefWidth(160);
-        backButton.setPrefHeight(160);
+        backButton.setPrefWidth(120);
+        backButton.setPrefHeight(80);
         backButton.setMaxHeight(Double.MAX_VALUE);
-        backButton.setPadding(new Insets(10, 0, 10, 0));
+        // backButton.setPadding(new Insets(10, 0, 10, 0));
         backButton.setOnAction(e -> {
             Stage currentStage = (Stage) this.getScene().getWindow();
             currentStage.setScene(startScene);

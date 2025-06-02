@@ -137,14 +137,15 @@ public class StartScreenFX extends VBox {
         HBox gameStart = new HBox(20);
         gameStart.setAlignment(Pos.BOTTOM_CENTER);
         // gameStart.setPadding(new Insets(0, 0, 0, 0));
-        VBox.setMargin(gameStart, new Insets(50, 0, 30, 0));
+        VBox.setMargin(gameStart, new Insets(30, 0, 20, 0));
 
         Button gameStartBtn = new Button("게임 시작!");
 
-        gameStartBtn.setPrefWidth(140); // width in pixels
-        gameStartBtn.setPrefHeight(80); // height in pixels
-        gameStartBtn.setPadding(new Insets(10, 0, 10, 0));
+        gameStartBtn.setPrefWidth(150); // width in pixels
+        gameStartBtn.setPrefHeight(60); // height in pixels
+        gameStartBtn.setPadding(new Insets(0, 20, 0, 20));
         gameStartBtn.setFont(customFont20);
+        gameStartBtn.setStyle("-fx-font-size: 20px;");
         gameStartBtn.setOnAction(e -> {
             if (startButtonAction != null) {
                 startButtonAction.run();
