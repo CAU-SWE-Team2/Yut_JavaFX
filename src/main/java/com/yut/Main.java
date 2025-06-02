@@ -12,14 +12,13 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
 
-       
         primaryStage.setTitle("Yut Game - Game Screen");
         primaryStage.setResizable(false);
         primaryStage.show();
 
         TitleController titleController = new TitleController(primaryStage);
         titleController.start();
-        
+
     }
 
     public static void main(String[] args) {

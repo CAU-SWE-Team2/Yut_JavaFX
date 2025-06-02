@@ -98,7 +98,18 @@ public class GameScreenFX extends BorderPane implements GameScreenInterface {
                 BackgroundPosition.CENTER,
                 new BackgroundSize(950, 760, false, false, false, false));
 
-        if (playerCount == 3) {
+        BackgroundImage backgroundImage3 = new BackgroundImage(
+                new javafx.scene.image.Image(
+                        getClass().getResource("/assets/img/background_game3.png").toExternalForm()),
+
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.CENTER,
+                new BackgroundSize(950, 760, false, false, false, false));
+
+        if (playerCount == 2) {
+            setBackground(new Background(backgroundImage3));
+        } else if (playerCount == 3) {
             setBackground(new Background(backgroundImage2));
         } else {
             setBackground(new Background(backgroundImage));
@@ -148,9 +159,9 @@ public class GameScreenFX extends BorderPane implements GameScreenInterface {
         deckDisplayArea.setPrefWidth(180);
         deckDisplayArea.setPrefHeight(300);
         deckDisplayArea.setStyle("""
-            -fx-background-insets: 0;
-            -fx-effect: none;
-        """);
+                    -fx-background-insets: 0;
+                    -fx-effect: none;
+                """);
 
         // 컨트롤 패널 (사진, 버튼 등)
         controlPanel = new ControlPanelFX();
@@ -317,7 +328,7 @@ public class GameScreenFX extends BorderPane implements GameScreenInterface {
     public void deleteMovePreview() {
         if (previewCircle != null) {
             if (currentHintNode != null) {
-                
+
                 currentHintNode.setPreviewPiece(false);
                 currentHintNode = null;
             }
@@ -355,20 +366,20 @@ public class GameScreenFX extends BorderPane implements GameScreenInterface {
 
     // @Override
     // public void updateRandomResult(int yut) {
-    //     controlPanel.highlightYutButton(yut);
+    // controlPanel.highlightYutButton(yut);
 
-    //     if (yut == 4 || yut == 5) {
-    //         controlPanel.getMoveNewPieceButton().setStyle("-fx-background-color: lightgray;");
-    //         controlPanel.getMoveNewPieceButton().setDisable(true);
-    //     } else {
-    //         controlPanel.getMoveNewPieceButton().setStyle(""); // Reset to default style
-    //         controlPanel.getMoveNewPieceButton().setDisable(false);
-    //     }
+    // if (yut == 4 || yut == 5) {
+    // controlPanel.getMoveNewPieceButton().setStyle("-fx-background-color:
+    // lightgray;");
+    // controlPanel.getMoveNewPieceButton().setDisable(true);
+    // } else {
+    // controlPanel.getMoveNewPieceButton().setStyle(""); // Reset to default style
+    // controlPanel.getMoveNewPieceButton().setDisable(false);
+    // }
     // }
 
     @Override
     public void updateRandomResult(int[] yut) {
-
 
         controlPanel.highlightYutButton(yut[0]);
 
@@ -380,36 +391,32 @@ public class GameScreenFX extends BorderPane implements GameScreenInterface {
             controlPanel.getMoveNewPieceButton().setDisable(false);
         }
 
-
-        Image image = new
-        Image(getClass().getResource("/assets/img/yut_small_backward.png").toExternalForm());
-        Image image2 = new
-        Image(getClass().getResource("/assets/img/yut_small_upward.png").toExternalForm());
-        Image image3 = new
-        Image(getClass().getResource("/assets/img/yut_small_backdo.png").toExternalForm());
+        Image image = new Image(getClass().getResource("/assets/img/yut_small_backward.png").toExternalForm());
+        Image image2 = new Image(getClass().getResource("/assets/img/yut_small_upward.png").toExternalForm());
+        Image image3 = new Image(getClass().getResource("/assets/img/yut_small_backdo.png").toExternalForm());
 
         if (yut[1] == 0) {
-        this.firtstYut.setImage(image3);
+            this.firtstYut.setImage(image3);
         } else {
-        this.firtstYut.setImage(image2);
+            this.firtstYut.setImage(image2);
         }
 
         if (yut[2] == 0) {
-        this.secondYut.setImage(image);
+            this.secondYut.setImage(image);
         } else {
-        this.secondYut.setImage(image2);
+            this.secondYut.setImage(image2);
         }
 
         if (yut[3] == 0) {
-        this.thirdYut.setImage(image);
+            this.thirdYut.setImage(image);
         } else {
-        this.thirdYut.setImage(image2);
+            this.thirdYut.setImage(image2);
         }
 
         if (yut[4] == 0) {
-        this.fourthYut.setImage(image);
+            this.fourthYut.setImage(image);
         } else {
-        this.fourthYut.setImage(image2);
+            this.fourthYut.setImage(image2);
         }
     }
 

@@ -62,10 +62,10 @@ public class PlayerCanvasFX extends Pane {
         gc.setFont(customFont16);
 
         String label = switch (playerID) {
-            case 1 -> "첫 번째 놀이꾼";
-            case 2 -> "두 번째 놀이꾼";
-            case 3 -> "세 번째 놀이꾼";
-            default -> "네 번째 놀이꾼";
+            case 1 -> " 첫번째 놀이꾼";
+            case 2 -> " 두번째 놀이꾼";
+            case 3 -> " 세번째 놀이꾼";
+            default -> " 네번째 놀이꾼";
         };
 
         double startX = 110; // 오른쪽 위치
