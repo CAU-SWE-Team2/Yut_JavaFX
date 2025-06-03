@@ -4,10 +4,13 @@ import com.yut.model.Board;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import javafx.animation.*;
+import javafx.util.Duration;
+
 import javafx.scene.text.Font;
 
 public class StartScreenFX extends VBox {
@@ -38,6 +41,32 @@ public class StartScreenFX extends VBox {
         ImageView titleImage = new ImageView(image);
         titleImage.setFitWidth(500);
         titleImage.setPreserveRatio(true);
+
+        FadeTransition fadeIn = new FadeTransition(Duration.seconds(2), titleImage);
+        fadeIn.setFromValue(0.0);
+        fadeIn.setToValue(1.0);
+        fadeIn.play();
+
+        ScaleTransition scale = new ScaleTransition(Duration.seconds(1.2), titleImage);
+        scale.setFromX(1.0);
+        scale.setFromY(1.0);
+        scale.setToX(1.2);
+        scale.setToY(1.2);
+        scale.setCycleCount(ScaleTransition.INDEFINITE);
+        scale.setAutoReverse(true);
+        scale.play();
+
+        ParallelTransition combined = new ParallelTransition(fadeIn, scale);
+        combined.play();
+
+        /*
+         * RotateTransition rotate = new RotateTransition(Duration.seconds(2),
+         * titleImage);
+         * rotate.setByAngle(360);
+         * rotate.setCycleCount(Animation.INDEFINITE);
+         * rotate.setInterpolator(Interpolator.LINEAR);
+         * rotate.play();
+         */
 
         // titleBox
         HBox titleBox = new HBox();
