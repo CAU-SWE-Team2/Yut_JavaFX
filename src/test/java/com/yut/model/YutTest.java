@@ -89,7 +89,11 @@ public class YutTest {
         group1.move(board.nodes.get(100));
 
         // when
+        group1.move(group1.getNextNode(3));
+        group1.goal();
 
         // then
+        assertEquals(player1.numOfCurrentPieces, 1);
+        assertEquals(group1.currentLocation, board.endNode);
     }
 }
