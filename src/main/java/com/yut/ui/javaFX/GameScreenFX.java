@@ -157,7 +157,7 @@ public class GameScreenFX extends BorderPane implements GameScreenInterface {
         deckDisplayArea.setEditable(false);
         deckDisplayArea.setWrapText(true);
         deckDisplayArea.setPrefWidth(180);
-        deckDisplayArea.setPrefHeight(300);
+        deckDisplayArea.setPrefHeight(340);
         deckDisplayArea.setStyle("""
                     -fx-background-insets: 0;
                     -fx-effect: none;
@@ -190,6 +190,8 @@ public class GameScreenFX extends BorderPane implements GameScreenInterface {
         HBox soohyun = new HBox(15, firtstYut, secondYut, thirdYut, fourthYut);
 
         VBox rightOfBoard = new VBox(15, deckDisplayArea, soohyun);
+        VBox.setMargin(deckDisplayArea, new Insets(0, 0, 20, 0));
+        VBox.setMargin(soohyun, new Insets(0, 0, 30, 0));
         rightOfBoard.setAlignment(Pos.CENTER);
         rightOfBoard.setFillWidth(false);
 
@@ -255,10 +257,10 @@ public class GameScreenFX extends BorderPane implements GameScreenInterface {
 
     @Override
     public void printDeckContents(Deque<int[]> deck) {
-        Font customFont18 = Font.loadFont(
+        Font customFont25 = Font.loadFont(
                 getClass().getResource("/assets/fonts/SF_HailSnow.ttf").toExternalForm(),
-                18);
-        deckDisplayArea.setFont(customFont18);
+                25);
+        deckDisplayArea.setFont(customFont25);
 
         StringBuilder sb = new StringBuilder();
         for (int[] obj : deck) {

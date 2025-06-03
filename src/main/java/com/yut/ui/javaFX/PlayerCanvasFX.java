@@ -4,6 +4,9 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.CycleMethod;
+import javafx.scene.paint.LinearGradient;
+import javafx.scene.paint.Stop;
 import javafx.scene.text.Font;
 
 public class PlayerCanvasFX extends Pane {
@@ -44,17 +47,21 @@ public class PlayerCanvasFX extends Pane {
         GraphicsContext gc = canvas.getGraphicsContext2D();
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
-        // 배경 사각형
-        gc.setFill(Color.TRANSPARENT);
-        gc.fillRoundRect(10, 10, canvas.getWidth() - 20, canvas.getHeight() - 20, 20, 15);
-
-        // 테두리
-        gc.setStroke(highlighted ? Color.rgb(81, 58, 29) : Color.TRANSPARENT);
-        gc.setLineWidth(highlighted ? 3 : 1);
-        gc.strokeRoundRect(10, 10, canvas.getWidth() - 20, canvas.getHeight() - 20, 20, 15);
+        if (highlighted) {
+            gc.setFill(Color.rgb(81, 58, 29));
+            gc.fillRoundRect(96, 10, canvas.getWidth() - 110, canvas.getHeight() - 20, 20, 15);
+        } else {
+            gc.setFill(Color.TRANSPARENT);
+            gc.setStroke(Color.TRANSPARENT);
+        }
 
         // 플레이어
-        gc.setFill(Color.BLACK);
+        if (highlighted) {
+            gc.setFill(Color.WHITE);
+        } else {
+            gc.setFill(Color.BLACK);
+
+        }
 
         Font customFont16 = Font.loadFont(
                 getClass().getResource("/assets/fonts/SF_HailSnow.ttf").toExternalForm(),
