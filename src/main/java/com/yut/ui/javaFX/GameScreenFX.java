@@ -2,6 +2,8 @@ package com.yut.ui.javaFX;
 
 import com.yut.controller.view_interfaces.GameScreenInterface;
 import com.yut.model.Yut;
+
+import javafx.animation.RotateTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -17,6 +19,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.animation.RotateTransition;
+import javafx.util.Duration;
 
 import java.util.*;
 
@@ -194,13 +198,6 @@ public class GameScreenFX extends BorderPane implements GameScreenInterface {
         VBox.setMargin(soohyun, new Insets(0, 0, 30, 0));
         rightOfBoard.setAlignment(Pos.CENTER);
         rightOfBoard.setFillWidth(false);
-
-        // 테스트 코드
-        // Deque<Integer> testDeque = new ArrayDeque<>();
-        // testDeque.add(5);
-        // testDeque.add(3);
-        // testDeque.add(1);
-        // printDeckContents(testDeque);
 
         // 보드 + 덱/컨트롤 패널 수평 정렬
         HBox centerArea = new HBox(20, boardPane, rightOfBoard);
@@ -422,9 +419,24 @@ public class GameScreenFX extends BorderPane implements GameScreenInterface {
         }
     }
 
+    private void applyRotationAnimation(ImageView imageView) {
+        RotateTransition rotate = new RotateTransition(Duration.seconds(0.5), imageView);
+        rotate.setByAngle(360);
+        rotate.setCycleCount(1);
+        rotate.setAutoReverse(false);
+        rotate.play();
+    }
+
     @Override
     public void addRandomThrowButtonListener(EventHandler<ActionEvent> listener) {
-        controlPanel.getRandomButton().setOnAction(listener);
+        controlPanel.getRandomButton().setOnAction(e -> {
+            applyRotationAnimation(firtstYut);
+            applyRotationAnimation(secondYut);
+            applyRotationAnimation(thirdYut);
+            applyRotationAnimation(fourthYut);
+
+            listener.handle(e);
+        });
     }
 
     @Override
