@@ -42,11 +42,6 @@ public class StartScreenFX extends VBox {
         titleImage.setFitWidth(500);
         titleImage.setPreserveRatio(true);
 
-        FadeTransition fadeIn = new FadeTransition(Duration.seconds(2), titleImage);
-        fadeIn.setFromValue(0.0);
-        fadeIn.setToValue(1.0);
-        fadeIn.play();
-
         ScaleTransition scale = new ScaleTransition(Duration.seconds(1.2), titleImage);
         scale.setFromX(1.0);
         scale.setFromY(1.0);
@@ -55,9 +50,6 @@ public class StartScreenFX extends VBox {
         scale.setCycleCount(ScaleTransition.INDEFINITE);
         scale.setAutoReverse(true);
         scale.play();
-
-        ParallelTransition combined = new ParallelTransition(fadeIn, scale);
-        combined.play();
 
         /*
          * RotateTransition rotate = new RotateTransition(Duration.seconds(2),
