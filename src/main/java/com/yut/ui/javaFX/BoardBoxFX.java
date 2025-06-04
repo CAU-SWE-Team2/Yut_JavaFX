@@ -16,6 +16,7 @@ public class BoardBoxFX extends VBox {
 
     private Label label;
     private Line underline;
+    private Line topline;
 
     Font customFont = Font.loadFont(
             getClass().getResource("/assets/fonts/SF_HailSnow.ttf").toExternalForm(),
@@ -24,6 +25,15 @@ public class BoardBoxFX extends VBox {
     BoardBoxFX(String label, int boardType) {
         this.boardType = boardType;
         setAlignment(Pos.CENTER);
+
+        this.topline = new Line();
+        this.topline.setStartX(20);
+        this.topline.setEndX(width - 20);
+        this.topline.setStrokeWidth(1);
+        this.topline.setStroke(Color.web("#C16D00"));
+        this.topline.setStrokeWidth(3);
+        this.topline.setVisible(false); // hidden by default
+
         this.label = new Label(label);
         this.label.setFont(customFont);
         this.label.setPrefWidth(width);
@@ -41,15 +51,23 @@ public class BoardBoxFX extends VBox {
         this.underline.setStrokeWidth(3);
         this.underline.setVisible(false); // hidden by default
 
+        if (selectedBoardType == this.boardType) {
+            currentlySelected = this;
+            currentlySelected.underline.setVisible(true);
+            currentlySelected.topline.setVisible(true);
+        }
+
         this.label.setOnMouseClicked(event -> {
             selectedBoardType = this.boardType;
             if (currentlySelected != null) {
                 currentlySelected.underline.setVisible(false);
+                currentlySelected.topline.setVisible(false);
             }
             underline.setVisible(true);
+            topline.setVisible(true);
             currentlySelected = this;
         });
 
-        getChildren().addAll(this.label, this.underline);
+        getChildren().addAll(this.topline, this.label, this.underline);
     }
 }
