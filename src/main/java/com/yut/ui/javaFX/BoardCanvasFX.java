@@ -217,6 +217,7 @@ public class BoardCanvasFX extends Region {
                 drawCircle(gc, xPoints[i], yPoints[i], 12);
             }
 
+            
             // Intervals (to add intermediate points)
             int intervalTopX = (xPoints[4] - xPoints[0]) / 5;
             int intervalTopY = (yPoints[4] - yPoints[0]) / 5;

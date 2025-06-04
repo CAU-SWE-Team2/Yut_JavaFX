@@ -89,7 +89,11 @@ public class GameControllerFX {
 
                 gameScreen.highlightCurrentPlayer(gameModel.getCurrentPlayer().getId());
 
-            } else if (state == 3) { // 자기 말 선택 시
+            } 
+            else if(state == 2){
+                gameScreen.deleteMovePreview();
+            }
+            else if (state == 3) { // 자기 말 선택 시
                 if (node.getCurrentGroup().getOwner().getId() == currentPlayer.getId()) {
                     currentPlayer.chooseTarget(node.getCurrentGroup());
                     gameScreen.deleteMovePreview();
@@ -147,7 +151,7 @@ public class GameControllerFX {
             GameTurnModelInterface gameTurnModel = gameModel.getGameTurn();
             if (gameTurnModel.getState() == GameTurnModelInterface.HASTOMOVE)
                 return;
-                
+
             int[] yutResult = new int[5];
 
             Alert alert = new Alert(AlertType.CONFIRMATION);
@@ -203,6 +207,7 @@ public class GameControllerFX {
                 yutResult[3] = 1;
                 yutResult[4] = 1;
             }else {
+                return;
                 // ... user chose CANCEL or closed the dialog
             }
             gameModel.getGameTurn().roll(yutResult[0]);
