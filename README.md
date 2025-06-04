@@ -1,0 +1,1 @@
+to run the program, use command ./gradlew run in the root of project.
