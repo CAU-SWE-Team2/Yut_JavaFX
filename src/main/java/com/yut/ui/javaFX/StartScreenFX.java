@@ -10,10 +10,11 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.animation.*;
 import javafx.util.Duration;
+import javafx.scene.Node;
 
 import javafx.scene.text.Font;
 
-public class StartScreenFX extends VBox {
+public class StartScreenFX extends StackPane {
 
     private int boardType = 4;
 
@@ -25,6 +26,8 @@ public class StartScreenFX extends VBox {
     private Runnable startButtonAction;
 
     public StartScreenFX() {
+        VBox layout = new VBox();
+
         Font customFont20 = Font.loadFont(
                 getClass().getResource("/assets/fonts/SF_HailSnow.ttf").toExternalForm(),
                 20);
@@ -33,9 +36,9 @@ public class StartScreenFX extends VBox {
                 getClass().getResource("/assets/fonts/SF_HailSnow.ttf").toExternalForm(),
                 40);
 
-        setSpacing(30);
-        setPadding(new Insets(30));
-        setAlignment(Pos.TOP_CENTER);
+        layout.setSpacing(30);
+        layout.setPadding(new Insets(30));
+        layout.setAlignment(Pos.TOP_CENTER);
 
         Image image = new Image(getClass().getResource("/assets/img/yut!_logo.png").toExternalForm());
         ImageView titleImage = new ImageView(image);
@@ -56,13 +59,13 @@ public class StartScreenFX extends VBox {
         titleBox.setAlignment(Pos.TOP_CENTER); // center the label horizontally
         titleBox.setPadding(new Insets(60, 0, 20, 0)); // optional padding
         titleBox.getChildren().add(titleImage); // add the Label into the box
-        getChildren().add(titleBox);
+        layout.getChildren().add(titleBox);
 
         // middleBox
         HBox middleBox = new HBox(10);
         // middleBox.setAlignment(Pos.CENTER);
         VBox.setMargin(middleBox, new Insets(100, 0, 0, 0));
-        getChildren().add(middleBox);
+        layout.getChildren().add(middleBox);
 
         // optionBox
         VBox optionBox = new VBox(30);
@@ -165,15 +168,50 @@ public class StartScreenFX extends VBox {
         });
 
         gameStart.getChildren().add(gameStartBtn); // ✔ Add button to HBox
-        getChildren().add(gameStart); // ✔ Add HBox to parent layout (e.g., VBox)
+        layout.getChildren().add(gameStart); // ✔ Add HBox to parent layout (e.g., VBox)
 
         BackgroundImage backgroundImage = new BackgroundImage(
-                new javafx.scene.image.Image(getClass().getResource("/assets/img/background.png").toExternalForm()),
+                new javafx.scene.image.Image(getClass().getResource("/assets/img/background_empty.png").toExternalForm()),
                 BackgroundRepeat.NO_REPEAT,
                 BackgroundRepeat.NO_REPEAT,
                 BackgroundPosition.CENTER,
                 new BackgroundSize(100, 100, true, true, false, true));
         setBackground(new Background(backgroundImage));
+
+        Image yut1 = new Image(getClass().getResource("/assets/img/yut_large_upward.png").toExternalForm());
+        Image yut2 = new Image(getClass().getResource("/assets/img/yut_large_upward.png").toExternalForm());
+        Image yut3 = new Image(getClass().getResource("/assets/img/yut_large_backdo.png").toExternalForm());
+        Image yut4 = new Image(getClass().getResource("/assets/img/yut_large_backward.png").toExternalForm());
+
+        ImageView yut1ImageView = new ImageView(yut1);
+        ImageView yut2ImageView = new ImageView(yut2);
+        ImageView yut3ImageView = new ImageView(yut3);
+        ImageView yut4ImageView = new ImageView(yut4);
+
+        yut1ImageView.setFitHeight(500);
+        yut1ImageView.setPreserveRatio(true);
+        yut2ImageView.setFitHeight(459);
+        yut2ImageView.setPreserveRatio(true);
+        yut3ImageView.setFitHeight(412);
+        yut3ImageView.setPreserveRatio(true);
+        yut4ImageView.setFitHeight(522);
+        yut4ImageView.setPreserveRatio(true);
+
+
+        FallingYutFX fallingYut1 = new FallingYutFX(yut1ImageView, -300, -350 , -200, 400,
+                30, 360, 15);
+        FallingYutFX fallingYut2 = new FallingYutFX(yut2ImageView, 75, 90 , 250, 400,
+                60, -360, 15);
+        FallingYutFX fallingYut3 = new FallingYutFX(yut3ImageView, -300, 50 , -200, 400,
+                90, 360, 15);
+        FallingYutFX fallingYut4 = new FallingYutFX(yut4ImageView, 350, -230 , 250, 400,
+                120, -360, 15);
+
+        //fallingYut1.setMouseTransparent(true);
+        getChildren().addAll(fallingYut1.getNode(), fallingYut2.getNode(), fallingYut3.getNode(), fallingYut4.getNode(),
+                layout);
+        //getChildren().add(0, fallingYut1.getNode());
+
 
     }
 
