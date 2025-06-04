@@ -15,17 +15,17 @@ public class Yut {
     public static String getYutName(int yut){
         switch (yut) {
             case BACKDO:
-                return "Backdo";
+                return "빽도";
             case DO:
-                return "Do";
+                return "도";
             case GE:
-                return "Ge";
+                return "개";
             case GUL:
-                return "Gul";
+                return "걸";
             case YUT:
-                return "Yut";
+                return "윷";
             case MO:
-                return "Mo";
+                return "모";
             default:
                 return null;
         }

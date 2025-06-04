@@ -249,7 +249,7 @@ public class GameScreenFX extends BorderPane implements GameScreenInterface {
 
         StringBuilder sb = new StringBuilder();
         for (int[] obj : deck) {
-            sb.append(Yut.getYutName(obj[0])).append("\n");
+            sb.append("          " + Yut.getYutName(obj[0])).append("\n");
         }
         deckDisplayArea.setText(sb.toString());
     }
