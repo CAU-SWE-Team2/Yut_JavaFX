@@ -232,16 +232,19 @@ public class GameControllerFX {
             Group targetGroup = currentPlayer.getMoveTarget();
 
             gameScreen.deletePiece(targetGroup.getCurrentLocation().getId());
+            targetGroup.goal();
+            gameScreen.updatePlayerCanvas(currentPlayer.getId(), gameModel.getCurrentPlayer().getNumOfCurrentPieces());
+
+            
             gameTurnModel.move(targetGroup);
             gameScreen.printDeckContents(gameTurnModel.getLeftYuts());
-            targetGroup.goal();
+            
             
             // gameScreen.updatePlayerCanvas(currentPlayer.getId(), gameModel.getCurrentPlayer().getNumOfCurrentPieces());
             gameScreen.setGoalButtonVisible(false);
 
             gameScreen.highlightCurrentPlayer(gameModel.getCurrentPlayer().getId());
-            gameScreen.updatePlayerCanvas(currentPlayer.getId(), gameModel.getCurrentPlayer().getNumOfCurrentPieces());
-
+            
 
             if(currentPlayer.getNumOfCurrentPieces() == 0){
                 Alert alert = new Alert(AlertType.CONFIRMATION);
