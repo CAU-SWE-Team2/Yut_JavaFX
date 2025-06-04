@@ -47,15 +47,19 @@ public class FallingYutFX {
 
         ParallelTransition animation = new ParallelTransition(node, translate, rotate);
 
+        /*
         animation.setOnFinished(e -> {
             node.setTranslateX(startX);
-            node.setTranslateY(startY);
+            node.setTranslateY(startY - 600);
+            translate.setByY(1600);
+            this.durationSec = 35;
             node.setRotate(rotationStartDeg);
+
             playAnimation();
-            System.out.println("Resetting Yut...");
-            System.out.println("Before reset: X = " + node.getTranslateX() + ", Y = " + node.getTranslateY());
 
         });
+
+         */
 
         animation.play();
     }

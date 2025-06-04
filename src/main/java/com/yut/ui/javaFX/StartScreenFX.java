@@ -63,14 +63,14 @@ public class StartScreenFX extends StackPane {
 
         // middleBox
         HBox middleBox = new HBox(10);
-        // middleBox.setAlignment(Pos.CENTER);
-        VBox.setMargin(middleBox, new Insets(100, 0, 0, 0));
+        middleBox.setAlignment(Pos.TOP_LEFT);
+        VBox.setMargin(middleBox, new Insets(50, 0, 0, 0));
         layout.getChildren().add(middleBox);
 
         // optionBox
         VBox optionBox = new VBox(30);
         optionBox.setAlignment(Pos.CENTER_LEFT);
-        HBox.setMargin(optionBox, new Insets(0, 0, 0, 50));
+        HBox.setMargin(optionBox, new Insets(0, 0, 0, 100));
         middleBox.getChildren().add(optionBox);
 
         Label playerLabel = new Label("인원 수:");
@@ -84,6 +84,7 @@ public class StartScreenFX extends StackPane {
         // choiceBox
 
         VBox choiceBox = new VBox(0);
+        choiceBox.setAlignment(Pos.CENTER);
         HBox.setMargin(choiceBox, new Insets(0, 0, 0, 30));
         middleBox.getChildren().add(choiceBox);
 
@@ -95,7 +96,7 @@ public class StartScreenFX extends StackPane {
         }
 
         ImageView playerImageView = new ImageView(playerImages[2]);
-        playerImageView.setFitWidth(100);
+        playerImageView.setFitWidth(60);
         playerImageView.setPreserveRatio(true);
         playerImageView.setPickOnBounds(true);
 
@@ -114,7 +115,7 @@ public class StartScreenFX extends StackPane {
         }
 
         ImageView pieceImageView = new ImageView(playerImages[2]);
-        pieceImageView.setFitWidth(100);
+        pieceImageView.setFitWidth(60);
         pieceImageView.setPreserveRatio(true);
         pieceImageView.setPickOnBounds(true);
 
@@ -198,14 +199,14 @@ public class StartScreenFX extends StackPane {
         yut4ImageView.setPreserveRatio(true);
 
 
-        FallingYutFX fallingYut1 = new FallingYutFX(yut1ImageView, -300, -350 , -200, 400,
-                30, 360, 15);
-        FallingYutFX fallingYut2 = new FallingYutFX(yut2ImageView, 75, 90 , 250, 400,
-                60, -360, 15);
-        FallingYutFX fallingYut3 = new FallingYutFX(yut3ImageView, -300, 50 , -200, 400,
-                90, 360, 15);
-        FallingYutFX fallingYut4 = new FallingYutFX(yut4ImageView, 350, -230 , 250, 400,
-                120, -360, 15);
+        FallingYutFX fallingYut1 = new FallingYutFX(yut1ImageView, -300, -350 , -200, 600,
+                30, 360, 23);
+        FallingYutFX fallingYut2 = new FallingYutFX(yut2ImageView, 75, 90 , -25, 600,
+                60, -360, 19);
+        FallingYutFX fallingYut3 = new FallingYutFX(yut3ImageView, -300, 50 , -200, 600,
+                90, 360, 24);
+        FallingYutFX fallingYut4 = new FallingYutFX(yut4ImageView, 350, -230 , 250, 600,
+                120, -360, 21);
 
         //fallingYut1.setMouseTransparent(true);
         getChildren().addAll(fallingYut1.getNode(), fallingYut2.getNode(), fallingYut3.getNode(), fallingYut4.getNode(),
