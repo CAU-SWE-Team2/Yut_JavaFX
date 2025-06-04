@@ -98,6 +98,8 @@ public class BoardCanvasFX extends Region {
                 clickableNodes.add(node);
                 this.getChildren().add(node);
                 drawCircle(gc, x, y, radius);
+                if (i == 0)
+                    drawCircle(gc, x, y, 12);
             }
 
             // Top-right to top-left (top edge)
@@ -110,6 +112,8 @@ public class BoardCanvasFX extends Region {
                 clickableNodes.add(node);
                 this.getChildren().add(node);
                 drawCircle(gc, x, y, radius);
+                if (i == 0)
+                    drawCircle(gc, x, y, 12);
             }
 
             // Top-left to bottom-left (left edge)
@@ -122,6 +126,8 @@ public class BoardCanvasFX extends Region {
                 clickableNodes.add(node);
                 this.getChildren().add(node);
                 drawCircle(gc, x, y, radius);
+                if (i == 0)
+                    drawCircle(gc, x, y, 12);
             }
 
             // Bottom-left to bottom-right (bottom edge)
@@ -134,6 +140,8 @@ public class BoardCanvasFX extends Region {
                 clickableNodes.add(node);
                 this.getChildren().add(node);
                 drawCircle(gc, x, y, radius);
+                if (i == 0)
+                    drawCircle(gc, x, y, 12);
             }
 
             // Diagonal paths
@@ -178,6 +186,7 @@ public class BoardCanvasFX extends Region {
             clickableNodes.add(node);
             this.getChildren().add(node);
             drawCircle(gc, centerX, centerY, 16);
+            drawCircle(gc, centerX, centerY, 12);
             drawText(gc, "출발", startX + 5 * cStep, startY + 5 * cStep); // label the starting point
         }
 
@@ -310,6 +319,7 @@ public class BoardCanvasFX extends Region {
             clickableNodes.add(node);
             this.getChildren().add(node);
             drawCircle(gc, cx, cy, 16);
+            drawCircle(gc, cx, cy, 12);
             drawText(gc, "출발", xPoints[0], yPoints[0]);
         }
 
@@ -345,6 +355,7 @@ public class BoardCanvasFX extends Region {
                 clickableNodes.add(node);
                 this.getChildren().add(node);
                 drawCircle(gc, xPoints[i], yPoints[i], 16);
+                drawCircle(gc, xPoints[i], yPoints[i], 12);
             }
 
             // Intermediate path nodes between corners
@@ -352,7 +363,7 @@ public class BoardCanvasFX extends Region {
             int interval1Y = (yPoints[3] - yPoints[2]) / 5;
             int interval2X = (xPoints[2] - xPoints[1]) / 5;
 
-            for (int i = 0; i < 5; i++) {
+            for (int i = 1; i < 5; i++) {
                 int x1 = xPoints[0] + interval1X * i;
                 int y1 = yPoints[0] - interval1Y * i;
                 ClickableNodeFX node1 = new ClickableNodeFX(x1, y1, 9, 120 + i);
@@ -446,10 +457,11 @@ public class BoardCanvasFX extends Region {
             }
 
             // Center
-            ClickableNodeFX node = new ClickableNodeFX(cx, cy, 15, 700);
+            ClickableNodeFX node = new ClickableNodeFX(cx, cy, 16, 700);
             clickableNodes.add(node);
             this.getChildren().add(node);
             drawCircle(gc, cx, cy, 16);
+            drawCircle(gc, cx, cy, 12);
             drawText(gc, "출발", xPoints[0], yPoints[0]);
         }
 
