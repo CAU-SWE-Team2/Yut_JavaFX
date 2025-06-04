@@ -18,14 +18,6 @@ public class Player {
         this.numOfCurrentPieces = numOfPieces;
     }
 
-    // public int throwYut(Yut yut){
-    //     return yut.getRandomResult();
-    // }
-
-    // public int throwDecidedYut(Yut yut, int num){
-    //     return yut.getDecidedResult(num);
-    // }
-
     public Group getNewGroup(){
         Group newGroup = null;
         for(int i = 0; i < currentGroups.size(); i++){
