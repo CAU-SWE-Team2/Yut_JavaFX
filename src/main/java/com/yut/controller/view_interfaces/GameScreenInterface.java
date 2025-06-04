@@ -28,9 +28,6 @@ public interface GameScreenInterface {
     // 현재 차례인 플레이어 강조
     void highlightCurrentPlayer(int playerId);
 
-    // 말 선택 사각형 표시
-    void select(int nodeID);
-
     // 윷 결과(도/개/걸/윷/모 등) 반영
     void updateRandomResult(int yut[]);
 

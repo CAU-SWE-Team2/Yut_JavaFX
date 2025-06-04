@@ -21,11 +21,13 @@ public class GameTurn implements GameTurnModelInterface {
 
     private int state;
 
+    private Game game;
 
-    public GameTurn(Player currentPlayer) {
+    public GameTurn(Player currentPlayer, Game game) {
         this.currentPlayer = currentPlayer;
         this.rollCount = 1;
         this.yut = Yut.getYut();
+        this.game = game;
         leftYuts = new ArrayDeque<int[]>();
 
         state = GameTurnModelInterface.THROWABLE;
@@ -54,25 +56,39 @@ public class GameTurn implements GameTurnModelInterface {
             alert.showAndWait();
             leftYuts.addLast(result);
         }
-        else if(yut_type == Yut.BACKDO && (currentPlayer.getNumOfWaitingPieces() == currentPlayer.getNumOfCurrentPieces()) && leftYuts.isEmpty()){
-            if(type == -2){
-                yut.rollYutRandomly();
-                result = yut.getCurrent();
-            }
-            else{
-                Alert alert = new Alert(AlertType.INFORMATION);
-                alert.setTitle("Backdo");
-                alert.setHeaderText("뒤로 갈 수 있는 말이 없습니다.");
-                alert.setContentText("한 번 더 던지세요!");
-                alert.showAndWait();
-                rollCount++;
-            }
-        }
+        // else if(yut_type == Yut.BACKDO && (currentPlayer.getNumOfWaitingPieces() == currentPlayer.getNumOfCurrentPieces()) && leftYuts.isEmpty()){
+
+        //         Alert alert = new Alert(AlertType.INFORMATION);
+        //         alert.setTitle("Backdo");
+        //         alert.setHeaderText("뒤로 갈 수 있는 말이 없습니다.");
+        //         alert.setContentText("한 번 더 던지세요!");
+        //         alert.showAndWait();
+        //         rollCount++;
+        //     }
+        // }
         else{
             leftYuts.addLast(result);
         }
 
-         // 남은 윷이 없으면 턴 종료
+       
+
+        if(leftYuts.isEmpty())
+            return;
+
+        int nextYut = leftYuts.getFirst()[0];
+        if(nextYut == Yut.BACKDO && (currentPlayer.getNumOfWaitingPieces() == currentPlayer.getNumOfCurrentPieces())){
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("Backdo");
+            alert.setHeaderText("뒤로 갈 수 있는 말이 없습니다.");
+            alert.setContentText("빽도는 사라집니다!");
+            alert.showAndWait();
+
+            leftYuts.removeFirst();
+        }
+        if(leftYuts.isEmpty() && rollCount == 0)
+            game.switchTurn();
+
+        // 남은 윷이 없으면 움직여야함
         if(rollCount == 0)
             state = GameTurnModelInterface.HASTOMOVE;
     }
@@ -100,6 +116,11 @@ public class GameTurn implements GameTurnModelInterface {
             state = GameTurnModelInterface.THROWABLE;
         }           
         leftYuts.removeFirst();
+
+
+        if(leftYuts.isEmpty() && rollCount == 0)
+            game.switchTurn();
+        
     }
 
     public int getState(){

@@ -324,25 +324,6 @@ public class GameScreenFX extends BorderPane implements GameScreenInterface {
         }
     }
 
-    @Override
-    public void select(int nodeID) {
-        if (selectRectangle != null) {
-            layeredBoard.getChildren().remove(selectRectangle);
-        }
-        ClickableNodeFX node = nodeMap.get(nodeID);
-        if (node == null) {
-            throw new RuntimeException("Node " + nodeID + " does not exist");
-        }
-
-        selectRectangle = new Rectangle(20, 20);
-        selectRectangle.setStroke(Color.BLACK);
-        selectRectangle.setFill(Color.TRANSPARENT);
-        selectRectangle.setLayoutX(node.getNodeX() - 10); // 10 = half of width (20/2)
-        selectRectangle.setLayoutY(node.getNodeY() - 10); // 10 = half of height (20/2)
-
-        node.setPreviewPiece(true);
-        layeredBoard.getChildren().add(selectRectangle);
-    }
 
     @Override
     public void highlightCurrentPlayer(int currentPlayerId) {

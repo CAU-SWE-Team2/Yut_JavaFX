@@ -81,12 +81,11 @@ public class GameControllerFX {
                 gameTurnModel.move(targetGroup);
 
                 gameScreen.printDeckContents(gameTurnModel.getLeftYuts());
-                gameScreen.updatePlayerCanvas(currentPlayer.getId(), currentPlayer.getNumOfCurrentPieces());
+                // gameScreen.updatePlayerCanvas(currentPlayer.getId(), currentPlayer.getNumOfCurrentPieces());
                 gameScreen.drawPiece(nodeId, currentPlayer.getId(), node.getCurrentGroup().getNumOfPieces());
                 gameScreen.deleteMovePreview();
 
-                if (gameTurnModel.getLeftYuts().isEmpty() && gameTurnModel.getRollCount() == 0)
-                    gameModel.switchTurn();
+
 
                 gameScreen.highlightCurrentPlayer(gameModel.getCurrentPlayer().getId());
 
@@ -134,14 +133,21 @@ public class GameControllerFX {
                 return;
 
             gameTurnModel.roll(-2);
-            gameScreen.updateRandomResult(gameTurnModel.getLeftYuts().getLast());
+
+            if(gameTurnModel.getLeftYuts().size() != 0)
+                gameScreen.updateRandomResult(gameTurnModel.getLeftYuts().getLast());
             gameScreen.printDeckContents(gameTurnModel.getLeftYuts());
+            gameScreen.highlightCurrentPlayer(gameModel.getCurrentPlayer().getId());
         }
     }
 
     class SelectThrowButtonListener implements EventHandler<ActionEvent> {
         @Override
         public void handle(ActionEvent e) {
+            GameTurnModelInterface gameTurnModel = gameModel.getGameTurn();
+            if (gameTurnModel.getState() == GameTurnModelInterface.HASTOMOVE)
+                return;
+                
             int[] yutResult = new int[5];
 
             Alert alert = new Alert(AlertType.CONFIRMATION);
@@ -200,9 +206,13 @@ public class GameControllerFX {
                 // ... user chose CANCEL or closed the dialog
             }
             gameModel.getGameTurn().roll(yutResult[0]);
+            
 
-            gameScreen.updateRandomResult(gameModel.getGameTurn().getLeftYuts().getLast());
+            if(gameModel.getGameTurn().getLeftYuts().size() != 0)
+                gameScreen.updateRandomResult(gameModel.getGameTurn().getLeftYuts().getLast());
             gameScreen.printDeckContents(gameModel.getGameTurn().getLeftYuts());
+            gameScreen.highlightCurrentPlayer(gameModel.getCurrentPlayer().getId());
+        
         }
     }
 
@@ -221,20 +231,12 @@ public class GameControllerFX {
             gameScreen.printDeckContents(gameTurnModel.getLeftYuts());
             targetGroup.goal();
             
-            gameScreen.updatePlayerCanvas(currentPlayer.getId(), gameModel.getCurrentPlayer().getNumOfCurrentPieces());
+            // gameScreen.updatePlayerCanvas(currentPlayer.getId(), gameModel.getCurrentPlayer().getNumOfCurrentPieces());
             gameScreen.setGoalButtonVisible(false);
 
-            if (gameTurnModel.getLeftYuts().isEmpty() && gameTurnModel.getRollCount() == 0){
-                gameModel.switchTurn();
-                gameScreen.highlightCurrentPlayer(gameModel.getCurrentPlayer().getId());
-            }
-            if(gameTurnModel.getLeftYuts().size() == 1 && gameTurnModel.getLeftYuts().getFirst()[0] == Yut.BACKDO){
-                gameTurnModel.getLeftYuts().removeFirst();
-                gameModel.switchTurn();
-                gameScreen.highlightCurrentPlayer(gameModel.getCurrentPlayer().getId());
-            }
+            gameScreen.highlightCurrentPlayer(gameModel.getCurrentPlayer().getId());
+            gameScreen.updatePlayerCanvas(currentPlayer.getId(), gameModel.getCurrentPlayer().getNumOfCurrentPieces());
 
-            
 
             if(currentPlayer.getNumOfCurrentPieces() == 0){
                 Alert alert = new Alert(AlertType.CONFIRMATION);

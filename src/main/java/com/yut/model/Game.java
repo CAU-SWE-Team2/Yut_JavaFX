@@ -27,7 +27,7 @@ public class Game implements GameModelInterface {
             board = new HexagonBoard();
         
         currentPlayerId = players.getFirstPlayer().id;
-        gameTurn = new GameTurn(players.getPlayer(1));
+        gameTurn = new GameTurn(players.getPlayer(1), this);
 
         for(int i = 1; i <= players.size(); i++){
             Player player = players.getPlayer(i);
@@ -45,7 +45,7 @@ public class Game implements GameModelInterface {
         currentPlayerId = (currentPlayerId - 1) % playerCount + 1;
         Player player = players.getPlayer(currentPlayerId);
 
-        gameTurn = new GameTurn(player);
+        gameTurn = new GameTurn(player, this);
     }
 
     public boolean ifGameEnded(){
