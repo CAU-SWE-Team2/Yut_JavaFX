@@ -67,18 +67,9 @@ public class GameScreenFX extends BorderPane implements GameScreenInterface {
 
     public GameScreenFX(Scene startScene, int boardType, int playerCount, int pieceCount) {
 
-        // Font customFont20 = Font.loadFont(
-        // getClass().getResource("/assets/fonts/SF_HailSnow.ttf").toExternalForm(),
-        // 20);
-
-        // Font customFont50 = Font.loadFont(
-        // getClass().getResource("/assets/fonts/SF_HailSnow.ttf").toExternalForm(),
-        // 50);
-
         this.boardType = boardType;
         this.playerCount = playerCount;
         this.pieceCount = pieceCount;
-        // this.onBack = onBack;
 
         Font customFont18 = Font.loadFont(
                 getClass().getResource("/assets/fonts/SF_HailSnow.ttf").toExternalForm(),
@@ -131,14 +122,11 @@ public class GameScreenFX extends BorderPane implements GameScreenInterface {
         backButton.setPrefWidth(140);
         backButton.setPrefHeight(80);
         backButton.setMaxHeight(Double.MAX_VALUE);
-        // backButton.setPadding(new Insets(10, 0, 10, 0));
         backButton.setOnAction(e -> {
             Stage currentStage = (Stage) this.getScene().getWindow();
             currentStage.setScene(startScene);
         });
 
-        // backButton.setOnAction(e -> onBack.run());
-        // backButton.setFont(customFont20);
         topPanel.getChildren().add(backButton);
 
         // 보드 및 노드
@@ -362,20 +350,6 @@ public class GameScreenFX extends BorderPane implements GameScreenInterface {
             playerCanvases.get(i).setHighlighted(i == currentPlayerId);
         }
     }
-
-    // @Override
-    // public void updateRandomResult(int yut) {
-    // controlPanel.highlightYutButton(yut);
-
-    // if (yut == 4 || yut == 5) {
-    // controlPanel.getMoveNewPieceButton().setStyle("-fx-background-color:
-    // lightgray;");
-    // controlPanel.getMoveNewPieceButton().setDisable(true);
-    // } else {
-    // controlPanel.getMoveNewPieceButton().setStyle(""); // Reset to default style
-    // controlPanel.getMoveNewPieceButton().setDisable(false);
-    // }
-    // }
 
     @Override
     public void updateRandomResult(int[] yut) {

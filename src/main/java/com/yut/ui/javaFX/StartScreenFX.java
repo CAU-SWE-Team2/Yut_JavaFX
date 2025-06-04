@@ -51,31 +51,12 @@ public class StartScreenFX extends VBox {
         scale.setAutoReverse(true);
         scale.play();
 
-        /*
-         * RotateTransition rotate = new RotateTransition(Duration.seconds(2),
-         * titleImage);
-         * rotate.setByAngle(360);
-         * rotate.setCycleCount(Animation.INDEFINITE);
-         * rotate.setInterpolator(Interpolator.LINEAR);
-         * rotate.play();
-         */
-
         // titleBox
         HBox titleBox = new HBox();
         titleBox.setAlignment(Pos.TOP_CENTER); // center the label horizontally
         titleBox.setPadding(new Insets(60, 0, 20, 0)); // optional padding
         titleBox.getChildren().add(titleImage); // add the Label into the box
         getChildren().add(titleBox);
-
-        /*
-         * titleBox.setStyle(
-         * "-fx-border-color: blue;" +
-         * "-fx-border-width: 3px;" +
-         * "-fx-border-radius: 5px;" + // rounded corners
-         * "-fx-background-color: lightgray;" // optional background to see it better
-         * );
-         * 
-         */
 
         // middleBox
         HBox middleBox = new HBox(10);
@@ -167,6 +148,16 @@ public class StartScreenFX extends VBox {
         gameStartBtn.setPadding(new Insets(0, 20, 0, 20));
         gameStartBtn.setFont(customFont20);
         gameStartBtn.setStyle("-fx-font-size: 20px;");
+
+        ScaleTransition pressAnimation = new ScaleTransition(Duration.millis(100), gameStartBtn);
+        pressAnimation.setToX(1.1);
+        pressAnimation.setToY(1.1);
+
+        ScaleTransition releaseAnimation = new ScaleTransition(Duration.millis(100), gameStartBtn);
+        releaseAnimation.setToX(1.0);
+        releaseAnimation.setToY(1.0);
+        gameStartBtn.setOnMousePressed(e -> pressAnimation.playFromStart());
+        gameStartBtn.setOnMouseReleased(e -> releaseAnimation.playFromStart());
         gameStartBtn.setOnAction(e -> {
             if (startButtonAction != null) {
                 startButtonAction.run();

@@ -38,8 +38,8 @@ public class ControlPanelFX extends VBox {
             throw new IllegalArgumentException("yut index out of range: " + yut);
 
         for (Button b : yutButtons) {
-            b.setStyle(""); // reset style
-            b.setDisable(true); // disable all
+            b.setStyle("");
+            b.setDisable(true);
         }
 
         Button highlight = yutButtons[yut];
